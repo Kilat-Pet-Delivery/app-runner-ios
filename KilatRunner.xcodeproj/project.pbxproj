@@ -18,6 +18,7 @@
 		A00000000000000000000113 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000103 /* NetworkError.swift */; };
 		A00000000000000000000114 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000104 /* KeychainStore.swift */; };
 		A00000000000000000000115 /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000105 /* KeychainStoreTests.swift */; };
+		A00000000000000000000116 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000106 /* MockURLProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		A00000000000000000000103 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		A00000000000000000000104 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		A00000000000000000000105 /* KeychainStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStoreTests.swift; sourceTree = "<group>"; };
+		A00000000000000000000106 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				A00000000000000000000105 /* KeychainStoreTests.swift */,
+				A00000000000000000000106 /* MockURLProtocol.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 			files = (
 				A00000000000000000000016 /* KilatRunnerTests.swift in Sources */,
 				A00000000000000000000115 /* KeychainStoreTests.swift in Sources */,
+				A00000000000000000000116 /* MockURLProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
