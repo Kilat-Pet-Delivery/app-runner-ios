@@ -43,8 +43,14 @@
 		B100000000000000B1000004 /* AvailableJobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000000000000B1000003 /* AvailableJobsView.swift */; };
 		B100000000000000B1000006 /* JobDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000000000000B1000005 /* JobDetailViewModel.swift */; };
 		B100000000000000B1000008 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000000000000B1000007 /* JobDetailView.swift */; };
+		C100000000000000C1000002 /* TrackingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000001 /* TrackingModels.swift */; };
+		C100000000000000C1000004 /* TrackingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000003 /* TrackingRepository.swift */; };
+		C100000000000000C1000006 /* ActiveDeliveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000005 /* ActiveDeliveryViewModel.swift */; };
+		C100000000000000C1000008 /* ActiveDeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000007 /* ActiveDeliveryView.swift */; };
 		B200000000000000B2000002 /* AvailableJobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */; };
 		B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000003 /* JobDetailViewModelTests.swift */; };
+		C200000000000000C2000002 /* TrackingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000001 /* TrackingRepositoryTests.swift */; };
+		C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,8 +71,14 @@
 		B100000000000000B1000003 /* AvailableJobsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsView.swift; sourceTree = "<group>"; };
 		B100000000000000B1000005 /* JobDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModel.swift; sourceTree = "<group>"; };
 		B100000000000000B1000007 /* JobDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
+		C100000000000000C1000001 /* TrackingModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingModels.swift; sourceTree = "<group>"; };
+		C100000000000000C1000003 /* TrackingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingRepository.swift; sourceTree = "<group>"; };
+		C100000000000000C1000005 /* ActiveDeliveryViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryViewModel.swift; sourceTree = "<group>"; };
+		C100000000000000C1000007 /* ActiveDeliveryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryView.swift; sourceTree = "<group>"; };
 		B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000003 /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
+		C200000000000000C2000001 /* TrackingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingRepositoryTests.swift; sourceTree = "<group>"; };
+		C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryViewModelTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000001 /* KilatRunnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KilatRunnerApp.swift; sourceTree = "<group>"; };
 		A00000000000000000000002 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		A00000000000000000000003 /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
@@ -224,6 +236,7 @@
 				A00000000000000000000125 /* Auth */,
 				A00000000000000000000137 /* Dashboard */,
 				BC1C56524F3A90AAD1DED878 /* Jobs */,
+				C300000000000000C3000001 /* ActiveDelivery */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -246,6 +259,7 @@
 				A0000000000000000000010D /* AuthRepositoryTests.swift */,
 				A0000000000000000000010F /* LoginViewModelTests.swift */,
 				B2934FEA376F9712C6C98AAF /* Jobs */,
+				C300000000000000C3000002 /* ActiveDelivery */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -294,6 +308,28 @@
 			);
 			name = Jobs;
 			path = Jobs;
+			sourceTree = "<group>";
+		};
+		C300000000000000C3000001 /* ActiveDelivery */ = {
+			isa = PBXGroup;
+			children = (
+				C100000000000000C1000001 /* TrackingModels.swift */,
+				C100000000000000C1000003 /* TrackingRepository.swift */,
+				C100000000000000C1000005 /* ActiveDeliveryViewModel.swift */,
+				C100000000000000C1000007 /* ActiveDeliveryView.swift */,
+			);
+			name = ActiveDelivery;
+			path = ActiveDelivery;
+			sourceTree = "<group>";
+		};
+		C300000000000000C3000002 /* ActiveDelivery */ = {
+			isa = PBXGroup;
+			children = (
+				C200000000000000C2000001 /* TrackingRepositoryTests.swift */,
+				C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */,
+			);
+			name = ActiveDelivery;
+			path = ActiveDelivery;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -420,6 +456,10 @@
 				B100000000000000B1000004 /* AvailableJobsView.swift in Sources */,
 				B100000000000000B1000006 /* JobDetailViewModel.swift in Sources */,
 				B100000000000000B1000008 /* JobDetailView.swift in Sources */,
+				C100000000000000C1000002 /* TrackingModels.swift in Sources */,
+				C100000000000000C1000004 /* TrackingRepository.swift in Sources */,
+				C100000000000000C1000006 /* ActiveDeliveryViewModel.swift in Sources */,
+				C100000000000000C1000008 /* ActiveDeliveryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +479,8 @@
 				5CE36A5B86F166AB8F2404FA /* BookingRepositoryTests.swift in Sources */,
 				B200000000000000B2000002 /* AvailableJobsViewModelTests.swift in Sources */,
 				B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */,
+				C200000000000000C2000002 /* TrackingRepositoryTests.swift in Sources */,
+				C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

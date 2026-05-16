@@ -29,11 +29,7 @@ struct JobDetailView: View {
                 set: { newValue in if !newValue { viewModel.acceptedBookingId = nil } }
             )
         ) {
-            ContentUnavailableView(
-                "Active Delivery",
-                systemImage: "shippingbox",
-                description: Text("Live tracking ships in Phase 5.")
-            )
+            ActiveDeliveryView(viewModel: ActiveDeliveryViewModel(booking: viewModel.booking))
         }
     }
 

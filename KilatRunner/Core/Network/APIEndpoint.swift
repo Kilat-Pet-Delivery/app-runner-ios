@@ -14,6 +14,7 @@ enum APIEndpoint: Equatable {
     case acceptBooking(id: String)
     case markPickup(id: String)
     case markDelivered(id: String)
+    case trackingHistory(bookingId: String)
     case earnings(page: Int = 1, limit: Int = 20)
 
     var method: HTTPMethod {
@@ -21,7 +22,7 @@ enum APIEndpoint: Equatable {
         case .login, .refresh, .logout, .runnerOnline, .runnerOffline, .runnerLocation,
                 .acceptBooking, .markPickup, .markDelivered:
             return .post
-        case .profile, .runnerMe, .availableJobs, .bookingDetail, .earnings:
+        case .profile, .runnerMe, .availableJobs, .bookingDetail, .trackingHistory, .earnings:
             return .get
         }
     }
@@ -54,6 +55,8 @@ enum APIEndpoint: Equatable {
             return "bookings/\(id)/pickup"
         case let .markDelivered(id):
             return "bookings/\(id)/deliver"
+        case let .trackingHistory(bookingId):
+            return "bookings/\(bookingId)/tracking"
         case .earnings:
             // The backend currently derives runner earnings from completed bookings.
             return "bookings"
