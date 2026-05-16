@@ -43,7 +43,7 @@ final class WebSocketClientTests: XCTestCase {
         try await client.connect(url: url)
         await transport.failNextConnects(2)
         await transport.drop()
-        try await waitUntil { client.state == .connected }
+        try await waitUntil { await transport.connectCallCount >= 4 }
 
         let connectCallCount = await transport.connectCallCount
         let recordedSleeps = await sleeper.snapshot()
