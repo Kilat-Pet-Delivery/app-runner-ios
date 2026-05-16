@@ -19,6 +19,8 @@
 		A00000000000000000000114 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000104 /* KeychainStore.swift */; };
 		A00000000000000000000115 /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000105 /* KeychainStoreTests.swift */; };
 		A00000000000000000000116 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000106 /* MockURLProtocol.swift */; };
+		A00000000000000000000117 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000107 /* APIClient.swift */; };
+		A00000000000000000000118 /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000108 /* APIClientTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		A00000000000000000000104 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		A00000000000000000000105 /* KeychainStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStoreTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000106 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		A00000000000000000000107 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		A00000000000000000000108 /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +125,7 @@
 				A00000000000000000000101 /* HTTPMethod.swift */,
 				A00000000000000000000102 /* APIEndpoint.swift */,
 				A00000000000000000000103 /* NetworkError.swift */,
+				A00000000000000000000107 /* APIClient.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 			children = (
 				A00000000000000000000105 /* KeychainStoreTests.swift */,
 				A00000000000000000000106 /* MockURLProtocol.swift */,
+				A00000000000000000000108 /* APIClientTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -267,6 +273,7 @@
 				A00000000000000000000112 /* APIEndpoint.swift in Sources */,
 				A00000000000000000000113 /* NetworkError.swift in Sources */,
 				A00000000000000000000114 /* KeychainStore.swift in Sources */,
+				A00000000000000000000117 /* APIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +284,7 @@
 				A00000000000000000000016 /* KilatRunnerTests.swift in Sources */,
 				A00000000000000000000115 /* KeychainStoreTests.swift in Sources */,
 				A00000000000000000000116 /* MockURLProtocol.swift in Sources */,
+				A00000000000000000000118 /* APIClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
