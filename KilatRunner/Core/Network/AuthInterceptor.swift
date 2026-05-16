@@ -5,6 +5,7 @@ final class AuthInterceptor {
     private let tokenStore: TokenStore
     private let refreshLock = NSLock()
     private var refreshTask: Task<AuthTokenPair, Error>?
+    private var refreshTaskID: UUID?
 
     init(apiClient: APIClient, tokenStore: TokenStore) {
         self.apiClient = apiClient
@@ -32,11 +33,12 @@ final class AuthInterceptor {
     }
 
     private func refreshTokens() async throws -> AuthTokenPair {
-        let task = refreshLock.withLock {
-            if let refreshTask {
-                return refreshTask
+        let (task, ownedTaskID): (Task<AuthTokenPair, Error>, UUID?) = refreshLock.withLock {
+            if let existing = refreshTask {
+                return (existing, nil)
             }
 
+            let newID = UUID()
             let task = Task { [apiClient, tokenStore] in
                 guard let refreshToken = tokenStore.refreshToken() else {
                     tokenStore.clear()
@@ -58,13 +60,17 @@ final class AuthInterceptor {
             }
 
             refreshTask = task
-            return task
+            refreshTaskID = newID
+            return (task, newID)
         }
 
         defer {
-            refreshLock.withLock {
-                if refreshTask === task {
-                    refreshTask = nil
+            if let ownedTaskID {
+                refreshLock.withLock {
+                    if refreshTaskID == ownedTaskID {
+                        refreshTask = nil
+                        refreshTaskID = nil
+                    }
                 }
             }
         }
