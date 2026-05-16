@@ -26,6 +26,8 @@
 		A0000000000000000000011B /* AuthModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010B /* AuthModels.swift */; };
 		A0000000000000000000011C /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010C /* AuthRepository.swift */; };
 		A0000000000000000000011D /* AuthRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010D /* AuthRepositoryTests.swift */; };
+		A0000000000000000000011E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010E /* LoginViewModel.swift */; };
+		A0000000000000000000011F /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010F /* LoginViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		A0000000000000000000010B /* AuthModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModels.swift; sourceTree = "<group>"; };
 		A0000000000000000000010C /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		A0000000000000000000010D /* AuthRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryTests.swift; sourceTree = "<group>"; };
+		A0000000000000000000010E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		A0000000000000000000010F /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +188,7 @@
 			children = (
 				A0000000000000000000010B /* AuthModels.swift */,
 				A0000000000000000000010C /* AuthRepository.swift */,
+				A0000000000000000000010E /* LoginViewModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -192,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				A0000000000000000000010D /* AuthRepositoryTests.swift */,
+				A0000000000000000000010F /* LoginViewModelTests.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -316,6 +322,7 @@
 				A00000000000000000000119 /* AuthInterceptor.swift in Sources */,
 				A0000000000000000000011B /* AuthModels.swift in Sources */,
 				A0000000000000000000011C /* AuthRepository.swift in Sources */,
+				A0000000000000000000011E /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,6 +336,7 @@
 				A00000000000000000000118 /* APIClientTests.swift in Sources */,
 				A0000000000000000000011A /* AuthInterceptorTests.swift in Sources */,
 				A0000000000000000000011D /* AuthRepositoryTests.swift in Sources */,
+				A0000000000000000000011F /* LoginViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
