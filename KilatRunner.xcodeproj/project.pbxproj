@@ -28,6 +28,7 @@
 		A0000000000000000000011D /* AuthRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010D /* AuthRepositoryTests.swift */; };
 		A0000000000000000000011E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010E /* LoginViewModel.swift */; };
 		A0000000000000000000011F /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010F /* LoginViewModelTests.swift */; };
+		A0000000000000000000012A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000012B /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		A0000000000000000000010D /* AuthRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryTests.swift; sourceTree = "<group>"; };
 		A0000000000000000000010E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		A0000000000000000000010F /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
+		A0000000000000000000012B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +191,7 @@
 				A0000000000000000000010B /* AuthModels.swift */,
 				A0000000000000000000010C /* AuthRepository.swift */,
 				A0000000000000000000010E /* LoginViewModel.swift */,
+				A0000000000000000000012B /* LoginView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				A0000000000000000000011B /* AuthModels.swift in Sources */,
 				A0000000000000000000011C /* AuthRepository.swift in Sources */,
 				A0000000000000000000011E /* LoginViewModel.swift in Sources */,
+				A0000000000000000000012A /* LoginView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
