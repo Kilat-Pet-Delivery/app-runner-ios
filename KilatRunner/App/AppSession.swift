@@ -8,13 +8,21 @@ final class AppSession {
         case authenticated
     }
 
-    var state: State = .unauthenticated
+    @ObservationIgnored private let tokenStore: TokenStore
+
+    var state: State
+
+    init(tokenStore: TokenStore = KeychainStore()) {
+        self.tokenStore = tokenStore
+        state = tokenStore.accessToken() == nil ? .unauthenticated : .authenticated
+    }
 
     func markAuthenticated() {
         state = .authenticated
     }
 
     func logout() {
+        tokenStore.clear()
         state = .unauthenticated
     }
 }
