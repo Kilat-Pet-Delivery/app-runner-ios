@@ -23,6 +23,15 @@ struct ActiveDeliveryView: View {
         }
         .navigationTitle("Active Delivery")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            viewModel.onAppear()
+        }
+        .task {
+            // onDisappear handles cleanup via Task cancellation when view goes away.
+        }
+        .onDisappear {
+            Task { await viewModel.onDisappear() }
+        }
     }
 
     private var map: some View {

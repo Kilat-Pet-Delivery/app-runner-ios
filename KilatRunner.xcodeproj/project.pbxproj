@@ -51,6 +51,9 @@
 		B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000003 /* JobDetailViewModelTests.swift */; };
 		C200000000000000C2000002 /* TrackingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000001 /* TrackingRepositoryTests.swift */; };
 		C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */; };
+		D100000000000000D1000002 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000001 /* LocationManager.swift */; };
+		D100000000000000D1000004 /* WaypointBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000003 /* WaypointBuffer.swift */; };
+		D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200000000000000D2000001 /* WaypointBufferTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +82,9 @@
 		B200000000000000B2000003 /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
 		C200000000000000C2000001 /* TrackingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingRepositoryTests.swift; sourceTree = "<group>"; };
 		C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryViewModelTests.swift; sourceTree = "<group>"; };
+		D100000000000000D1000001 /* LocationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D100000000000000D1000003 /* WaypointBuffer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBuffer.swift; sourceTree = "<group>"; };
+		D200000000000000D2000001 /* WaypointBufferTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBufferTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000001 /* KilatRunnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KilatRunnerApp.swift; sourceTree = "<group>"; };
 		A00000000000000000000002 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		A00000000000000000000003 /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
@@ -195,6 +201,7 @@
 			children = (
 				A00000000000000000000121 /* Network */,
 				A00000000000000000000122 /* Storage */,
+				D300000000000000D3000001 /* Location */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -226,6 +233,7 @@
 				A00000000000000000000106 /* MockURLProtocol.swift */,
 				A00000000000000000000108 /* APIClientTests.swift */,
 				A0000000000000000000010A /* AuthInterceptorTests.swift */,
+				D200000000000000D2000001 /* WaypointBufferTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -330,6 +338,15 @@
 			);
 			name = ActiveDelivery;
 			path = ActiveDelivery;
+			sourceTree = "<group>";
+		};
+		D300000000000000D3000001 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				D100000000000000D1000001 /* LocationManager.swift */,
+				D100000000000000D1000003 /* WaypointBuffer.swift */,
+			);
+			path = Location;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -460,6 +477,8 @@
 				C100000000000000C1000004 /* TrackingRepository.swift in Sources */,
 				C100000000000000C1000006 /* ActiveDeliveryViewModel.swift in Sources */,
 				C100000000000000C1000008 /* ActiveDeliveryView.swift in Sources */,
+				D100000000000000D1000002 /* LocationManager.swift in Sources */,
+				D100000000000000D1000004 /* WaypointBuffer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,6 +500,7 @@
 				B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */,
 				C200000000000000C2000002 /* TrackingRepositoryTests.swift in Sources */,
 				C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */,
+				D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

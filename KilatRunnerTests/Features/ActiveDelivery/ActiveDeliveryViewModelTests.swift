@@ -1,3 +1,4 @@
+import CoreLocation
 import XCTest
 @testable import KilatRunner
 
@@ -5,7 +6,11 @@ import XCTest
 final class ActiveDeliveryViewModelTests: XCTestCase {
     func test_init_derivesCoordinatesFromBooking() {
         let booking = Self.makeBooking()
-        let viewModel = ActiveDeliveryViewModel(booking: booking)
+        let viewModel = ActiveDeliveryViewModel(
+            booking: booking,
+            locationProvider: FakeLocationProvider(),
+            runnerRepository: FakeRunnerRepository()
+        )
 
         XCTAssertEqual(viewModel.pickupCoordinate.latitude, booking.pickupAddress.latitude)
         XCTAssertEqual(viewModel.pickupCoordinate.longitude, booking.pickupAddress.longitude)
@@ -14,9 +19,87 @@ final class ActiveDeliveryViewModelTests: XCTestCase {
     }
 
     func test_initialDeliveryPhase_isEnroute() {
-        let viewModel = ActiveDeliveryViewModel(booking: Self.makeBooking())
+        let viewModel = ActiveDeliveryViewModel(
+            booking: Self.makeBooking(),
+            locationProvider: FakeLocationProvider(),
+            runnerRepository: FakeRunnerRepository()
+        )
 
         XCTAssertEqual(viewModel.deliveryPhase, .enroute)
+    }
+
+    func test_onAppear_startsLocationUpdates() {
+        let locationProvider = FakeLocationProvider()
+        let viewModel = ActiveDeliveryViewModel(
+            booking: Self.makeBooking(),
+            locationProvider: locationProvider,
+            runnerRepository: FakeRunnerRepository()
+        )
+
+        viewModel.onAppear()
+
+        XCTAssertEqual(locationProvider.startUpdatesCallCount, 1)
+    }
+
+    func test_locationUpdate_updatesCurrentLocation() async throws {
+        let locationProvider = FakeLocationProvider()
+        let viewModel = ActiveDeliveryViewModel(
+            booking: Self.makeBooking(),
+            locationProvider: locationProvider,
+            runnerRepository: FakeRunnerRepository()
+        )
+
+        viewModel.onAppear()
+
+        let testCoordinate = CLLocationCoordinate2D(latitude: 3.14, longitude: 101.5)
+        let testLocation = CLLocation(
+            coordinate: testCoordinate,
+            altitude: 0,
+            horizontalAccuracy: 10,
+            verticalAccuracy: 10,
+            course: 90,
+            speed: 5,
+            timestamp: Date()
+        )
+        locationProvider.emit(testLocation)
+
+        try? await Task.sleep(nanoseconds: 100_000_000)
+
+        let coord = try XCTUnwrap(viewModel.currentLocation)
+        XCTAssertEqual(coord.latitude, 3.14, accuracy: 0.0001)
+        XCTAssertEqual(coord.longitude, 101.5, accuracy: 0.0001)
+    }
+
+    func test_onDeliveryCompleted_stopsUpdatesAndFlushes() async throws {
+        let locationProvider = FakeLocationProvider()
+        let runnerRepository = FakeRunnerRepository()
+        let viewModel = ActiveDeliveryViewModel(
+            booking: Self.makeBooking(),
+            locationProvider: locationProvider,
+            runnerRepository: runnerRepository
+        )
+
+        viewModel.onAppear()
+        let testLocation = CLLocation(
+            coordinate: CLLocationCoordinate2D(latitude: 3.14, longitude: 101.5),
+            altitude: 0,
+            horizontalAccuracy: 10,
+            verticalAccuracy: 10,
+            course: 90,
+            speed: 5,
+            timestamp: Date()
+        )
+        locationProvider.emit(testLocation)
+        try? await Task.sleep(nanoseconds: 100_000_000)
+
+        await viewModel.onDeliveryCompleted()
+
+        XCTAssertEqual(viewModel.deliveryPhase, .delivered)
+        XCTAssertEqual(locationProvider.stopUpdatesCallCount, 1)
+        let posted = await runnerRepository.postedWaypoints
+        XCTAssertEqual(posted.count, 1)
+        let firstPosted = try XCTUnwrap(posted.first)
+        XCTAssertEqual(firstPosted.latitude, 3.14, accuracy: 0.0001)
     }
 
     // MARK: - Fixtures
@@ -77,5 +160,53 @@ final class ActiveDeliveryViewModelTests: XCTestCase {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         decoder.dateDecodingStrategy = .iso8601
         return try! decoder.decode(Booking.self, from: json.data(using: .utf8)!)
+    }
+}
+
+private final class FakeLocationProvider: LocationProvider, @unchecked Sendable {
+    let locationUpdates: AsyncStream<CLLocation>
+    private let yielder: AsyncStream<CLLocation>.Continuation
+    private(set) var startUpdatesCallCount = 0
+    private(set) var stopUpdatesCallCount = 0
+    private(set) var requestAlwaysCallCount = 0
+
+    init() {
+        var continuation: AsyncStream<CLLocation>.Continuation!
+        self.locationUpdates = AsyncStream { continuation = $0 }
+        self.yielder = continuation
+    }
+
+    func requestAlwaysAuthorization() async -> CLAuthorizationStatus {
+        requestAlwaysCallCount += 1
+        return .authorizedAlways
+    }
+
+    func startUpdates() {
+        startUpdatesCallCount += 1
+    }
+
+    func stopUpdates() {
+        stopUpdatesCallCount += 1
+        yielder.finish()
+    }
+
+    func emit(_ location: CLLocation) {
+        yielder.yield(location)
+    }
+}
+
+private actor FakeRunnerRepository: RunnerRepositoryProtocol {
+    private(set) var postedWaypoints: [RunnerLocationWaypoint] = []
+
+    func getMe() async throws -> Runner {
+        throw NetworkError.notFound
+    }
+
+    func goOnline(latitude: Double, longitude: Double) async throws {}
+
+    func goOffline() async throws {}
+
+    func postLocation(_ waypoint: RunnerLocationWaypoint) async throws {
+        postedWaypoints.append(waypoint)
     }
 }
