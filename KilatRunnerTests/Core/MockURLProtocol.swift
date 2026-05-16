@@ -1,4 +1,5 @@
 import Foundation
+@testable import KilatRunner
 
 final class MockURLProtocol: URLProtocol {
     typealias RequestHandler = (URLRequest) throws -> (HTTPURLResponse, Data?)
@@ -15,7 +16,8 @@ final class MockURLProtocol: URLProtocol {
     }
 
     override func startLoading() {
-        Self.capturedRequests.append(request)
+        let materializedRequest = Self.materializingBody(of: request)
+        Self.capturedRequests.append(materializedRequest)
 
         guard let handler = Self.requestHandler else {
             client?.urlProtocol(self, didFailWithError: NetworkError.unknown("Missing mock request handler."))
@@ -23,7 +25,7 @@ final class MockURLProtocol: URLProtocol {
         }
 
         do {
-            let (response, data) = try handler(request)
+            let (response, data) = try handler(materializedRequest)
             client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
             if let data {
                 client?.urlProtocol(self, didLoad: data)
@@ -32,6 +34,35 @@ final class MockURLProtocol: URLProtocol {
         } catch {
             client?.urlProtocol(self, didFailWithError: error)
         }
+    }
+
+    private static func materializingBody(of request: URLRequest) -> URLRequest {
+        guard request.httpBody == nil, let stream = request.httpBodyStream else {
+            return request
+        }
+        var copy = request
+        copy.httpBody = Self.readAll(from: stream)
+        return copy
+    }
+
+    private static func readAll(from stream: InputStream) -> Data {
+        stream.open()
+        defer { stream.close() }
+
+        var data = Data()
+        let bufferSize = 1024
+        let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
+        defer { buffer.deallocate() }
+
+        while stream.hasBytesAvailable {
+            let read = stream.read(buffer, maxLength: bufferSize)
+            if read > 0 {
+                data.append(buffer, count: read)
+            } else {
+                break
+            }
+        }
+        return data
     }
 
     override func stopLoading() {}
