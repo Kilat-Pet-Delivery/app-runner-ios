@@ -3,9 +3,11 @@ import SwiftUI
 
 struct ActiveDeliveryView: View {
     @Bindable private var viewModel: ActiveDeliveryViewModel
+    private let onBackToDashboard: () -> Void
 
-    init(viewModel: ActiveDeliveryViewModel) {
+    init(viewModel: ActiveDeliveryViewModel, onBackToDashboard: @escaping () -> Void = {}) {
         self.viewModel = viewModel
+        self.onBackToDashboard = onBackToDashboard
     }
 
     var body: some View {
@@ -20,6 +22,9 @@ struct ActiveDeliveryView: View {
             .padding(.horizontal, 16)
             .padding(.top, 8)
             .padding(.bottom, 24)
+            if viewModel.deliveryPhase == .delivered {
+                tripCompleteOverlay
+            }
         }
         .navigationTitle("Active Delivery")
         .navigationBarTitleDisplayMode(.inline)
@@ -74,32 +79,81 @@ struct ActiveDeliveryView: View {
 
     private var actionCard: some View {
         VStack(spacing: 10) {
+            if let errorMessage = viewModel.errorMessage {
+                errorBanner(message: errorMessage)
+            }
+
             Button {
-                // Wired in Phase 8.
+                Task { await viewModel.markPickup() }
             } label: {
-                Text("Picked Up")
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity)
+                HStack {
+                    if viewModel.isMarkingPickup {
+                        ProgressView()
+                    }
+                    Label("Picked Up", systemImage: "shippingbox.fill")
+                        .fontWeight(.semibold)
+                }
+                .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
             .tint(.orange)
-            .disabled(viewModel.deliveryPhase != .enroute)
+            .disabled(viewModel.deliveryPhase != .enroute || viewModel.isMarkingPickup)
 
             Button {
-                // Wired in Phase 8.
+                Task { await viewModel.markDelivered() }
             } label: {
-                Text("Mark Delivered")
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity)
+                HStack {
+                    if viewModel.isMarkingDelivered {
+                        ProgressView()
+                    }
+                    Label("Mark Delivered", systemImage: "checkmark.circle.fill")
+                        .fontWeight(.semibold)
+                }
+                .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
             .tint(.green)
-            .disabled(viewModel.deliveryPhase != .pickedUp)
+            .disabled(viewModel.deliveryPhase != .pickedUp || viewModel.isMarkingDelivered)
         }
         .padding(14)
         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 8))
+    }
+
+    private var tripCompleteOverlay: some View {
+        Color.black.opacity(0.28)
+            .ignoresSafeArea()
+            .overlay {
+                VStack(spacing: 18) {
+                    Image(systemName: "checkmark.seal.fill")
+                        .font(.system(size: 44, weight: .semibold))
+                        .foregroundStyle(.green)
+
+                    VStack(spacing: 6) {
+                        Text("Trip complete")
+                            .font(.title2.bold())
+                        Text(fareLabel)
+                            .font(.headline)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    Button {
+                        onBackToDashboard()
+                    } label: {
+                        Label("Back to Dashboard", systemImage: "house.fill")
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .tint(.green)
+                }
+                .padding(20)
+                .frame(maxWidth: 340)
+                .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 8))
+                .padding(.horizontal, 24)
+            }
     }
 
     private func routeLine(icon: String, tint: Color, text: String) -> some View {
@@ -112,6 +166,20 @@ struct ActiveDeliveryView: View {
                 .font(.subheadline)
                 .lineLimit(2)
         }
+    }
+
+    private func errorBanner(message: String) -> some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(.orange)
+            Text(message)
+                .font(.caption)
+                .foregroundStyle(.primary)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+        }
+        .padding(10)
+        .background(Color(.systemBackground).opacity(0.72), in: RoundedRectangle(cornerRadius: 8))
     }
 
     private var mapRegion: MKCoordinateRegion {
@@ -143,5 +211,11 @@ struct ActiveDeliveryView: View {
         case .pickedUp: return .orange
         case .delivered: return .green
         }
+    }
+
+    private var fareLabel: String {
+        let cents = viewModel.booking.finalPriceCents ?? viewModel.booking.estimatedPriceCents
+        let amount = Double(cents) / 100
+        return "\(viewModel.booking.currency) \(String(format: "%.2f", amount))"
     }
 }

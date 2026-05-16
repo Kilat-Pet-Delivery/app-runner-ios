@@ -14,10 +14,13 @@ final class ActiveDeliveryViewModel {
     private(set) var booking: Booking
     var currentLocation: CLLocationCoordinate2D?
     private(set) var deliveryPhase: DeliveryPhase = .enroute
+    private(set) var isMarkingPickup = false
+    private(set) var isMarkingDelivered = false
     var errorMessage: String?
 
     @ObservationIgnored private let locationProvider: LocationProvider
     @ObservationIgnored private let runnerRepository: RunnerRepositoryProtocol
+    @ObservationIgnored private let bookingRepository: BookingRepositoryProtocol
     @ObservationIgnored private let webSocketClient: RealtimeTrackingClient
     @ObservationIgnored private let tokenStore: TokenStore
     @ObservationIgnored private let wsBaseURL: URL
@@ -32,6 +35,7 @@ final class ActiveDeliveryViewModel {
         booking: Booking,
         locationProvider: LocationProvider,
         runnerRepository: RunnerRepositoryProtocol,
+        bookingRepository: BookingRepositoryProtocol = BookingRepository(),
         webSocketClient: RealtimeTrackingClient? = nil,
         tokenStore: TokenStore = KeychainStore(),
         wsBaseURL: URL = AppEnvironment.wsBaseURL
@@ -39,6 +43,7 @@ final class ActiveDeliveryViewModel {
         self.booking = booking
         self.locationProvider = locationProvider
         self.runnerRepository = runnerRepository
+        self.bookingRepository = bookingRepository
         self.webSocketClient = webSocketClient ?? WebSocketClient()
         self.tokenStore = tokenStore
         self.wsBaseURL = wsBaseURL
@@ -61,6 +66,7 @@ final class ActiveDeliveryViewModel {
             booking: booking,
             locationProvider: LocationManager(),
             runnerRepository: RunnerRepository(),
+            bookingRepository: BookingRepository(),
             webSocketClient: WebSocketClient(),
             tokenStore: KeychainStore(),
             wsBaseURL: AppEnvironment.wsBaseURL
@@ -91,13 +97,42 @@ final class ActiveDeliveryViewModel {
 
     func onDeliveryCompleted() async {
         deliveryPhase = .delivered
-        locationProvider.stopUpdates()
-        locationStreamTask?.cancel()
-        locationStreamTask = nil
-        webSocketClient.disconnect()
-        webSocketStreamTask?.cancel()
-        webSocketStreamTask = nil
-        await buffer.forceFlush()
+        await stopRealtimeAndFlush()
+    }
+
+    func markPickup() async {
+        guard deliveryPhase == .enroute, !isMarkingPickup else { return }
+        errorMessage = nil
+        isMarkingPickup = true
+        defer { isMarkingPickup = false }
+
+        do {
+            let updated = try await bookingRepository.markPickup(id: booking.id)
+            booking = updated
+            deliveryPhase = .pickedUp
+        } catch let error as NetworkError {
+            errorMessage = error.userMessage
+        } catch {
+            errorMessage = NetworkError.unknown(error.localizedDescription).userMessage
+        }
+    }
+
+    func markDelivered() async {
+        guard deliveryPhase == .pickedUp, !isMarkingDelivered else { return }
+        errorMessage = nil
+        isMarkingDelivered = true
+        defer { isMarkingDelivered = false }
+
+        do {
+            let updated = try await bookingRepository.markDelivered(id: booking.id)
+            booking = updated
+            deliveryPhase = .delivered
+            await stopRealtimeAndFlush()
+        } catch let error as NetworkError {
+            errorMessage = error.userMessage
+        } catch {
+            errorMessage = NetworkError.unknown(error.localizedDescription).userMessage
+        }
     }
 
     private func handleLocation(_ location: CLLocation) async {
@@ -149,5 +184,15 @@ final class ActiveDeliveryViewModel {
             return
         }
         currentLocation = CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude)
+    }
+
+    private func stopRealtimeAndFlush() async {
+        locationProvider.stopUpdates()
+        locationStreamTask?.cancel()
+        locationStreamTask = nil
+        webSocketClient.disconnect()
+        webSocketStreamTask?.cancel()
+        webSocketStreamTask = nil
+        await buffer.forceFlush()
     }
 }

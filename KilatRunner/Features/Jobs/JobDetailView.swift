@@ -2,6 +2,7 @@ import MapKit
 import SwiftUI
 
 struct JobDetailView: View {
+    @Environment(\.dismiss) private var dismiss
     @Bindable private var viewModel: JobDetailViewModel
 
     init(viewModel: JobDetailViewModel) {
@@ -29,7 +30,10 @@ struct JobDetailView: View {
                 set: { newValue in if !newValue { viewModel.acceptedBookingId = nil } }
             )
         ) {
-            ActiveDeliveryView(viewModel: ActiveDeliveryViewModel(booking: viewModel.booking))
+            ActiveDeliveryView(viewModel: ActiveDeliveryViewModel(booking: viewModel.booking)) {
+                viewModel.acceptedBookingId = nil
+                dismiss()
+            }
         }
     }
 
