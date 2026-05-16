@@ -32,11 +32,7 @@ struct AvailableJobsView: View {
             } else {
                 List(viewModel.jobs) { booking in
                     NavigationLink {
-                        ContentUnavailableView(
-                            "Job \(booking.bookingNumber)",
-                            systemImage: "shippingbox",
-                            description: Text("Detail view ships in Task 4.3.")
-                        )
+                        JobDetailView(viewModel: JobDetailViewModel(booking: booking))
                     } label: {
                         row(for: booking)
                     }

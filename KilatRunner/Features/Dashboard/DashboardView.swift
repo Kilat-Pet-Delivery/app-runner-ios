@@ -112,7 +112,7 @@ struct DashboardView: View {
     private var actionGrid: some View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
             NavigationLink {
-                ContentUnavailableView("Available Jobs", systemImage: "shippingbox")
+                AvailableJobsView(viewModel: AvailableJobsViewModel())
             } label: {
                 actionTile(title: "Jobs", subtitle: "Available", icon: "shippingbox.fill")
             }
