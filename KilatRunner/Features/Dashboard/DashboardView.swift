@@ -118,7 +118,7 @@ struct DashboardView: View {
             }
 
             NavigationLink {
-                ContentUnavailableView("Earnings", systemImage: "banknote")
+                EarningsView(viewModel: EarningsViewModel())
             } label: {
                 actionTile(title: "Earnings", subtitle: "\(viewModel.runner?.totalTrips ?? 0) trips", icon: "banknote.fill")
             }

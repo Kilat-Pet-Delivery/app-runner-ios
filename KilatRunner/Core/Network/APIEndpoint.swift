@@ -73,6 +73,7 @@ enum APIEndpoint: Equatable {
             ]
         case let .earnings(page, limit):
             return [
+                URLQueryItem(name: "status", value: "completed"),
                 URLQueryItem(name: "page", value: String(page)),
                 URLQueryItem(name: "limit", value: String(limit))
             ]

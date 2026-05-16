@@ -56,6 +56,10 @@
 		D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200000000000000D2000001 /* WaypointBufferTests.swift */; };
 		E100000000000000E1000002 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E100000000000000E1000001 /* WebSocketClient.swift */; };
 		E200000000000000E2000002 /* WebSocketClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000000000000E2000001 /* WebSocketClientTests.swift */; };
+		F100000000000000F1000002 /* EarningsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000000000000F1000001 /* EarningsModels.swift */; };
+		F100000000000000F1000004 /* EarningsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000000000000F1000003 /* EarningsRepository.swift */; };
+		F100000000000000F1000006 /* EarningsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000000000000F1000005 /* EarningsViewModel.swift */; };
+		F100000000000000F1000008 /* EarningsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000000000000F1000007 /* EarningsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +93,10 @@
 		D200000000000000D2000001 /* WaypointBufferTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBufferTests.swift; sourceTree = "<group>"; };
 		E100000000000000E1000001 /* WebSocketClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClient.swift; sourceTree = "<group>"; };
 		E200000000000000E2000001 /* WebSocketClientTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClientTests.swift; sourceTree = "<group>"; };
+		F100000000000000F1000001 /* EarningsModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsModels.swift; sourceTree = "<group>"; };
+		F100000000000000F1000003 /* EarningsRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsRepository.swift; sourceTree = "<group>"; };
+		F100000000000000F1000005 /* EarningsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsViewModel.swift; sourceTree = "<group>"; };
+		F100000000000000F1000007 /* EarningsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsView.swift; sourceTree = "<group>"; };
 		A00000000000000000000001 /* KilatRunnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KilatRunnerApp.swift; sourceTree = "<group>"; };
 		A00000000000000000000002 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		A00000000000000000000003 /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
@@ -251,6 +259,7 @@
 				A00000000000000000000137 /* Dashboard */,
 				BC1C56524F3A90AAD1DED878 /* Jobs */,
 				C300000000000000C3000001 /* ActiveDelivery */,
+				F300000000000000F3000001 /* Earnings */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -361,6 +370,17 @@
 				E100000000000000E1000001 /* WebSocketClient.swift */,
 			);
 			path = WebSocket;
+			sourceTree = "<group>";
+		};
+		F300000000000000F3000001 /* Earnings */ = {
+			isa = PBXGroup;
+			children = (
+				F100000000000000F1000001 /* EarningsModels.swift */,
+				F100000000000000F1000003 /* EarningsRepository.swift */,
+				F100000000000000F1000005 /* EarningsViewModel.swift */,
+				F100000000000000F1000007 /* EarningsView.swift */,
+			);
+			path = Earnings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -494,6 +514,10 @@
 				D100000000000000D1000002 /* LocationManager.swift in Sources */,
 				D100000000000000D1000004 /* WaypointBuffer.swift in Sources */,
 				E100000000000000E1000002 /* WebSocketClient.swift in Sources */,
+				F100000000000000F1000002 /* EarningsModels.swift in Sources */,
+				F100000000000000F1000004 /* EarningsRepository.swift in Sources */,
+				F100000000000000F1000006 /* EarningsViewModel.swift in Sources */,
+				F100000000000000F1000008 /* EarningsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
