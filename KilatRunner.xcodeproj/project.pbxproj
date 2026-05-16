@@ -32,6 +32,8 @@
 		A00000000000000000000134 /* RunnerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000131 /* RunnerModels.swift */; };
 		A00000000000000000000135 /* RunnerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000132 /* RunnerRepository.swift */; };
 		A00000000000000000000136 /* RunnerRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000133 /* RunnerRepositoryTests.swift */; };
+		A0000000000000000000013B /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000139 /* DashboardViewModel.swift */; };
+		A0000000000000000000013C /* DashboardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000013A /* DashboardViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		A00000000000000000000131 /* RunnerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerModels.swift; sourceTree = "<group>"; };
 		A00000000000000000000132 /* RunnerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerRepository.swift; sourceTree = "<group>"; };
 		A00000000000000000000133 /* RunnerRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerRepositoryTests.swift; sourceTree = "<group>"; };
+		A00000000000000000000139 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		A0000000000000000000013A /* DashboardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +212,7 @@
 			children = (
 				A00000000000000000000131 /* RunnerModels.swift */,
 				A00000000000000000000132 /* RunnerRepository.swift */,
+				A00000000000000000000139 /* DashboardViewModel.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -226,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				A00000000000000000000133 /* RunnerRepositoryTests.swift */,
+				A0000000000000000000013A /* DashboardViewModelTests.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -354,6 +360,7 @@
 				A0000000000000000000012A /* LoginView.swift in Sources */,
 				A00000000000000000000134 /* RunnerModels.swift in Sources */,
 				A00000000000000000000135 /* RunnerRepository.swift in Sources */,
+				A0000000000000000000013B /* DashboardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +376,7 @@
 				A0000000000000000000011D /* AuthRepositoryTests.swift in Sources */,
 				A0000000000000000000011F /* LoginViewModelTests.swift in Sources */,
 				A00000000000000000000136 /* RunnerRepositoryTests.swift in Sources */,
+				A0000000000000000000013C /* DashboardViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
