@@ -18,6 +18,10 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Kilat tracks your location in the background while you are online for active delivery updates.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Kilat uses your current location to match nearby delivery jobs.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

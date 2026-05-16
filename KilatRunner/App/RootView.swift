@@ -8,11 +8,17 @@ struct RootView: View {
         case .unauthenticated:
             LoginView(viewModel: LoginViewModel(appSession: session))
         case .authenticated:
-            ContentUnavailableView(
-                "Authenticated home placeholder",
-                systemImage: "bolt.car",
-                description: Text("Phase 3 wires the dashboard.")
-            )
+            AuthenticatedRootView()
+        }
+    }
+}
+
+private struct AuthenticatedRootView: View {
+    @State private var dashboardViewModel = DashboardViewModel()
+
+    var body: some View {
+        NavigationStack {
+            DashboardView(viewModel: dashboardViewModel)
         }
     }
 }

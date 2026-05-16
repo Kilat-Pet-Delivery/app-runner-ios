@@ -34,6 +34,8 @@
 		A00000000000000000000136 /* RunnerRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000133 /* RunnerRepositoryTests.swift */; };
 		A0000000000000000000013B /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000139 /* DashboardViewModel.swift */; };
 		A0000000000000000000013C /* DashboardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000013A /* DashboardViewModelTests.swift */; };
+		A0000000000000000000013F /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000013D /* DashboardView.swift */; };
+		A0000000000000000000014A /* PermissionRationaleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000013E /* PermissionRationaleSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,8 @@
 		A00000000000000000000133 /* RunnerRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerRepositoryTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000139 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		A0000000000000000000013A /* DashboardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModelTests.swift; sourceTree = "<group>"; };
+		A0000000000000000000013D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		A0000000000000000000013E /* PermissionRationaleSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionRationaleSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +217,8 @@
 				A00000000000000000000131 /* RunnerModels.swift */,
 				A00000000000000000000132 /* RunnerRepository.swift */,
 				A00000000000000000000139 /* DashboardViewModel.swift */,
+				A0000000000000000000013D /* DashboardView.swift */,
+				A0000000000000000000013E /* PermissionRationaleSheet.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -361,6 +367,8 @@
 				A00000000000000000000134 /* RunnerModels.swift in Sources */,
 				A00000000000000000000135 /* RunnerRepository.swift in Sources */,
 				A0000000000000000000013B /* DashboardViewModel.swift in Sources */,
+				A0000000000000000000013F /* DashboardView.swift in Sources */,
+				A0000000000000000000014A /* PermissionRationaleSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,6 +518,7 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = KilatRunner/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -517,6 +526,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = my.kilat.KilatRunner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -531,6 +542,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = KilatRunner/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -538,6 +550,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = my.kilat.KilatRunner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -560,6 +574,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = my.kilat.KilatRunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KilatRunner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KilatRunner";
@@ -582,6 +598,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = my.kilat.KilatRunnerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KilatRunner.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KilatRunner";
