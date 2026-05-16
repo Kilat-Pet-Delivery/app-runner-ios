@@ -6,11 +6,7 @@ struct RootView: View {
     var body: some View {
         switch session.state {
         case .unauthenticated:
-            ContentUnavailableView(
-                "Login screen placeholder",
-                systemImage: "lock",
-                description: Text("Phase 2 wires the real login flow.")
-            )
+            LoginView(viewModel: LoginViewModel(appSession: session))
         case .authenticated:
             ContentUnavailableView(
                 "Authenticated home placeholder",
