@@ -54,6 +54,8 @@
 		D100000000000000D1000002 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000001 /* LocationManager.swift */; };
 		D100000000000000D1000004 /* WaypointBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000003 /* WaypointBuffer.swift */; };
 		D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200000000000000D2000001 /* WaypointBufferTests.swift */; };
+		E100000000000000E1000002 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E100000000000000E1000001 /* WebSocketClient.swift */; };
+		E200000000000000E2000002 /* WebSocketClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000000000000E2000001 /* WebSocketClientTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,8 @@
 		D100000000000000D1000001 /* LocationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		D100000000000000D1000003 /* WaypointBuffer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBuffer.swift; sourceTree = "<group>"; };
 		D200000000000000D2000001 /* WaypointBufferTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBufferTests.swift; sourceTree = "<group>"; };
+		E100000000000000E1000001 /* WebSocketClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClient.swift; sourceTree = "<group>"; };
+		E200000000000000E2000001 /* WebSocketClientTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClientTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000001 /* KilatRunnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KilatRunnerApp.swift; sourceTree = "<group>"; };
 		A00000000000000000000002 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		A00000000000000000000003 /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 				A00000000000000000000121 /* Network */,
 				A00000000000000000000122 /* Storage */,
 				D300000000000000D3000001 /* Location */,
+				E300000000000000E3000001 /* WebSocket */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 				A00000000000000000000108 /* APIClientTests.swift */,
 				A0000000000000000000010A /* AuthInterceptorTests.swift */,
 				D200000000000000D2000001 /* WaypointBufferTests.swift */,
+				E200000000000000E2000001 /* WebSocketClientTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -347,6 +353,14 @@
 				D100000000000000D1000003 /* WaypointBuffer.swift */,
 			);
 			path = Location;
+			sourceTree = "<group>";
+		};
+		E300000000000000E3000001 /* WebSocket */ = {
+			isa = PBXGroup;
+			children = (
+				E100000000000000E1000001 /* WebSocketClient.swift */,
+			);
+			path = WebSocket;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -479,6 +493,7 @@
 				C100000000000000C1000008 /* ActiveDeliveryView.swift in Sources */,
 				D100000000000000D1000002 /* LocationManager.swift in Sources */,
 				D100000000000000D1000004 /* WaypointBuffer.swift in Sources */,
+				E100000000000000E1000002 /* WebSocketClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +516,7 @@
 				C200000000000000C2000002 /* TrackingRepositoryTests.swift in Sources */,
 				C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */,
 				D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */,
+				E200000000000000E2000002 /* WebSocketClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

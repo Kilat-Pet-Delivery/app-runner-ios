@@ -9,7 +9,9 @@ final class ActiveDeliveryViewModelTests: XCTestCase {
         let viewModel = ActiveDeliveryViewModel(
             booking: booking,
             locationProvider: FakeLocationProvider(),
-            runnerRepository: FakeRunnerRepository()
+            runnerRepository: FakeRunnerRepository(),
+            webSocketClient: FakeRealtimeTrackingClient(),
+            tokenStore: FakeTokenStore()
         )
 
         XCTAssertEqual(viewModel.pickupCoordinate.latitude, booking.pickupAddress.latitude)
@@ -22,7 +24,9 @@ final class ActiveDeliveryViewModelTests: XCTestCase {
         let viewModel = ActiveDeliveryViewModel(
             booking: Self.makeBooking(),
             locationProvider: FakeLocationProvider(),
-            runnerRepository: FakeRunnerRepository()
+            runnerRepository: FakeRunnerRepository(),
+            webSocketClient: FakeRealtimeTrackingClient(),
+            tokenStore: FakeTokenStore()
         )
 
         XCTAssertEqual(viewModel.deliveryPhase, .enroute)
@@ -33,7 +37,9 @@ final class ActiveDeliveryViewModelTests: XCTestCase {
         let viewModel = ActiveDeliveryViewModel(
             booking: Self.makeBooking(),
             locationProvider: locationProvider,
-            runnerRepository: FakeRunnerRepository()
+            runnerRepository: FakeRunnerRepository(),
+            webSocketClient: FakeRealtimeTrackingClient(),
+            tokenStore: FakeTokenStore()
         )
 
         viewModel.onAppear()
@@ -46,7 +52,9 @@ final class ActiveDeliveryViewModelTests: XCTestCase {
         let viewModel = ActiveDeliveryViewModel(
             booking: Self.makeBooking(),
             locationProvider: locationProvider,
-            runnerRepository: FakeRunnerRepository()
+            runnerRepository: FakeRunnerRepository(),
+            webSocketClient: FakeRealtimeTrackingClient(),
+            tokenStore: FakeTokenStore()
         )
 
         viewModel.onAppear()
@@ -76,7 +84,9 @@ final class ActiveDeliveryViewModelTests: XCTestCase {
         let viewModel = ActiveDeliveryViewModel(
             booking: Self.makeBooking(),
             locationProvider: locationProvider,
-            runnerRepository: runnerRepository
+            runnerRepository: runnerRepository,
+            webSocketClient: FakeRealtimeTrackingClient(),
+            tokenStore: FakeTokenStore()
         )
 
         viewModel.onAppear()
@@ -100,6 +110,72 @@ final class ActiveDeliveryViewModelTests: XCTestCase {
         XCTAssertEqual(posted.count, 1)
         let firstPosted = try XCTUnwrap(posted.first)
         XCTAssertEqual(firstPosted.latitude, 3.14, accuracy: 0.0001)
+    }
+
+    func test_onAppear_connectsWebSocket() async throws {
+        let webSocketClient = FakeRealtimeTrackingClient()
+        let viewModel = ActiveDeliveryViewModel(
+            booking: Self.makeBooking(),
+            locationProvider: FakeLocationProvider(),
+            runnerRepository: FakeRunnerRepository(),
+            webSocketClient: webSocketClient,
+            tokenStore: FakeTokenStore(accessToken: "abc123"),
+            wsBaseURL: URL(string: "ws://localhost:8080")!
+        )
+
+        viewModel.onAppear()
+        try await waitUntil { webSocketClient.connectedURL != nil }
+
+        let url = try XCTUnwrap(webSocketClient.connectedURL)
+        XCTAssertEqual(url.path, "/ws/tracking/10000000-0000-4000-8000-000000000001")
+        XCTAssertEqual(URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.first?.name, "token")
+        XCTAssertEqual(URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.first?.value, "abc123")
+    }
+
+    func test_incomingTrackingUpdate_updatesCurrentLocation() async throws {
+        let webSocketClient = FakeRealtimeTrackingClient()
+        let viewModel = ActiveDeliveryViewModel(
+            booking: Self.makeBooking(),
+            locationProvider: FakeLocationProvider(),
+            runnerRepository: FakeRunnerRepository(),
+            webSocketClient: webSocketClient,
+            tokenStore: FakeTokenStore()
+        )
+
+        viewModel.onAppear()
+        let json = """
+        {
+          "booking_id": "10000000-0000-4000-8000-000000000001",
+          "runner_id": "22222222-2222-4222-8222-222222222222",
+          "latitude": 3.1555,
+          "longitude": 101.7222,
+          "speed_kmh": 18.5,
+          "heading_degrees": 120,
+          "timestamp": "2026-05-16T10:01:00Z"
+        }
+        """
+        webSocketClient.emit(Data(json.utf8))
+        try await waitUntil { viewModel.currentLocation != nil }
+
+        let coord = try XCTUnwrap(viewModel.currentLocation)
+        XCTAssertEqual(coord.latitude, 3.1555, accuracy: 0.0001)
+        XCTAssertEqual(coord.longitude, 101.7222, accuracy: 0.0001)
+    }
+
+    func test_onDisappear_disconnectsWebSocket() async throws {
+        let webSocketClient = FakeRealtimeTrackingClient()
+        let viewModel = ActiveDeliveryViewModel(
+            booking: Self.makeBooking(),
+            locationProvider: FakeLocationProvider(),
+            runnerRepository: FakeRunnerRepository(),
+            webSocketClient: webSocketClient,
+            tokenStore: FakeTokenStore()
+        )
+
+        viewModel.onAppear()
+        await viewModel.onDisappear()
+
+        XCTAssertEqual(webSocketClient.disconnectCallCount, 1)
     }
 
     // MARK: - Fixtures
@@ -161,6 +237,18 @@ final class ActiveDeliveryViewModelTests: XCTestCase {
         decoder.dateDecodingStrategy = .iso8601
         return try! decoder.decode(Booking.self, from: json.data(using: .utf8)!)
     }
+
+    private func waitUntil(
+        timeoutNanoseconds: UInt64 = 1_000_000_000,
+        condition: @escaping () async -> Bool
+    ) async throws {
+        let deadline = Date().addingTimeInterval(Double(timeoutNanoseconds) / 1_000_000_000)
+        while Date() < deadline {
+            if await condition() { return }
+            try await Task.sleep(nanoseconds: 10_000_000)
+        }
+        XCTFail("Timed out waiting for condition.")
+    }
 }
 
 private final class FakeLocationProvider: LocationProvider, @unchecked Sendable {
@@ -208,5 +296,56 @@ private actor FakeRunnerRepository: RunnerRepositoryProtocol {
 
     func postLocation(_ waypoint: RunnerLocationWaypoint) async throws {
         postedWaypoints.append(waypoint)
+    }
+}
+
+private final class FakeRealtimeTrackingClient: RealtimeTrackingClient, @unchecked Sendable {
+    let messages: AsyncStream<Data>
+    private let yielder: AsyncStream<Data>.Continuation
+    private(set) var connectedURL: URL?
+    private(set) var disconnectCallCount = 0
+
+    init() {
+        var continuation: AsyncStream<Data>.Continuation!
+        self.messages = AsyncStream { continuation = $0 }
+        self.yielder = continuation
+    }
+
+    func connect(url: URL) async throws {
+        connectedURL = url
+    }
+
+    func disconnect() {
+        disconnectCallCount += 1
+    }
+
+    func emit(_ data: Data) {
+        yielder.yield(data)
+    }
+}
+
+private final class FakeTokenStore: TokenStore {
+    private var storedAccessToken: String?
+
+    init(accessToken: String? = "test-access-token") {
+        self.storedAccessToken = accessToken
+    }
+
+    func saveAccessToken(_ token: String) throws {
+        storedAccessToken = token
+    }
+
+    func accessToken() -> String? {
+        storedAccessToken
+    }
+
+    func saveRefreshToken(_ token: String) throws {}
+
+    func refreshToken() -> String? {
+        nil
+    }
+
+    func clear() {
+        storedAccessToken = nil
     }
 }

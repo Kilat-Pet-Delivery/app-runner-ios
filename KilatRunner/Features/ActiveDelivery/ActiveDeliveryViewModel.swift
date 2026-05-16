@@ -18,8 +18,12 @@ final class ActiveDeliveryViewModel {
 
     @ObservationIgnored private let locationProvider: LocationProvider
     @ObservationIgnored private let runnerRepository: RunnerRepositoryProtocol
+    @ObservationIgnored private let webSocketClient: RealtimeTrackingClient
+    @ObservationIgnored private let tokenStore: TokenStore
+    @ObservationIgnored private let wsBaseURL: URL
     @ObservationIgnored private let buffer: WaypointBuffer
     @ObservationIgnored private var locationStreamTask: Task<Void, Never>?
+    @ObservationIgnored private var webSocketStreamTask: Task<Void, Never>?
 
     var pickupCoordinate: CLLocationCoordinate2D { booking.pickupCoordinate }
     var dropoffCoordinate: CLLocationCoordinate2D { booking.dropoffCoordinate }
@@ -27,11 +31,17 @@ final class ActiveDeliveryViewModel {
     init(
         booking: Booking,
         locationProvider: LocationProvider,
-        runnerRepository: RunnerRepositoryProtocol
+        runnerRepository: RunnerRepositoryProtocol,
+        webSocketClient: RealtimeTrackingClient? = nil,
+        tokenStore: TokenStore = KeychainStore(),
+        wsBaseURL: URL = AppEnvironment.wsBaseURL
     ) {
         self.booking = booking
         self.locationProvider = locationProvider
         self.runnerRepository = runnerRepository
+        self.webSocketClient = webSocketClient ?? WebSocketClient()
+        self.tokenStore = tokenStore
+        self.wsBaseURL = wsBaseURL
         self.buffer = WaypointBuffer { batch in
             for waypoint in batch {
                 try? await runnerRepository.postLocation(
@@ -50,7 +60,10 @@ final class ActiveDeliveryViewModel {
         self.init(
             booking: booking,
             locationProvider: LocationManager(),
-            runnerRepository: RunnerRepository()
+            runnerRepository: RunnerRepository(),
+            webSocketClient: WebSocketClient(),
+            tokenStore: KeychainStore(),
+            wsBaseURL: AppEnvironment.wsBaseURL
         )
     }
 
@@ -63,12 +76,16 @@ final class ActiveDeliveryViewModel {
                 await self?.handleLocation(location)
             }
         }
+        startWebSocket()
     }
 
     func onDisappear() async {
         locationProvider.stopUpdates()
         locationStreamTask?.cancel()
         locationStreamTask = nil
+        webSocketClient.disconnect()
+        webSocketStreamTask?.cancel()
+        webSocketStreamTask = nil
         await buffer.forceFlush()
     }
 
@@ -77,6 +94,9 @@ final class ActiveDeliveryViewModel {
         locationProvider.stopUpdates()
         locationStreamTask?.cancel()
         locationStreamTask = nil
+        webSocketClient.disconnect()
+        webSocketStreamTask?.cancel()
+        webSocketStreamTask = nil
         await buffer.forceFlush()
     }
 
@@ -90,5 +110,44 @@ final class ActiveDeliveryViewModel {
             timestamp: location.timestamp
         )
         await buffer.add(waypoint)
+    }
+
+    private func startWebSocket() {
+        guard webSocketStreamTask == nil else { return }
+        guard let url = trackingURL() else { return }
+        let client = webSocketClient
+        webSocketStreamTask = Task { [weak self] in
+            do {
+                try await client.connect(url: url)
+                for await data in client.messages {
+                    self?.handleTrackingData(data)
+                }
+            } catch {
+                await MainActor.run {
+                    self?.errorMessage = "Could not connect to live tracking."
+                }
+            }
+        }
+    }
+
+    private func trackingURL() -> URL? {
+        guard let token = tokenStore.accessToken() else { return nil }
+        var url = wsBaseURL.appending(path: "ws/tracking/\(booking.id)")
+        guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+        components.queryItems = [URLQueryItem(name: "token", value: token)]
+        url = components.url ?? url
+        return url
+    }
+
+    private func handleTrackingData(_ data: Data) {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .iso8601
+        guard let update = try? decoder.decode(TrackingUpdate.self, from: data) else {
+            return
+        }
+        currentLocation = CLLocationCoordinate2D(latitude: update.latitude, longitude: update.longitude)
     }
 }

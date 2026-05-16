@@ -21,6 +21,21 @@ final class AuthRepository: AuthRepositoryProtocol {
     }
 
     func login(email: String, password: String) async throws -> AuthenticatedUser {
+        // TODO: STUB — revert before merging. Bypasses backend so the app can be previewed without a running API.
+        #if DEBUG
+        try? tokenStore.saveAccessToken("stub-access-token")
+        try? tokenStore.saveRefreshToken("stub-refresh-token")
+        return AuthenticatedUser(
+            id: "stub-user-id",
+            email: email.isEmpty ? "runner@kilat.my" : email,
+            phone: "+60123456789",
+            fullName: "Stub Runner",
+            role: "runner",
+            isVerified: true,
+            avatarURL: nil,
+            createdAt: Date()
+        )
+        #else
         let envelope: APIResponseEnvelope<LoginResponse> = try await authInterceptor.perform(
             .login,
             body: LoginRequest(email: email, password: password)
@@ -30,5 +45,6 @@ final class AuthRepository: AuthRepositoryProtocol {
         try tokenStore.saveRefreshToken(envelope.data.refreshToken)
 
         return envelope.data.user
+        #endif
     }
 }
