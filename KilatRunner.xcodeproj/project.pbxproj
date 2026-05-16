@@ -29,6 +29,9 @@
 		A0000000000000000000011E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010E /* LoginViewModel.swift */; };
 		A0000000000000000000011F /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010F /* LoginViewModelTests.swift */; };
 		A0000000000000000000012A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000012B /* LoginView.swift */; };
+		A00000000000000000000134 /* RunnerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000131 /* RunnerModels.swift */; };
+		A00000000000000000000135 /* RunnerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000132 /* RunnerRepository.swift */; };
+		A00000000000000000000136 /* RunnerRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000133 /* RunnerRepositoryTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +70,9 @@
 		A0000000000000000000010E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		A0000000000000000000010F /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
 		A0000000000000000000012B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		A00000000000000000000131 /* RunnerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerModels.swift; sourceTree = "<group>"; };
+		A00000000000000000000132 /* RunnerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerRepository.swift; sourceTree = "<group>"; };
+		A00000000000000000000133 /* RunnerRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerRepositoryTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				A00000000000000000000125 /* Auth */,
+				A00000000000000000000137 /* Dashboard */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -196,13 +203,31 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		A00000000000000000000137 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000131 /* RunnerModels.swift */,
+				A00000000000000000000132 /* RunnerRepository.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
 		A00000000000000000000126 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				A00000000000000000000138 /* Dashboard */,
 				A0000000000000000000010D /* AuthRepositoryTests.swift */,
 				A0000000000000000000010F /* LoginViewModelTests.swift */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000138 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000133 /* RunnerRepositoryTests.swift */,
+			);
+			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		A00000000000000000000029 /* Products */ = {
@@ -327,6 +352,8 @@
 				A0000000000000000000011C /* AuthRepository.swift in Sources */,
 				A0000000000000000000011E /* LoginViewModel.swift in Sources */,
 				A0000000000000000000012A /* LoginView.swift in Sources */,
+				A00000000000000000000134 /* RunnerModels.swift in Sources */,
+				A00000000000000000000135 /* RunnerRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +368,7 @@
 				A0000000000000000000011A /* AuthInterceptorTests.swift in Sources */,
 				A0000000000000000000011D /* AuthRepositoryTests.swift in Sources */,
 				A0000000000000000000011F /* LoginViewModelTests.swift in Sources */,
+				A00000000000000000000136 /* RunnerRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
