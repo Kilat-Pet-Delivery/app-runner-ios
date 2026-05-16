@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E99C5AB41B02332BA41F34B /* BookingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D05F1798C164AC4FF87C2A /* BookingModels.swift */; };
+		5CE36A5B86F166AB8F2404FA /* BookingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */; };
 		A00000000000000000000011 /* KilatRunnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000001 /* KilatRunnerApp.swift */; };
 		A00000000000000000000012 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000002 /* AppEnvironment.swift */; };
 		A00000000000000000000013 /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000003 /* AppSession.swift */; };
@@ -36,6 +38,7 @@
 		A0000000000000000000013C /* DashboardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000013A /* DashboardViewModelTests.swift */; };
 		A0000000000000000000013F /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000013D /* DashboardView.swift */; };
 		A0000000000000000000014A /* PermissionRationaleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000013E /* PermissionRationaleSheet.swift */; };
+		DB095217962F9A0A47957E6A /* BookingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80705C0875BC5231B538FDFF /* BookingRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		48D05F1798C164AC4FF87C2A /* BookingModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingModels.swift; sourceTree = "<group>"; };
+		80705C0875BC5231B538FDFF /* BookingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingRepository.swift; sourceTree = "<group>"; };
+		9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingRepositoryTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000001 /* KilatRunnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KilatRunnerApp.swift; sourceTree = "<group>"; };
 		A00000000000000000000002 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		A00000000000000000000003 /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
@@ -141,6 +147,25 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		A00000000000000000000028 /* KilatRunnerTests */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000123 /* Core */,
+				A00000000000000000000126 /* Features */,
+				A00000000000000000000008 /* KilatRunnerTests.swift */,
+			);
+			path = KilatRunnerTests;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000029 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000007 /* KilatRunner.app */,
+				A00000000000000000000009 /* KilatRunnerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A00000000000000000000120 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,16 +195,6 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
-		A00000000000000000000028 /* KilatRunnerTests */ = {
-			isa = PBXGroup;
-			children = (
-				A00000000000000000000123 /* Core */,
-				A00000000000000000000126 /* Features */,
-				A00000000000000000000008 /* KilatRunnerTests.swift */,
-			);
-			path = KilatRunnerTests;
-			sourceTree = "<group>";
-		};
 		A00000000000000000000123 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +211,7 @@
 			children = (
 				A00000000000000000000125 /* Auth */,
 				A00000000000000000000137 /* Dashboard */,
+				BC1C56524F3A90AAD1DED878 /* Jobs */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -211,6 +227,17 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		A00000000000000000000126 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000138 /* Dashboard */,
+				A0000000000000000000010D /* AuthRepositoryTests.swift */,
+				A0000000000000000000010F /* LoginViewModelTests.swift */,
+				B2934FEA376F9712C6C98AAF /* Jobs */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
 		A00000000000000000000137 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,16 +250,6 @@
 			path = Dashboard;
 			sourceTree = "<group>";
 		};
-		A00000000000000000000126 /* Features */ = {
-			isa = PBXGroup;
-			children = (
-				A00000000000000000000138 /* Dashboard */,
-				A0000000000000000000010D /* AuthRepositoryTests.swift */,
-				A0000000000000000000010F /* LoginViewModelTests.swift */,
-			);
-			path = Features;
-			sourceTree = "<group>";
-		};
 		A00000000000000000000138 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,13 +259,23 @@
 			path = Dashboard;
 			sourceTree = "<group>";
 		};
-		A00000000000000000000029 /* Products */ = {
+		B2934FEA376F9712C6C98AAF /* Jobs */ = {
 			isa = PBXGroup;
 			children = (
-				A00000000000000000000007 /* KilatRunner.app */,
-				A00000000000000000000009 /* KilatRunnerTests.xctest */,
+				9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */,
 			);
-			name = Products;
+			name = Jobs;
+			path = Jobs;
+			sourceTree = "<group>";
+		};
+		BC1C56524F3A90AAD1DED878 /* Jobs */ = {
+			isa = PBXGroup;
+			children = (
+				48D05F1798C164AC4FF87C2A /* BookingModels.swift */,
+				80705C0875BC5231B538FDFF /* BookingRepository.swift */,
+			);
+			name = Jobs;
+			path = Jobs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,6 +396,8 @@
 				A0000000000000000000013B /* DashboardViewModel.swift in Sources */,
 				A0000000000000000000013F /* DashboardView.swift in Sources */,
 				A0000000000000000000014A /* PermissionRationaleSheet.swift in Sources */,
+				3E99C5AB41B02332BA41F34B /* BookingModels.swift in Sources */,
+				DB095217962F9A0A47957E6A /* BookingRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +414,7 @@
 				A0000000000000000000011F /* LoginViewModelTests.swift in Sources */,
 				A00000000000000000000136 /* RunnerRepositoryTests.swift in Sources */,
 				A0000000000000000000013C /* DashboardViewModelTests.swift in Sources */,
+				5CE36A5B86F166AB8F2404FA /* BookingRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

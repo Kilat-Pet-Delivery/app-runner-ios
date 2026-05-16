@@ -62,7 +62,13 @@ enum APIEndpoint: Equatable {
 
     var queryItems: [URLQueryItem] {
         switch self {
-        case let .availableJobs(page, limit), let .earnings(page, limit):
+        case let .availableJobs(page, limit):
+            return [
+                URLQueryItem(name: "status", value: "requested"),
+                URLQueryItem(name: "page", value: String(page)),
+                URLQueryItem(name: "limit", value: String(limit))
+            ]
+        case let .earnings(page, limit):
             return [
                 URLQueryItem(name: "page", value: String(page)),
                 URLQueryItem(name: "limit", value: String(limit))
