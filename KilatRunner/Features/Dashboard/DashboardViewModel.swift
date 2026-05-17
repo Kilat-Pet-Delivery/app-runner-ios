@@ -41,13 +41,30 @@ final class CoreLocationPermissionProvider: LocationPermissionProvider {
     }
 }
 
+struct DashboardActiveJob: Equatable {
+    let bookingId: String
+    let pickupAddress: String
+    let dropoffAddress: String
+}
+
 @Observable
 final class DashboardViewModel {
-    private(set) var runner: Runner?
+    var runner: Runner?
     var isOnline = false
     var errorMessage: String?
     private(set) var isLoading = false
     private(set) var isTogglingOnline = false
+
+    var weeklyEarningsCents: Int = 0
+    var weeklyGoalCents: Int = 50_000
+    var deliveriesThisWeek: Int = 0
+    var onlineMinutesThisWeek: Int = 0
+    var activeJob: DashboardActiveJob? = nil
+
+    var weeklyGoalProgress: Double {
+        guard weeklyGoalCents > 0 else { return 0 }
+        return min(1.0, Double(weeklyEarningsCents) / Double(weeklyGoalCents))
+    }
 
     @ObservationIgnored private let repository: RunnerRepositoryProtocol
     @ObservationIgnored private let locationPermissionProvider: LocationPermissionProvider
