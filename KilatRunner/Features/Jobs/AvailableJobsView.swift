@@ -1,4 +1,5 @@
 import SwiftUI
+import KilatUI
 
 struct AvailableJobsView: View {
     @Bindable private var viewModel: AvailableJobsViewModel
@@ -8,93 +9,121 @@ struct AvailableJobsView: View {
     }
 
     var body: some View {
-        Group {
-            if viewModel.isLoading && viewModel.jobs.isEmpty {
-                ProgressView("Loading available jobs")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if let errorMessage = viewModel.errorMessage, viewModel.jobs.isEmpty {
-                ContentUnavailableView {
-                    Label("Could not load jobs", systemImage: "wifi.exclamationmark")
-                } description: {
-                    Text(errorMessage)
-                } actions: {
-                    Button("Try Again") {
-                        Task { await viewModel.load() }
+        VStack(spacing: 0) {
+            sortPills
+                .padding(.horizontal, Tokens.Space.md)
+                .padding(.top, Tokens.Space.sm)
+
+            content
+        }
+        .background(Tokens.Color.background.ignoresSafeArea())
+        .navigationTitle("Available jobs")
+        .navigationBarTitleDisplayMode(.inline)
+        .refreshable { await viewModel.refresh() }
+        .task { await viewModel.load() }
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if viewModel.isLoading && viewModel.jobs.isEmpty {
+            VStack {
+                ProgressView()
+                    .tint(Tokens.Color.primary)
+                Text("Loading available jobs")
+                    .font(Tokens.FontRole.label)
+                    .foregroundStyle(Tokens.Color.textSecondary)
+                    .padding(.top, Tokens.Space.xs)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else if let errorMessage = viewModel.errorMessage, viewModel.jobs.isEmpty {
+            errorState(errorMessage)
+        } else if viewModel.jobs.isEmpty {
+            emptyState
+                .accessibilityIdentifier("availableJobsEmptyState")
+        } else {
+            ScrollView {
+                LazyVStack(spacing: Tokens.Space.sm) {
+                    ForEach(viewModel.sortedJobs) { booking in
+                        NavigationLink {
+                            JobDetailView(viewModel: JobDetailViewModel(booking: booking))
+                        } label: {
+                            JobRowCard(booking: booking)
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.borderedProminent)
                 }
-            } else if viewModel.jobs.isEmpty {
-                ContentUnavailableView(
-                    "No available jobs",
-                    systemImage: "shippingbox",
-                    description: Text("Pull to refresh when new bookings come in.")
+                .padding(Tokens.Space.md)
+            }
+        }
+    }
+
+    private var sortPills: some View {
+        HStack(spacing: Tokens.Space.xs) {
+            ForEach(AvailableJobsSort.allCases) { option in
+                sortPill(option)
+            }
+        }
+    }
+
+    private func sortPill(_ option: AvailableJobsSort) -> some View {
+        let isSelected = viewModel.selectedSort == option
+        return Button { viewModel.selectedSort = option } label: {
+            Text(option.label)
+                .font(Tokens.FontRole.label)
+                .padding(.horizontal, Tokens.Space.md)
+                .padding(.vertical, Tokens.Space.xs)
+                .foregroundStyle(isSelected ? Tokens.Color.onPrimary : Tokens.Color.textPrimary)
+                .background(
+                    Capsule().fill(isSelected ? Tokens.Color.primary : Tokens.Color.surface)
                 )
-            } else {
-                List(viewModel.jobs) { booking in
-                    NavigationLink {
-                        JobDetailView(viewModel: JobDetailViewModel(booking: booking))
-                    } label: {
-                        row(for: booking)
-                    }
-                }
-                .listStyle(.plain)
-            }
         }
-        .navigationTitle("Available Jobs")
-        .refreshable {
-            await viewModel.refresh()
-        }
-        .task {
-            await viewModel.load()
-        }
+        .accessibilityIdentifier("sortPill_\(option.rawValue)")
     }
 
-    private func row(for booking: Booking) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Label(booking.petSpec.name.isEmpty ? "Pet" : booking.petSpec.name, systemImage: "pawprint.fill")
-                    .font(.subheadline.weight(.semibold))
-                Spacer()
-                Text(fareLabel(booking))
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(.primary)
-            }
-
-            VStack(alignment: .leading, spacing: 6) {
-                routeLine(icon: "circle.fill", iconColor: .green, text: booking.pickupAddress.singleLineLabel)
-                routeLine(icon: "mappin.circle.fill", iconColor: .red, text: booking.dropoffAddress.singleLineLabel)
-            }
-
-            if let distance = booking.distanceKm {
-                Text(String(format: "%.1f km", distance))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
+    private var emptyState: some View {
+        VStack(spacing: Tokens.Space.md) {
+            Image(kilatAsset: "box")
+                .resizable()
+                .renderingMode(.template)
+                .frame(width: 64, height: 64)
+                .foregroundStyle(Tokens.Color.textTertiary)
+            Text("No available jobs")
+                .font(Tokens.FontRole.titleM)
+                .foregroundStyle(Tokens.Color.textPrimary)
+            Text("Pull to refresh when new bookings come in.")
+                .font(Tokens.FontRole.label)
+                .foregroundStyle(Tokens.Color.textSecondary)
+                .multilineTextAlignment(.center)
         }
-        .padding(.vertical, 6)
+        .padding(Tokens.Space.xl)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    private func routeLine(icon: String, iconColor: Color, text: String) -> some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: icon)
-                .foregroundStyle(iconColor)
-                .font(.caption)
-                .padding(.top, 4)
-            Text(text)
-                .font(.subheadline)
-                .foregroundStyle(.primary)
-                .lineLimit(2)
+    private func errorState(_ message: String) -> some View {
+        VStack(spacing: Tokens.Space.md) {
+            Image(kilatAsset: "alert")
+                .resizable()
+                .renderingMode(.template)
+                .frame(width: 56, height: 56)
+                .foregroundStyle(Tokens.Color.destructive)
+            Text("Could not load jobs")
+                .font(Tokens.FontRole.titleM)
+                .foregroundStyle(Tokens.Color.textPrimary)
+            Text(message)
+                .font(Tokens.FontRole.label)
+                .foregroundStyle(Tokens.Color.textSecondary)
+                .multilineTextAlignment(.center)
+            PrimaryButton(title: "Try again") {
+                Task { await viewModel.load() }
+            }
+            .padding(.horizontal, Tokens.Space.xl)
         }
-    }
-
-    private func fareLabel(_ booking: Booking) -> String {
-        let cents = booking.finalPriceCents ?? booking.estimatedPriceCents
-        let amount = Double(cents) / 100
-        return "\(booking.currency) \(String(format: "%.2f", amount))"
+        .padding(Tokens.Space.xl)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
-#Preview {
+#Preview("Empty") {
     NavigationStack {
         AvailableJobsView(viewModel: AvailableJobsViewModel())
     }
