@@ -8,6 +8,10 @@ final class LoginViewModel {
     private(set) var isSubmitting = false
     var errorMessage: String?
 
+    var isFormValid: Bool {
+        !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !password.isEmpty
+    }
+
     @ObservationIgnored private let authRepository: AuthRepositoryProtocol
     @ObservationIgnored private let appSession: AppSession
 

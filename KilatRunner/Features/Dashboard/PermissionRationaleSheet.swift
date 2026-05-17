@@ -1,43 +1,38 @@
 import SwiftUI
+import KilatUI
 
 struct PermissionRationaleSheet: View {
     let onContinue: () -> Void
     let onCancel: () -> Void
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: Tokens.Space.xl) {
             Image(systemName: "location.fill.viewfinder")
                 .font(.system(size: 44, weight: .semibold))
-                .foregroundStyle(.blue)
+                .foregroundStyle(Tokens.Color.primary)
 
-            VStack(spacing: 10) {
+            VStack(spacing: Tokens.Space.xs) {
                 Text("Location Access")
-                    .font(.title2.bold())
+                    .font(Tokens.FontRole.titleL)
+                    .foregroundStyle(Tokens.Color.textPrimary)
 
                 Text("Kilat uses your location while you are online so customers can follow active deliveries and dispatch can match nearby jobs.")
-                    .font(.body)
-                    .foregroundStyle(.secondary)
+                    .font(Tokens.FontRole.body)
+                    .foregroundStyle(Tokens.Color.textSecondary)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
             }
 
-            VStack(spacing: 12) {
-                Button {
-                    onContinue()
-                } label: {
-                    Label("Continue", systemImage: "location")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
+            VStack(spacing: Tokens.Space.sm) {
+                PrimaryButton(title: "Continue", icon: "location", action: onContinue)
 
-                Button("Not Now") {
-                    onCancel()
-                }
-                .buttonStyle(.borderless)
+                Button("Not Now", action: onCancel)
+                    .font(Tokens.FontRole.label)
+                    .foregroundStyle(Tokens.Color.textSecondary)
+                    .buttonStyle(.borderless)
             }
         }
-        .padding(24)
+        .padding(Tokens.Space.xl)
         .presentationDetents([.medium])
     }
 }

@@ -1,5 +1,6 @@
 import MapKit
 import SwiftUI
+import KilatUI
 
 struct JobDetailView: View {
     @Environment(\.dismiss) private var dismiss
@@ -10,26 +11,38 @@ struct JobDetailView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 18) {
-                summaryCard
-                mapPreview
-                if let errorMessage = viewModel.errorMessage {
-                    errorBanner(message: errorMessage)
+        VStack(spacing: 0) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: Tokens.Space.md) {
+                    headerRow
+                    mapPreview
+                    routeCard
+                    if let notes = viewModel.booking.notes, !notes.isEmpty {
+                        notesCard(notes: notes)
+                    }
+                    feeBreakdown
+                    if let errorMessage = viewModel.errorMessage {
+                        errorBanner(message: errorMessage)
+                    }
                 }
-                acceptButton
+                .padding(Tokens.Space.md)
             }
-            .padding(20)
+            stickyFooter
         }
-        .background(Color(.systemGroupedBackground))
+        .background(Tokens.Color.background.ignoresSafeArea())
         .navigationTitle(viewModel.booking.bookingNumber)
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $viewModel.showsDeclineSheet) {
+            // TODO(phase-9-9.6): replace with DeclineReasonSheet content
+            declineStubSheet
+        }
         .navigationDestination(
             isPresented: Binding(
                 get: { viewModel.acceptedBookingId != nil },
                 set: { newValue in if !newValue { viewModel.acceptedBookingId = nil } }
             )
         ) {
+            // TODO(phase-9-9.5): route via JobAcceptedView celebration screen before ActiveDelivery
             ActiveDeliveryView(viewModel: ActiveDeliveryViewModel(booking: viewModel.booking)) {
                 viewModel.acceptedBookingId = nil
                 dismiss()
@@ -37,128 +50,181 @@ struct JobDetailView: View {
         }
     }
 
-    private var summaryCard: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Label(
-                        viewModel.booking.petSpec.name.isEmpty ? "Pet" : viewModel.booking.petSpec.name,
-                        systemImage: "pawprint.fill"
-                    )
-                    .font(.headline)
-                    if !viewModel.booking.petSpec.breed.isEmpty {
-                        Text(viewModel.booking.petSpec.breed)
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                    }
+    private var headerRow: some View {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
+                HStack(spacing: Tokens.Space.xs) {
+                    Image(kilatAsset: "paw")
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 18, height: 18)
+                        .foregroundStyle(Tokens.Color.primary)
+                    Text(viewModel.booking.petSpec.name.isEmpty ? "Pet" : viewModel.booking.petSpec.name)
+                        .font(Tokens.FontRole.titleM)
+                        .foregroundStyle(Tokens.Color.textPrimary)
                 }
-                Spacer()
-                VStack(alignment: .trailing, spacing: 4) {
-                    Text(fareLabel)
-                        .font(.headline)
-                    if let distance = viewModel.booking.distanceKm {
-                        Text(String(format: "%.1f km", distance))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
+                if !viewModel.booking.petSpec.breed.isEmpty {
+                    Text(viewModel.booking.petSpec.breed)
+                        .font(Tokens.FontRole.label)
+                        .foregroundStyle(Tokens.Color.textSecondary)
                 }
             }
-
-            Divider()
-
-            routeRow(
-                icon: "circle.fill",
-                tint: .green,
-                title: "Pickup",
-                address: viewModel.booking.pickupAddress.singleLineLabel
-            )
-            routeRow(
-                icon: "mappin.circle.fill",
-                tint: .red,
-                title: "Drop-off",
-                address: viewModel.booking.dropoffAddress.singleLineLabel
-            )
-
-            if !(viewModel.booking.notes ?? "").isEmpty {
-                Divider()
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Notes")
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(.secondary)
-                    Text(viewModel.booking.notes ?? "")
-                        .font(.subheadline)
+            Spacer()
+            VStack(alignment: .trailing, spacing: Tokens.Space.xxs) {
+                Text(fareLabel)
+                    .font(Tokens.FontRole.titleM)
+                    .foregroundStyle(Tokens.Color.primary)
+                if let distance = viewModel.booking.distanceKm {
+                    Text(String(format: "%.1f km", distance))
+                        .font(Tokens.FontRole.caption)
+                        .foregroundStyle(Tokens.Color.textSecondary)
                 }
             }
         }
-        .padding(18)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 8))
     }
 
     private var mapPreview: some View {
         Map(initialPosition: .region(mapRegion)) {
             Marker("Pickup", coordinate: viewModel.booking.pickupCoordinate)
-                .tint(.green)
+                .tint(Tokens.Color.online)
             Marker("Drop-off", coordinate: viewModel.booking.dropoffCoordinate)
-                .tint(.red)
+                .tint(Tokens.Color.destructive)
         }
-        .frame(height: 220)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .frame(height: 200)
+        .clipShape(RoundedRectangle(cornerRadius: Tokens.Radius.lg))
     }
 
-    private var acceptButton: some View {
-        Button {
-            Task { await viewModel.accept() }
-        } label: {
-            HStack {
-                if viewModel.isAccepting {
-                    ProgressView()
-                }
-                Text(viewModel.isAccepting ? "Accepting…" : "Accept Job")
-                    .fontWeight(.semibold)
+    private var routeCard: some View {
+        VStack(alignment: .leading, spacing: Tokens.Space.md) {
+            routeRow(dotColor: Tokens.Color.online,
+                     title: "Pickup",
+                     address: viewModel.booking.pickupAddress.singleLineLabel)
+            Divider().background(Tokens.Color.separator)
+            routeRow(dotColor: Tokens.Color.destructive,
+                     title: "Drop-off",
+                     address: viewModel.booking.dropoffAddress.singleLineLabel)
+        }
+        .padding(Tokens.Space.md)
+        .background(Tokens.Color.surface, in: RoundedRectangle(cornerRadius: Tokens.Radius.lg, style: .continuous))
+        .tokenShadow(Tokens.Shadow.card)
+    }
+
+    private func notesCard(notes: String) -> some View {
+        VStack(alignment: .leading, spacing: Tokens.Space.xs) {
+            Text("Pickup notes")
+                .font(Tokens.FontRole.caption)
+                .foregroundStyle(Tokens.Color.textSecondary)
+                .textCase(.uppercase)
+            Text(notes)
+                .font(Tokens.FontRole.body)
+                .foregroundStyle(Tokens.Color.textPrimary)
+        }
+        .padding(Tokens.Space.md)
+        .background(Tokens.Color.surface, in: RoundedRectangle(cornerRadius: Tokens.Radius.md, style: .continuous))
+    }
+
+    private var feeBreakdown: some View {
+        VStack(spacing: Tokens.Space.xs) {
+            feeRow(label: "Base fare", amount: estimatedAmount * 0.7)
+            feeRow(label: "Distance", amount: estimatedAmount * 0.25)
+            feeRow(label: "Service fee", amount: estimatedAmount * 0.05)
+            Divider().background(Tokens.Color.separator)
+            feeRow(label: "Total", amount: estimatedAmount, isTotal: true)
+        }
+        .padding(Tokens.Space.md)
+        .background(Tokens.Color.surface, in: RoundedRectangle(cornerRadius: Tokens.Radius.md, style: .continuous))
+    }
+
+    private func feeRow(label: String, amount: Double, isTotal: Bool = false) -> some View {
+        HStack {
+            Text(label)
+                .font(isTotal ? Tokens.FontRole.bodyBold : Tokens.FontRole.label)
+                .foregroundStyle(isTotal ? Tokens.Color.textPrimary : Tokens.Color.textSecondary)
+            Spacer()
+            Text("\(viewModel.booking.currency) \(String(format: "%.2f", amount))")
+                .font(isTotal ? Tokens.FontRole.bodyBold : Tokens.FontRole.label)
+                .foregroundStyle(isTotal ? Tokens.Color.primary : Tokens.Color.textPrimary)
+        }
+    }
+
+    private var stickyFooter: some View {
+        HStack(spacing: Tokens.Space.sm) {
+            SecondaryButton(title: "Decline") {
+                viewModel.showsDeclineSheet = true
             }
-            .frame(maxWidth: .infinity)
+            PrimaryButton(
+                title: viewModel.isAccepting ? "Accepting" : "Accept \(fareLabel)",
+                isLoading: viewModel.isAccepting,
+                isEnabled: !viewModel.isAccepting,
+                action: { Task { await viewModel.accept() } }
+            )
         }
-        .buttonStyle(.borderedProminent)
-        .controlSize(.large)
-        .tint(.green)
-        .disabled(viewModel.isAccepting)
+        .padding(Tokens.Space.md)
+        .background(Tokens.Color.surface)
+        .tokenShadow(Tokens.Shadow.raised)
+        .accessibilityIdentifier("jobDetailStickyFooter")
     }
 
-    private func routeRow(icon: String, tint: Color, title: String, address: String) -> some View {
-        HStack(alignment: .top, spacing: 12) {
-            Image(systemName: icon)
-                .foregroundStyle(tint)
-                .font(.caption)
+    private var declineStubSheet: some View {
+        VStack(spacing: Tokens.Space.lg) {
+            Text("Decline job")
+                .font(Tokens.FontRole.titleL)
+                .foregroundStyle(Tokens.Color.textPrimary)
+            Text("Reason picker comes in Phase 9.")
+                .font(Tokens.FontRole.label)
+                .foregroundStyle(Tokens.Color.textSecondary)
+                .multilineTextAlignment(.center)
+            PrimaryButton(title: "Close") {
+                viewModel.showsDeclineSheet = false
+            }
+        }
+        .padding(Tokens.Space.xl)
+        .presentationDetents([.medium])
+    }
+
+    private func routeRow(dotColor: Color, title: String, address: String) -> some View {
+        HStack(alignment: .top, spacing: Tokens.Space.sm) {
+            Circle()
+                .fill(dotColor)
+                .frame(width: 10, height: 10)
                 .padding(.top, 6)
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
                 Text(title)
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(.secondary)
+                    .font(Tokens.FontRole.caption)
+                    .foregroundStyle(Tokens.Color.textSecondary)
+                    .textCase(.uppercase)
                 Text(address)
-                    .font(.subheadline)
-                    .foregroundStyle(.primary)
+                    .font(Tokens.FontRole.label)
+                    .foregroundStyle(Tokens.Color.textPrimary)
             }
             Spacer()
         }
     }
 
     private func errorBanner(message: String) -> some View {
-        HStack(alignment: .top, spacing: 12) {
-            Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundStyle(.orange)
+        HStack(alignment: .top, spacing: Tokens.Space.sm) {
+            Image(kilatAsset: "alert")
+                .resizable()
+                .renderingMode(.template)
+                .frame(width: 18, height: 18)
+                .foregroundStyle(Tokens.Color.destructive)
             Text(message)
-                .font(.subheadline)
-                .foregroundStyle(.primary)
+                .font(Tokens.FontRole.label)
+                .foregroundStyle(Tokens.Color.textPrimary)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(14)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 8))
+        .padding(Tokens.Space.md)
+        .background(Tokens.Color.surface, in: RoundedRectangle(cornerRadius: Tokens.Radius.md, style: .continuous))
     }
 
     private var fareLabel: String {
         let cents = viewModel.booking.finalPriceCents ?? viewModel.booking.estimatedPriceCents
-        let amount = Double(cents) / 100
-        return "\(viewModel.booking.currency) \(String(format: "%.2f", amount))"
+        return "\(viewModel.booking.currency) \(String(format: "%.2f", Double(cents) / 100))"
+    }
+
+    private var estimatedAmount: Double {
+        let cents = viewModel.booking.finalPriceCents ?? viewModel.booking.estimatedPriceCents
+        return Double(cents) / 100
     }
 
     private var mapRegion: MKCoordinateRegion {

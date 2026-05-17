@@ -7,8 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34BC4751CD6DB22C1563BB35 /* DashboardViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A9DC7C302D7AFFAC5A4303 /* DashboardViewSnapshotTests.swift */; };
 		3E99C5AB41B02332BA41F34B /* BookingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D05F1798C164AC4FF87C2A /* BookingModels.swift */; };
+		46E286AC12AFA28E90503231 /* MetricTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131AED623D1E34638811776C /* MetricTile.swift */; };
 		5CE36A5B86F166AB8F2404FA /* BookingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */; };
+		7374129BBE76891CC15CD7E4 /* ActiveDeliveryViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4813B2E1F3E2FBE1C62E1 /* ActiveDeliveryViewSnapshotTests.swift */; };
+		9386F5BF6AD77609BE45725D /* AvailableJobsViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA715E11EAC209CD4DC6D9 /* AvailableJobsViewSnapshotTests.swift */; };
+		93CF67DC3165D484ECB3D457 /* JobDetailViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED6F9FD7B89D29C73DBFE3 /* JobDetailViewSnapshotTests.swift */; };
+		9425FAB9D037D0BAA883621A /* EarningsViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08E4AF9BBD2320E67A1EA04 /* EarningsViewSnapshotTests.swift */; };
+		982735E5B23B22E48C90DB23 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C765F04AA88F7911233001B0 /* SnapshotTesting */; };
 		A00000000000000000000011 /* KilatRunnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000001 /* KilatRunnerApp.swift */; };
 		A00000000000000000000012 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000002 /* AppEnvironment.swift */; };
 		A00000000000000000000013 /* AppSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000003 /* AppSession.swift */; };
@@ -38,22 +45,25 @@
 		A0000000000000000000013C /* DashboardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000013A /* DashboardViewModelTests.swift */; };
 		A0000000000000000000013F /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000013D /* DashboardView.swift */; };
 		A0000000000000000000014A /* PermissionRationaleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000013E /* PermissionRationaleSheet.swift */; };
-		DB095217962F9A0A47957E6A /* BookingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80705C0875BC5231B538FDFF /* BookingRepository.swift */; };
 		B100000000000000B1000002 /* AvailableJobsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000000000000B1000001 /* AvailableJobsViewModel.swift */; };
 		B100000000000000B1000004 /* AvailableJobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000000000000B1000003 /* AvailableJobsView.swift */; };
 		B100000000000000B1000006 /* JobDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000000000000B1000005 /* JobDetailViewModel.swift */; };
 		B100000000000000B1000008 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000000000000B1000007 /* JobDetailView.swift */; };
+		B200000000000000B2000002 /* AvailableJobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */; };
+		B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000003 /* JobDetailViewModelTests.swift */; };
+		B9E1BF0B764F2EA2356115C4 /* JobRowCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66871F0C05A0AE356D40E442 /* JobRowCard.swift */; };
+		BEC13B12F121EAAE7B2A6C3A /* LoginViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8826BAD02B9DBAD2332F1880 /* LoginViewSnapshotTests.swift */; };
 		C100000000000000C1000002 /* TrackingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000001 /* TrackingModels.swift */; };
 		C100000000000000C1000004 /* TrackingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000003 /* TrackingRepository.swift */; };
 		C100000000000000C1000006 /* ActiveDeliveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000005 /* ActiveDeliveryViewModel.swift */; };
 		C100000000000000C1000008 /* ActiveDeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000007 /* ActiveDeliveryView.swift */; };
-		B200000000000000B2000002 /* AvailableJobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */; };
-		B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000003 /* JobDetailViewModelTests.swift */; };
 		C200000000000000C2000002 /* TrackingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000001 /* TrackingRepositoryTests.swift */; };
 		C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */; };
 		D100000000000000D1000002 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000001 /* LocationManager.swift */; };
 		D100000000000000D1000004 /* WaypointBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000003 /* WaypointBuffer.swift */; };
 		D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200000000000000D2000001 /* WaypointBufferTests.swift */; };
+		DB095217962F9A0A47957E6A /* BookingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80705C0875BC5231B538FDFF /* BookingRepository.swift */; };
+		DB64B2F5619772547D5077E6 /* KilatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 710C164DC37F68AA3B1E38D7 /* KilatUI */; };
 		E100000000000000E1000002 /* WebSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E100000000000000E1000001 /* WebSocketClient.swift */; };
 		E200000000000000E2000002 /* WebSocketClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E200000000000000E2000001 /* WebSocketClientTests.swift */; };
 		F100000000000000F1000002 /* EarningsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000000000000F1000001 /* EarningsModels.swift */; };
@@ -73,30 +83,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		131AED623D1E34638811776C /* MetricTile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MetricTile.swift; sourceTree = "<group>"; };
 		48D05F1798C164AC4FF87C2A /* BookingModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingModels.swift; sourceTree = "<group>"; };
+		54A9DC7C302D7AFFAC5A4303 /* DashboardViewSnapshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardViewSnapshotTests.swift; sourceTree = "<group>"; };
+		54ED6F9FD7B89D29C73DBFE3 /* JobDetailViewSnapshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewSnapshotTests.swift; sourceTree = "<group>"; };
+		66871F0C05A0AE356D40E442 /* JobRowCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobRowCard.swift; sourceTree = "<group>"; };
 		80705C0875BC5231B538FDFF /* BookingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingRepository.swift; sourceTree = "<group>"; };
+		8826BAD02B9DBAD2332F1880 /* LoginViewSnapshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginViewSnapshotTests.swift; sourceTree = "<group>"; };
 		9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingRepositoryTests.swift; sourceTree = "<group>"; };
-		B100000000000000B1000001 /* AvailableJobsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModel.swift; sourceTree = "<group>"; };
-		B100000000000000B1000003 /* AvailableJobsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsView.swift; sourceTree = "<group>"; };
-		B100000000000000B1000005 /* JobDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModel.swift; sourceTree = "<group>"; };
-		B100000000000000B1000007 /* JobDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
-		C100000000000000C1000001 /* TrackingModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingModels.swift; sourceTree = "<group>"; };
-		C100000000000000C1000003 /* TrackingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingRepository.swift; sourceTree = "<group>"; };
-		C100000000000000C1000005 /* ActiveDeliveryViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryViewModel.swift; sourceTree = "<group>"; };
-		C100000000000000C1000007 /* ActiveDeliveryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryView.swift; sourceTree = "<group>"; };
-		B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModelTests.swift; sourceTree = "<group>"; };
-		B200000000000000B2000003 /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
-		C200000000000000C2000001 /* TrackingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingRepositoryTests.swift; sourceTree = "<group>"; };
-		C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryViewModelTests.swift; sourceTree = "<group>"; };
-		D100000000000000D1000001 /* LocationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		D100000000000000D1000003 /* WaypointBuffer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBuffer.swift; sourceTree = "<group>"; };
-		D200000000000000D2000001 /* WaypointBufferTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBufferTests.swift; sourceTree = "<group>"; };
-		E100000000000000E1000001 /* WebSocketClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClient.swift; sourceTree = "<group>"; };
-		E200000000000000E2000001 /* WebSocketClientTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClientTests.swift; sourceTree = "<group>"; };
-		F100000000000000F1000001 /* EarningsModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsModels.swift; sourceTree = "<group>"; };
-		F100000000000000F1000003 /* EarningsRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsRepository.swift; sourceTree = "<group>"; };
-		F100000000000000F1000005 /* EarningsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsViewModel.swift; sourceTree = "<group>"; };
-		F100000000000000F1000007 /* EarningsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsView.swift; sourceTree = "<group>"; };
+		9AEA715E11EAC209CD4DC6D9 /* AvailableJobsViewSnapshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewSnapshotTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000001 /* KilatRunnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KilatRunnerApp.swift; sourceTree = "<group>"; };
 		A00000000000000000000002 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		A00000000000000000000003 /* AppSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSession.swift; sourceTree = "<group>"; };
@@ -129,6 +124,29 @@
 		A0000000000000000000013A /* DashboardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModelTests.swift; sourceTree = "<group>"; };
 		A0000000000000000000013D /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		A0000000000000000000013E /* PermissionRationaleSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionRationaleSheet.swift; sourceTree = "<group>"; };
+		B100000000000000B1000001 /* AvailableJobsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModel.swift; sourceTree = "<group>"; };
+		B100000000000000B1000003 /* AvailableJobsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsView.swift; sourceTree = "<group>"; };
+		B100000000000000B1000005 /* JobDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModel.swift; sourceTree = "<group>"; };
+		B100000000000000B1000007 /* JobDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
+		B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModelTests.swift; sourceTree = "<group>"; };
+		B200000000000000B2000003 /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
+		C08E4AF9BBD2320E67A1EA04 /* EarningsViewSnapshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsViewSnapshotTests.swift; sourceTree = "<group>"; };
+		C100000000000000C1000001 /* TrackingModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingModels.swift; sourceTree = "<group>"; };
+		C100000000000000C1000003 /* TrackingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingRepository.swift; sourceTree = "<group>"; };
+		C100000000000000C1000005 /* ActiveDeliveryViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryViewModel.swift; sourceTree = "<group>"; };
+		C100000000000000C1000007 /* ActiveDeliveryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryView.swift; sourceTree = "<group>"; };
+		C200000000000000C2000001 /* TrackingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingRepositoryTests.swift; sourceTree = "<group>"; };
+		C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryViewModelTests.swift; sourceTree = "<group>"; };
+		D100000000000000D1000001 /* LocationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D100000000000000D1000003 /* WaypointBuffer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBuffer.swift; sourceTree = "<group>"; };
+		D200000000000000D2000001 /* WaypointBufferTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBufferTests.swift; sourceTree = "<group>"; };
+		E100000000000000E1000001 /* WebSocketClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClient.swift; sourceTree = "<group>"; };
+		E200000000000000E2000001 /* WebSocketClientTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClientTests.swift; sourceTree = "<group>"; };
+		E8A4813B2E1F3E2FBE1C62E1 /* ActiveDeliveryViewSnapshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryViewSnapshotTests.swift; sourceTree = "<group>"; };
+		F100000000000000F1000001 /* EarningsModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsModels.swift; sourceTree = "<group>"; };
+		F100000000000000F1000003 /* EarningsRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsRepository.swift; sourceTree = "<group>"; };
+		F100000000000000F1000005 /* EarningsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsViewModel.swift; sourceTree = "<group>"; };
+		F100000000000000F1000007 /* EarningsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB64B2F5619772547D5077E6 /* KilatUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				982735E5B23B22E48C90DB23 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +303,8 @@
 				A0000000000000000000010F /* LoginViewModelTests.swift */,
 				B2934FEA376F9712C6C98AAF /* Jobs */,
 				C300000000000000C3000002 /* ActiveDelivery */,
+				8826BAD02B9DBAD2332F1880 /* LoginViewSnapshotTests.swift */,
+				BCC6C09D621FB318756B2812 /* Earnings */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -295,6 +317,7 @@
 				A00000000000000000000139 /* DashboardViewModel.swift */,
 				A0000000000000000000013D /* DashboardView.swift */,
 				A0000000000000000000013E /* PermissionRationaleSheet.swift */,
+				131AED623D1E34638811776C /* MetricTile.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -304,6 +327,7 @@
 			children = (
 				A00000000000000000000133 /* RunnerRepositoryTests.swift */,
 				A0000000000000000000013A /* DashboardViewModelTests.swift */,
+				54A9DC7C302D7AFFAC5A4303 /* DashboardViewSnapshotTests.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -314,6 +338,8 @@
 				9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */,
 				B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */,
 				B200000000000000B2000003 /* JobDetailViewModelTests.swift */,
+				9AEA715E11EAC209CD4DC6D9 /* AvailableJobsViewSnapshotTests.swift */,
+				54ED6F9FD7B89D29C73DBFE3 /* JobDetailViewSnapshotTests.swift */,
 			);
 			name = Jobs;
 			path = Jobs;
@@ -328,9 +354,19 @@
 				B100000000000000B1000003 /* AvailableJobsView.swift */,
 				B100000000000000B1000005 /* JobDetailViewModel.swift */,
 				B100000000000000B1000007 /* JobDetailView.swift */,
+				66871F0C05A0AE356D40E442 /* JobRowCard.swift */,
 			);
 			name = Jobs;
 			path = Jobs;
+			sourceTree = "<group>";
+		};
+		BCC6C09D621FB318756B2812 /* Earnings */ = {
+			isa = PBXGroup;
+			children = (
+				C08E4AF9BBD2320E67A1EA04 /* EarningsViewSnapshotTests.swift */,
+			);
+			name = Earnings;
+			path = Earnings;
 			sourceTree = "<group>";
 		};
 		C300000000000000C3000001 /* ActiveDelivery */ = {
@@ -350,6 +386,7 @@
 			children = (
 				C200000000000000C2000001 /* TrackingRepositoryTests.swift */,
 				C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */,
+				E8A4813B2E1F3E2FBE1C62E1 /* ActiveDeliveryViewSnapshotTests.swift */,
 			);
 			name = ActiveDelivery;
 			path = ActiveDelivery;
@@ -399,6 +436,9 @@
 			dependencies = (
 			);
 			name = KilatRunner;
+			packageProductDependencies = (
+				710C164DC37F68AA3B1E38D7 /* KilatUI */,
+			);
 			productName = KilatRunner;
 			productReference = A00000000000000000000007 /* KilatRunner.app */;
 			productType = "com.apple.product-type.application";
@@ -417,6 +457,9 @@
 				A00000000000000000000046 /* PBXTargetDependency */,
 			);
 			name = KilatRunnerTests;
+			packageProductDependencies = (
+				C765F04AA88F7911233001B0 /* SnapshotTesting */,
+			);
 			productName = KilatRunnerTests;
 			productReference = A00000000000000000000009 /* KilatRunnerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -449,6 +492,10 @@
 				Base,
 			);
 			mainGroup = A00000000000000000000020;
+			packageReferences = (
+				1B55AD0D06A61F631BF63CDB /* XCRemoteSwiftPackageReference "lib-ui-ios" */,
+				2E0FE838F0C4B2995089FFBA /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+			);
 			productRefGroup = A00000000000000000000029 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -518,6 +565,8 @@
 				F100000000000000F1000004 /* EarningsRepository.swift in Sources */,
 				F100000000000000F1000006 /* EarningsViewModel.swift in Sources */,
 				F100000000000000F1000008 /* EarningsView.swift in Sources */,
+				46E286AC12AFA28E90503231 /* MetricTile.swift in Sources */,
+				B9E1BF0B764F2EA2356115C4 /* JobRowCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +590,12 @@
 				C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */,
 				D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */,
 				E200000000000000E2000002 /* WebSocketClientTests.swift in Sources */,
+				BEC13B12F121EAAE7B2A6C3A /* LoginViewSnapshotTests.swift in Sources */,
+				34BC4751CD6DB22C1563BB35 /* DashboardViewSnapshotTests.swift in Sources */,
+				9386F5BF6AD77609BE45725D /* AvailableJobsViewSnapshotTests.swift in Sources */,
+				93CF67DC3165D484ECB3D457 /* JobDetailViewSnapshotTests.swift in Sources */,
+				7374129BBE76891CC15CD7E4 /* ActiveDeliveryViewSnapshotTests.swift in Sources */,
+				9425FAB9D037D0BAA883621A /* EarningsViewSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,6 +848,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1B55AD0D06A61F631BF63CDB /* XCRemoteSwiftPackageReference "lib-ui-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kilat-Pet-Delivery/lib-ui-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+		2E0FE838F0C4B2995089FFBA /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.19.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		710C164DC37F68AA3B1E38D7 /* KilatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B55AD0D06A61F631BF63CDB /* XCRemoteSwiftPackageReference "lib-ui-ios" */;
+			productName = KilatUI;
+		};
+		C765F04AA88F7911233001B0 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E0FE838F0C4B2995089FFBA /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A00000000000000000000030 /* Project object */;
 }

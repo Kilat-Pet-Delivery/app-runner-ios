@@ -8,15 +8,34 @@ enum DeliveryPhase: Equatable {
     case delivered
 }
 
+enum ActiveDeliveryPresentationStage: String, Equatable {
+    case toPickup
+    case atPickup
+    case toDropoff
+    case atDropoff
+    case delivered
+}
+
 @MainActor
 @Observable
 final class ActiveDeliveryViewModel {
-    private(set) var booking: Booking
+    var booking: Booking
     var currentLocation: CLLocationCoordinate2D?
-    private(set) var deliveryPhase: DeliveryPhase = .enroute
+    var deliveryPhase: DeliveryPhase = .enroute
     private(set) var isMarkingPickup = false
     private(set) var isMarkingDelivered = false
     var errorMessage: String?
+    var hasArrivedAtCurrentWaypoint: Bool = false
+
+    var presentationStage: ActiveDeliveryPresentationStage {
+        switch (deliveryPhase, hasArrivedAtCurrentWaypoint) {
+        case (.enroute, false):   return .toPickup
+        case (.enroute, true):    return .atPickup
+        case (.pickedUp, false):  return .toDropoff
+        case (.pickedUp, true):   return .atDropoff
+        case (.delivered, _):     return .delivered
+        }
+    }
 
     @ObservationIgnored private let locationProvider: LocationProvider
     @ObservationIgnored private let runnerRepository: RunnerRepositoryProtocol
