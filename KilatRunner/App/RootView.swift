@@ -1,4 +1,5 @@
 import SwiftUI
+import KilatUI
 
 struct RootView: View {
     @Environment(AppSession.self) private var session
@@ -26,4 +27,9 @@ private struct AuthenticatedRootView: View {
 #Preview {
     RootView()
         .environment(AppSession())
+}
+
+#Preview("KilatUI smoke") {
+    PrimaryButton(title: "Sign in") {}
+        .padding()
 }
