@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Kilat-Pet-Delivery/lib-ui-ios",
       "state" : {
-        "revision" : "5f8066ddd5e33862cc926c8addab0a91a24b669f",
-        "version" : "0.1.0"
+        "revision" : "8484297b8a687c1bdcc978afebe8f912e622f453",
+        "version" : "0.2.0"
       }
     },
     {

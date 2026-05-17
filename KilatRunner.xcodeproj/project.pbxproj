@@ -814,7 +814,7 @@
 			repositoryURL = "https://github.com/Kilat-Pet-Delivery/lib-ui-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
+				minimumVersion = 0.2.0;
 			};
 		};
 		2E0FE838F0C4B2995089FFBA /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
