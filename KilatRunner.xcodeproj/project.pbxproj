@@ -12,6 +12,7 @@
 		46E286AC12AFA28E90503231 /* MetricTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131AED623D1E34638811776C /* MetricTile.swift */; };
 		5CE36A5B86F166AB8F2404FA /* BookingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */; };
 		9386F5BF6AD77609BE45725D /* AvailableJobsViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA715E11EAC209CD4DC6D9 /* AvailableJobsViewSnapshotTests.swift */; };
+		93CF67DC3165D484ECB3D457 /* JobDetailViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED6F9FD7B89D29C73DBFE3 /* JobDetailViewSnapshotTests.swift */; };
 		982735E5B23B22E48C90DB23 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C765F04AA88F7911233001B0 /* SnapshotTesting */; };
 		A00000000000000000000011 /* KilatRunnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000001 /* KilatRunnerApp.swift */; };
 		A00000000000000000000012 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000002 /* AppEnvironment.swift */; };
@@ -83,6 +84,7 @@
 		131AED623D1E34638811776C /* MetricTile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MetricTile.swift; sourceTree = "<group>"; };
 		48D05F1798C164AC4FF87C2A /* BookingModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingModels.swift; sourceTree = "<group>"; };
 		54A9DC7C302D7AFFAC5A4303 /* DashboardViewSnapshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardViewSnapshotTests.swift; sourceTree = "<group>"; };
+		54ED6F9FD7B89D29C73DBFE3 /* JobDetailViewSnapshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewSnapshotTests.swift; sourceTree = "<group>"; };
 		66871F0C05A0AE356D40E442 /* JobRowCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobRowCard.swift; sourceTree = "<group>"; };
 		80705C0875BC5231B538FDFF /* BookingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingRepository.swift; sourceTree = "<group>"; };
 		8826BAD02B9DBAD2332F1880 /* LoginViewSnapshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginViewSnapshotTests.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */,
 				B200000000000000B2000003 /* JobDetailViewModelTests.swift */,
 				9AEA715E11EAC209CD4DC6D9 /* AvailableJobsViewSnapshotTests.swift */,
+				54ED6F9FD7B89D29C73DBFE3 /* JobDetailViewSnapshotTests.swift */,
 			);
 			name = Jobs;
 			path = Jobs;
@@ -575,6 +578,7 @@
 				BEC13B12F121EAAE7B2A6C3A /* LoginViewSnapshotTests.swift in Sources */,
 				34BC4751CD6DB22C1563BB35 /* DashboardViewSnapshotTests.swift in Sources */,
 				9386F5BF6AD77609BE45725D /* AvailableJobsViewSnapshotTests.swift in Sources */,
+				93CF67DC3165D484ECB3D457 /* JobDetailViewSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -3,10 +3,11 @@ import Observation
 
 @Observable
 final class JobDetailViewModel {
-    private(set) var booking: Booking
+    var booking: Booking
     private(set) var isAccepting = false
     var acceptedBookingId: String?
     var errorMessage: String?
+    var showsDeclineSheet = false
 
     @ObservationIgnored private let repository: BookingRepositoryProtocol
 
