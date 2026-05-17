@@ -45,6 +45,7 @@
 		B100000000000000B1000008 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000000000000B1000007 /* JobDetailView.swift */; };
 		B200000000000000B2000002 /* AvailableJobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */; };
 		B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000003 /* JobDetailViewModelTests.swift */; };
+		BEC13B12F121EAAE7B2A6C3A /* LoginViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8826BAD02B9DBAD2332F1880 /* LoginViewSnapshotTests.swift */; };
 		C100000000000000C1000002 /* TrackingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000001 /* TrackingModels.swift */; };
 		C100000000000000C1000004 /* TrackingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000003 /* TrackingRepository.swift */; };
 		C100000000000000C1000006 /* ActiveDeliveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000005 /* ActiveDeliveryViewModel.swift */; };
@@ -77,6 +78,7 @@
 /* Begin PBXFileReference section */
 		48D05F1798C164AC4FF87C2A /* BookingModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingModels.swift; sourceTree = "<group>"; };
 		80705C0875BC5231B538FDFF /* BookingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingRepository.swift; sourceTree = "<group>"; };
+		8826BAD02B9DBAD2332F1880 /* LoginViewSnapshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginViewSnapshotTests.swift; sourceTree = "<group>"; };
 		9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookingRepositoryTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000001 /* KilatRunnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KilatRunnerApp.swift; sourceTree = "<group>"; };
 		A00000000000000000000002 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				A0000000000000000000010F /* LoginViewModelTests.swift */,
 				B2934FEA376F9712C6C98AAF /* Jobs */,
 				C300000000000000C3000002 /* ActiveDelivery */,
+				8826BAD02B9DBAD2332F1880 /* LoginViewSnapshotTests.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */,
 				D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */,
 				E200000000000000E2000002 /* WebSocketClientTests.swift in Sources */,
+				BEC13B12F121EAAE7B2A6C3A /* LoginViewSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
