@@ -11,6 +11,7 @@
 		3E99C5AB41B02332BA41F34B /* BookingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D05F1798C164AC4FF87C2A /* BookingModels.swift */; };
 		46E286AC12AFA28E90503231 /* MetricTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131AED623D1E34638811776C /* MetricTile.swift */; };
 		5CE36A5B86F166AB8F2404FA /* BookingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */; };
+		7374129BBE76891CC15CD7E4 /* ActiveDeliveryViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A4813B2E1F3E2FBE1C62E1 /* ActiveDeliveryViewSnapshotTests.swift */; };
 		9386F5BF6AD77609BE45725D /* AvailableJobsViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA715E11EAC209CD4DC6D9 /* AvailableJobsViewSnapshotTests.swift */; };
 		93CF67DC3165D484ECB3D457 /* JobDetailViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ED6F9FD7B89D29C73DBFE3 /* JobDetailViewSnapshotTests.swift */; };
 		982735E5B23B22E48C90DB23 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C765F04AA88F7911233001B0 /* SnapshotTesting */; };
@@ -139,6 +140,7 @@
 		D200000000000000D2000001 /* WaypointBufferTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WaypointBufferTests.swift; sourceTree = "<group>"; };
 		E100000000000000E1000001 /* WebSocketClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClient.swift; sourceTree = "<group>"; };
 		E200000000000000E2000001 /* WebSocketClientTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WebSocketClientTests.swift; sourceTree = "<group>"; };
+		E8A4813B2E1F3E2FBE1C62E1 /* ActiveDeliveryViewSnapshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryViewSnapshotTests.swift; sourceTree = "<group>"; };
 		F100000000000000F1000001 /* EarningsModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsModels.swift; sourceTree = "<group>"; };
 		F100000000000000F1000003 /* EarningsRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsRepository.swift; sourceTree = "<group>"; };
 		F100000000000000F1000005 /* EarningsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EarningsViewModel.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 			children = (
 				C200000000000000C2000001 /* TrackingRepositoryTests.swift */,
 				C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */,
+				E8A4813B2E1F3E2FBE1C62E1 /* ActiveDeliveryViewSnapshotTests.swift */,
 			);
 			name = ActiveDelivery;
 			path = ActiveDelivery;
@@ -579,6 +582,7 @@
 				34BC4751CD6DB22C1563BB35 /* DashboardViewSnapshotTests.swift in Sources */,
 				9386F5BF6AD77609BE45725D /* AvailableJobsViewSnapshotTests.swift in Sources */,
 				93CF67DC3165D484ECB3D457 /* JobDetailViewSnapshotTests.swift in Sources */,
+				7374129BBE76891CC15CD7E4 /* ActiveDeliveryViewSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

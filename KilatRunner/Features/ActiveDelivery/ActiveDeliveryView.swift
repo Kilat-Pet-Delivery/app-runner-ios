@@ -1,5 +1,6 @@
 import MapKit
 import SwiftUI
+import KilatUI
 
 struct ActiveDeliveryView: View {
     @Bindable private var viewModel: ActiveDeliveryViewModel
@@ -11,175 +12,182 @@ struct ActiveDeliveryView: View {
     }
 
     var body: some View {
-        ZStack(alignment: .top) {
-            map
-                .ignoresSafeArea(edges: .bottom)
-            VStack(spacing: 12) {
-                summaryCard
+        ZStack(alignment: .bottom) {
+            map.ignoresSafeArea()
+
+            VStack(spacing: 0) {
                 Spacer()
-                actionCard
+                bottomSheet
             }
-            .padding(.horizontal, 16)
-            .padding(.top, 8)
-            .padding(.bottom, 24)
+
             if viewModel.deliveryPhase == .delivered {
                 tripCompleteOverlay
             }
         }
-        .navigationTitle("Active Delivery")
+        .navigationTitle("Active delivery")
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            viewModel.onAppear()
-        }
-        .task {
-            // onDisappear handles cleanup via Task cancellation when view goes away.
-        }
-        .onDisappear {
-            Task { await viewModel.onDisappear() }
-        }
+        .onAppear { viewModel.onAppear() }
+        .onDisappear { Task { await viewModel.onDisappear() } }
     }
 
     private var map: some View {
         Map(initialPosition: .region(mapRegion)) {
             Marker("Pickup", coordinate: viewModel.pickupCoordinate)
-                .tint(.green)
+                .tint(Tokens.Color.online)
             Marker("Drop-off", coordinate: viewModel.dropoffCoordinate)
-                .tint(.red)
+                .tint(Tokens.Color.destructive)
             if let current = viewModel.currentLocation {
-                Marker("You", systemImage: "location.fill", coordinate: current)
-                    .tint(.blue)
+                Annotation("You", coordinate: current) {
+                    runnerPin
+                }
             }
         }
     }
 
-    private var summaryCard: some View {
-        VStack(alignment: .leading, spacing: 10) {
+    private var runnerPin: some View {
+        ZStack {
+            Circle()
+                .fill(Tokens.Color.primary.opacity(0.25))
+                .frame(width: 36, height: 36)
+            Circle()
+                .fill(Tokens.Color.primary)
+                .frame(width: 16, height: 16)
+                .overlay(Circle().stroke(.white, lineWidth: 2))
+        }
+        .accessibilityIdentifier("runnerPin")
+    }
+
+    private var bottomSheet: some View {
+        VStack(alignment: .leading, spacing: Tokens.Space.md) {
             HStack {
-                Label(
-                    viewModel.booking.petSpec.name.isEmpty ? "Pet" : viewModel.booking.petSpec.name,
-                    systemImage: "pawprint.fill"
-                )
-                .font(.subheadline.weight(.semibold))
+                Text(stageHeading)
+                    .font(Tokens.FontRole.titleM)
+                    .foregroundStyle(Tokens.Color.textPrimary)
                 Spacer()
-                Text(phaseLabel)
-                    .font(.caption.weight(.semibold))
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .background(phaseTint.opacity(0.15), in: Capsule())
-                    .foregroundStyle(phaseTint)
+                StatusBadge(status: .inTransit)
             }
-            VStack(alignment: .leading, spacing: 4) {
-                routeLine(icon: "circle.fill", tint: .green, text: viewModel.booking.pickupAddress.singleLineLabel)
-                routeLine(icon: "mappin.circle.fill", tint: .red, text: viewModel.booking.dropoffAddress.singleLineLabel)
-            }
-        }
-        .padding(14)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 8))
-    }
 
-    private var actionCard: some View {
-        VStack(spacing: 10) {
+            customerContactRow
+
+            VStack(alignment: .leading, spacing: Tokens.Space.xs) {
+                routeRow(dotColor: Tokens.Color.online,
+                         label: "Pickup",
+                         address: viewModel.booking.pickupAddress.singleLineLabel)
+                routeRow(dotColor: Tokens.Color.destructive,
+                         label: "Drop-off",
+                         address: viewModel.booking.dropoffAddress.singleLineLabel)
+            }
+
             if let errorMessage = viewModel.errorMessage {
                 errorBanner(message: errorMessage)
             }
 
-            Button {
-                Task { await viewModel.markPickup() }
-            } label: {
-                HStack {
-                    if viewModel.isMarkingPickup {
-                        ProgressView()
-                    }
-                    Label("Picked Up", systemImage: "shippingbox.fill")
-                        .fontWeight(.semibold)
-                }
-                .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-            .tint(.orange)
-            .disabled(viewModel.deliveryPhase != .enroute || viewModel.isMarkingPickup)
-
-            Button {
-                Task { await viewModel.markDelivered() }
-            } label: {
-                HStack {
-                    if viewModel.isMarkingDelivered {
-                        ProgressView()
-                    }
-                    Label("Mark Delivered", systemImage: "checkmark.circle.fill")
-                        .fontWeight(.semibold)
-                }
-                .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-            .tint(.green)
-            .disabled(viewModel.deliveryPhase != .pickedUp || viewModel.isMarkingDelivered)
+            PrimaryButton(
+                title: stageCtaTitle,
+                icon: stageCtaIcon,
+                isLoading: viewModel.isMarkingPickup || viewModel.isMarkingDelivered,
+                isEnabled: stageCtaEnabled,
+                action: stageCtaAction
+            )
+            .accessibilityIdentifier("activeDeliveryCTA")
         }
-        .padding(14)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 8))
+        .padding(Tokens.Space.lg)
+        .background(Tokens.Color.surface)
+        .clipShape(.rect(topLeadingRadius: Tokens.Radius.xl, topTrailingRadius: Tokens.Radius.xl))
+        .tokenShadow(Tokens.Shadow.raised)
+    }
+
+    private var customerContactRow: some View {
+        HStack(spacing: Tokens.Space.sm) {
+            HStack(spacing: Tokens.Space.xs) {
+                Image(kilatAsset: "paw")
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 18, height: 18)
+                    .foregroundStyle(Tokens.Color.primary)
+                Text(viewModel.booking.petSpec.name.isEmpty ? "Pet" : viewModel.booking.petSpec.name)
+                    .font(Tokens.FontRole.bodyBold)
+                    .foregroundStyle(Tokens.Color.textPrimary)
+            }
+            Spacer()
+            Button {} label: {
+                Image(kilatAsset: "phone")
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 22, height: 22)
+                    .foregroundStyle(Tokens.Color.primary)
+            }
+            .accessibilityLabel("Call customer")
+            Button {} label: {
+                Image(kilatAsset: "message")
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 22, height: 22)
+                    .foregroundStyle(Tokens.Color.primary)
+            }
+            .accessibilityLabel("Message customer")
+        }
     }
 
     private var tripCompleteOverlay: some View {
-        Color.black.opacity(0.28)
+        Color.black.opacity(0.32)
             .ignoresSafeArea()
             .overlay {
-                VStack(spacing: 18) {
-                    Image(systemName: "checkmark.seal.fill")
-                        .font(.system(size: 44, weight: .semibold))
-                        .foregroundStyle(.green)
+                VStack(spacing: Tokens.Space.lg) {
+                    Image(kilatAsset: "check")
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 56, height: 56)
+                        .foregroundStyle(Tokens.Color.online)
 
-                    VStack(spacing: 6) {
+                    VStack(spacing: Tokens.Space.xxs) {
                         Text("Trip complete")
-                            .font(.title2.bold())
+                            .font(Tokens.FontRole.titleL)
+                            .foregroundStyle(Tokens.Color.textPrimary)
                         Text(fareLabel)
-                            .font(.headline)
-                            .foregroundStyle(.secondary)
+                            .font(Tokens.FontRole.titleM)
+                            .foregroundStyle(Tokens.Color.primary)
                     }
 
-                    Button {
-                        onBackToDashboard()
-                    } label: {
-                        Label("Back to Dashboard", systemImage: "house.fill")
-                            .fontWeight(.semibold)
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                    .tint(.green)
+                    PrimaryButton(title: "Back to dashboard", icon: "house.fill", action: onBackToDashboard)
                 }
-                .padding(20)
-                .frame(maxWidth: 340)
-                .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 8))
-                .padding(.horizontal, 24)
+                .padding(Tokens.Space.xl)
+                .frame(maxWidth: 360)
+                .background(Tokens.Color.surface,
+                            in: RoundedRectangle(cornerRadius: Tokens.Radius.xl, style: .continuous))
+                .padding(.horizontal, Tokens.Space.xl)
             }
     }
 
-    private func routeLine(icon: String, tint: Color, text: String) -> some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: icon)
-                .foregroundStyle(tint)
-                .font(.caption)
-                .padding(.top, 4)
-            Text(text)
-                .font(.subheadline)
-                .lineLimit(2)
+    private func routeRow(dotColor: Color, label: String, address: String) -> some View {
+        HStack(alignment: .top, spacing: Tokens.Space.sm) {
+            Circle().fill(dotColor).frame(width: 10, height: 10).padding(.top, 5)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(label)
+                    .font(Tokens.FontRole.caption)
+                    .foregroundStyle(Tokens.Color.textSecondary)
+                    .textCase(.uppercase)
+                Text(address)
+                    .font(Tokens.FontRole.label)
+                    .foregroundStyle(Tokens.Color.textPrimary)
+                    .lineLimit(2)
+            }
         }
     }
 
     private func errorBanner(message: String) -> some View {
-        HStack(alignment: .top, spacing: 10) {
-            Image(systemName: "exclamationmark.triangle.fill")
-                .foregroundStyle(.orange)
+        HStack(alignment: .top, spacing: Tokens.Space.xs) {
+            Image(kilatAsset: "alert")
+                .resizable()
+                .renderingMode(.template)
+                .frame(width: 16, height: 16)
+                .foregroundStyle(Tokens.Color.destructive)
             Text(message)
-                .font(.caption)
-                .foregroundStyle(.primary)
-                .fixedSize(horizontal: false, vertical: true)
-            Spacer(minLength: 0)
+                .font(Tokens.FontRole.caption)
+                .foregroundStyle(Tokens.Color.textPrimary)
         }
-        .padding(10)
-        .background(Color(.systemBackground).opacity(0.72), in: RoundedRectangle(cornerRadius: 8))
+        .padding(Tokens.Space.xs)
+        .background(Tokens.Color.surfaceMuted, in: RoundedRectangle(cornerRadius: Tokens.Radius.sm, style: .continuous))
     }
 
     private var mapRegion: MKCoordinateRegion {
@@ -197,25 +205,69 @@ struct ActiveDeliveryView: View {
         )
     }
 
-    private var phaseLabel: String {
-        switch viewModel.deliveryPhase {
-        case .enroute: return "En route"
-        case .pickedUp: return "Picked up"
-        case .delivered: return "Delivered"
+    private var stageHeading: String {
+        switch viewModel.presentationStage {
+        case .toPickup:   return "Heading to pickup"
+        case .atPickup:   return "Arrived at pickup"
+        case .toDropoff:  return "Heading to drop-off"
+        case .atDropoff:  return "Arrived at drop-off"
+        case .delivered:  return "Delivered"
         }
     }
 
-    private var phaseTint: Color {
-        switch viewModel.deliveryPhase {
-        case .enroute: return .blue
-        case .pickedUp: return .orange
-        case .delivered: return .green
+    private var stageCtaTitle: String {
+        switch viewModel.presentationStage {
+        case .toPickup:   return "I have arrived"
+        case .atPickup:   return "Picked up"
+        case .toDropoff:  return "I have arrived"
+        case .atDropoff:  return "Mark delivered"
+        case .delivered:  return "Back to dashboard"
+        }
+    }
+
+    private var stageCtaIcon: String? {
+        switch viewModel.presentationStage {
+        case .toPickup, .toDropoff: return "mappin.circle.fill"
+        case .atPickup:             return "shippingbox.fill"
+        case .atDropoff:            return "checkmark.circle.fill"
+        case .delivered:            return "house.fill"
+        }
+    }
+
+    private var stageCtaEnabled: Bool {
+        switch viewModel.presentationStage {
+        case .toPickup, .toDropoff: return !viewModel.isMarkingPickup && !viewModel.isMarkingDelivered
+        case .atPickup:             return !viewModel.isMarkingPickup
+        case .atDropoff:            return !viewModel.isMarkingDelivered
+        case .delivered:            return true
+        }
+    }
+
+    private var stageCtaAction: () -> Void {
+        switch viewModel.presentationStage {
+        case .toPickup, .toDropoff:
+            return { viewModel.hasArrivedAtCurrentWaypoint = true }
+        case .atPickup:
+            return {
+                Task {
+                    await viewModel.markPickup()
+                    viewModel.hasArrivedAtCurrentWaypoint = false
+                }
+            }
+        case .atDropoff:
+            return {
+                Task {
+                    await viewModel.markDelivered()
+                    viewModel.hasArrivedAtCurrentWaypoint = false
+                }
+            }
+        case .delivered:
+            return onBackToDashboard
         }
     }
 
     private var fareLabel: String {
         let cents = viewModel.booking.finalPriceCents ?? viewModel.booking.estimatedPriceCents
-        let amount = Double(cents) / 100
-        return "\(viewModel.booking.currency) \(String(format: "%.2f", amount))"
+        return "\(viewModel.booking.currency) \(String(format: "%.2f", Double(cents) / 100))"
     }
 }
