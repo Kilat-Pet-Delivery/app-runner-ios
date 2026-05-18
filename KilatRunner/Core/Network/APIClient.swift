@@ -2,6 +2,11 @@ import Foundation
 
 struct EmptyRequest: Encodable {}
 
+struct EmptyResponse: Decodable, Equatable {
+    init() {}
+    init(from decoder: Decoder) throws {}
+}
+
 final class APIClient {
     private let baseURL: URL
     private let session: URLSession
@@ -48,6 +53,10 @@ final class APIClient {
         }
 
         try validate(httpResponse)
+
+        if data.isEmpty, Response.self == EmptyResponse.self {
+            return EmptyResponse() as! Response
+        }
 
         do {
             return try decoder.decode(Response.self, from: data)
@@ -107,9 +116,13 @@ final class APIClient {
         }
     }
 
-    private static func makeEncoder() -> JSONEncoder {
+    static func makeCamelCaseEncoder() -> JSONEncoder {
+        makeEncoder(keyEncodingStrategy: .useDefaultKeys)
+    }
+
+    private static func makeEncoder(keyEncodingStrategy: JSONEncoder.KeyEncodingStrategy = .convertToSnakeCase) -> JSONEncoder {
         let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.keyEncodingStrategy = keyEncodingStrategy
         encoder.dateEncodingStrategy = .iso8601
         return encoder
     }
