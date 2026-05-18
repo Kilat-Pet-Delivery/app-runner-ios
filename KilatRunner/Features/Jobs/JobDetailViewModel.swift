@@ -8,6 +8,7 @@ final class JobDetailViewModel {
     var acceptedBookingId: String?
     var errorMessage: String?
     var showsDeclineSheet = false
+    var declineViewModel: DeclineReasonViewModel?
 
     @ObservationIgnored private let repository: BookingRepositoryProtocol
 
@@ -18,6 +19,18 @@ final class JobDetailViewModel {
 
     convenience init(booking: Booking) {
         self.init(booking: booking, repository: BookingRepository())
+    }
+
+    @MainActor
+    func presentDeclineSheet() {
+        declineViewModel = DeclineReasonViewModel(bookingID: booking.id, repository: repository)
+        showsDeclineSheet = true
+    }
+
+    @MainActor
+    func closeAfterDecline() {
+        showsDeclineSheet = false
+        declineViewModel = nil
     }
 
     @MainActor

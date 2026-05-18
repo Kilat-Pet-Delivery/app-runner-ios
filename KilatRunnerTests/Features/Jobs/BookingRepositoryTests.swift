@@ -95,6 +95,20 @@ final class BookingRepositoryTests: XCTestCase {
         XCTAssertEqual(booking.status, .accepted)
     }
 
+    func test_decline_postsReasonToEndpoint() async throws {
+        let bookingId = "10000000-0000-4000-8000-000000000001"
+        MockURLProtocol.requestHandler = { request in
+            XCTAssertEqual(request.url?.path, "/api/v1/bookings/\(bookingId)/decline")
+            XCTAssertEqual(request.httpMethod, "POST")
+            let body = try XCTUnwrap(request.httpBody)
+            let json = try JSONSerialization.jsonObject(with: body) as? [String: String]
+            XCTAssertEqual(json?["reason"], "too_far")
+            return Self.jsonResponse(request: request, statusCode: 202, body: "{}")
+        }
+
+        try await repository.decline(id: bookingId, reason: .tooFar)
+    }
+
     func test_markPickup_postsToPickupEndpoint_returnsInProgressBooking() async throws {
         let bookingId = "10000000-0000-4000-8000-000000000001"
         MockURLProtocol.requestHandler = { request in
