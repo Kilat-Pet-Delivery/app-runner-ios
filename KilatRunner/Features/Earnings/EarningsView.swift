@@ -180,8 +180,20 @@ struct EarningsView: View {
                 }
                 Spacer()
             }
-            // TODO(phase-9-9.7): wire to CashOutView (catalog 3.5)
-            PrimaryButton(title: "Cash out now", icon: "banknote") {}
+            NavigationLink {
+                CashOutView(
+                    viewModel: CashOutViewModel(
+                        availableAmountCents: Int64(max(viewModel.nextPayoutCents, viewModel.periodTotalCents))
+                    )
+                )
+            } label: {
+                Text("Cash out now")
+                    .font(Tokens.FontRole.button)
+                    .foregroundStyle(Tokens.Color.onPrimary)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: Tokens.Hit.button)
+                    .background(Tokens.Color.primary, in: RoundedRectangle(cornerRadius: Tokens.Radius.md, style: .continuous))
+            }
         }
         .padding(Tokens.Space.md)
         .background(Tokens.Color.primaryTonal, in: RoundedRectangle(cornerRadius: Tokens.Radius.lg, style: .continuous))
