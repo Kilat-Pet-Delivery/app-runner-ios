@@ -34,8 +34,9 @@ struct DashboardView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                // TODO(phase-9-9.9): wire to NotificationsInboxView (catalog 3.5)
-                Button {} label: {
+                NavigationLink {
+                    NotificationsInboxView(viewModel: NotificationsViewModel())
+                } label: {
                     Image(kilatAsset: "bell")
                         .resizable()
                         .renderingMode(.template)
