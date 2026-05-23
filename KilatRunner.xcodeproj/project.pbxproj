@@ -83,8 +83,17 @@
 		C100000000000000C1000004 /* TrackingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000003 /* TrackingRepository.swift */; };
 		C100000000000000C1000006 /* ActiveDeliveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000005 /* ActiveDeliveryViewModel.swift */; };
 		C100000000000000C1000008 /* ActiveDeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000007 /* ActiveDeliveryView.swift */; };
+		C100000000000000C100000A /* ArrivedAtPickupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000009 /* ArrivedAtPickupView.swift */; };
+		C100000000000000C100000C /* ProofOfDeliveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C100000B /* ProofOfDeliveryViewModel.swift */; };
+		C100000000000000C100000E /* ProofOfDeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C100000D /* ProofOfDeliveryView.swift */; };
+		C100000000000000C1000010 /* DeliveryCompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C100000F /* DeliveryCompleteViewModel.swift */; };
+		C100000000000000C1000012 /* DeliveryCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000011 /* DeliveryCompleteView.swift */; };
+		C100000000000000C1000014 /* PhotoUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C100000000000000C1000013 /* PhotoUploader.swift */; };
 		C200000000000000C2000002 /* TrackingRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000001 /* TrackingRepositoryTests.swift */; };
 		C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */; };
+		C200000000000000C2000006 /* ActiveDeliveryFixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000005 /* ActiveDeliveryFixture.swift */; };
+		C200000000000000C2000008 /* ProofOfDeliveryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000007 /* ProofOfDeliveryViewModelTests.swift */; };
+		C200000000000000C200000A /* DeliveryCompleteViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000009 /* DeliveryCompleteViewModelTests.swift */; };
 		D100000000000000D1000002 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000001 /* LocationManager.swift */; };
 		D100000000000000D1000004 /* WaypointBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000003 /* WaypointBuffer.swift */; };
 		D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200000000000000D2000001 /* WaypointBufferTests.swift */; };
@@ -188,8 +197,17 @@
 		C100000000000000C1000003 /* TrackingRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingRepository.swift; sourceTree = "<group>"; };
 		C100000000000000C1000005 /* ActiveDeliveryViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryViewModel.swift; sourceTree = "<group>"; };
 		C100000000000000C1000007 /* ActiveDeliveryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryView.swift; sourceTree = "<group>"; };
+		C100000000000000C1000009 /* ArrivedAtPickupView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ArrivedAtPickupView.swift; sourceTree = "<group>"; };
+		C100000000000000C100000B /* ProofOfDeliveryViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProofOfDeliveryViewModel.swift; sourceTree = "<group>"; };
+		C100000000000000C100000D /* ProofOfDeliveryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProofOfDeliveryView.swift; sourceTree = "<group>"; };
+		C100000000000000C100000F /* DeliveryCompleteViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeliveryCompleteViewModel.swift; sourceTree = "<group>"; };
+		C100000000000000C1000011 /* DeliveryCompleteView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeliveryCompleteView.swift; sourceTree = "<group>"; };
+		C100000000000000C1000013 /* PhotoUploader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PhotoUploader.swift; sourceTree = "<group>"; };
 		C200000000000000C2000001 /* TrackingRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TrackingRepositoryTests.swift; sourceTree = "<group>"; };
 		C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryViewModelTests.swift; sourceTree = "<group>"; };
+		C200000000000000C2000005 /* ActiveDeliveryFixture.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryFixture.swift; sourceTree = "<group>"; };
+		C200000000000000C2000007 /* ProofOfDeliveryViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProofOfDeliveryViewModelTests.swift; sourceTree = "<group>"; };
+		C200000000000000C2000009 /* DeliveryCompleteViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeliveryCompleteViewModelTests.swift; sourceTree = "<group>"; };
 		C528D7CA61D5E9AF840DFBB2 /* PayoutRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PayoutRepository.swift; sourceTree = "<group>"; };
 		C61D4F9C7ABC7014ED8A7528 /* CashOutSentViewTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CashOutSentViewTests.swift; sourceTree = "<group>"; };
 		C8A58C20706E86ABA46009AD /* CashOutSentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CashOutSentView.swift; sourceTree = "<group>"; };
@@ -347,6 +365,7 @@
 				A00000000000000000000103 /* NetworkError.swift */,
 				A00000000000000000000107 /* APIClient.swift */,
 				A00000000000000000000109 /* AuthInterceptor.swift */,
+				C100000000000000C1000013 /* PhotoUploader.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -495,6 +514,11 @@
 				C100000000000000C1000003 /* TrackingRepository.swift */,
 				C100000000000000C1000005 /* ActiveDeliveryViewModel.swift */,
 				C100000000000000C1000007 /* ActiveDeliveryView.swift */,
+				C100000000000000C1000009 /* ArrivedAtPickupView.swift */,
+				C100000000000000C100000B /* ProofOfDeliveryViewModel.swift */,
+				C100000000000000C100000D /* ProofOfDeliveryView.swift */,
+				C100000000000000C100000F /* DeliveryCompleteViewModel.swift */,
+				C100000000000000C1000011 /* DeliveryCompleteView.swift */,
 			);
 			name = ActiveDelivery;
 			path = ActiveDelivery;
@@ -505,6 +529,9 @@
 			children = (
 				C200000000000000C2000001 /* TrackingRepositoryTests.swift */,
 				C200000000000000C2000003 /* ActiveDeliveryViewModelTests.swift */,
+				C200000000000000C2000005 /* ActiveDeliveryFixture.swift */,
+				C200000000000000C2000007 /* ProofOfDeliveryViewModelTests.swift */,
+				C200000000000000C2000009 /* DeliveryCompleteViewModelTests.swift */,
 				E8A4813B2E1F3E2FBE1C62E1 /* ActiveDeliveryViewSnapshotTests.swift */,
 			);
 			name = ActiveDelivery;
@@ -662,6 +689,7 @@
 				A00000000000000000000114 /* KeychainStore.swift in Sources */,
 				A00000000000000000000117 /* APIClient.swift in Sources */,
 				A00000000000000000000119 /* AuthInterceptor.swift in Sources */,
+				C100000000000000C1000014 /* PhotoUploader.swift in Sources */,
 				A0000000000000000000011B /* AuthModels.swift in Sources */,
 				A0000000000000000000011C /* AuthRepository.swift in Sources */,
 				A0000000000000000000011E /* LoginViewModel.swift in Sources */,
@@ -681,6 +709,11 @@
 				C100000000000000C1000004 /* TrackingRepository.swift in Sources */,
 				C100000000000000C1000006 /* ActiveDeliveryViewModel.swift in Sources */,
 				C100000000000000C1000008 /* ActiveDeliveryView.swift in Sources */,
+				C100000000000000C100000A /* ArrivedAtPickupView.swift in Sources */,
+				C100000000000000C100000C /* ProofOfDeliveryViewModel.swift in Sources */,
+				C100000000000000C100000E /* ProofOfDeliveryView.swift in Sources */,
+				C100000000000000C1000010 /* DeliveryCompleteViewModel.swift in Sources */,
+				C100000000000000C1000012 /* DeliveryCompleteView.swift in Sources */,
 				D100000000000000D1000002 /* LocationManager.swift in Sources */,
 				D100000000000000D1000004 /* WaypointBuffer.swift in Sources */,
 				E100000000000000E1000002 /* WebSocketClient.swift in Sources */,
@@ -730,6 +763,9 @@
 				B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */,
 				C200000000000000C2000002 /* TrackingRepositoryTests.swift in Sources */,
 				C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */,
+				C200000000000000C2000006 /* ActiveDeliveryFixture.swift in Sources */,
+				C200000000000000C2000008 /* ProofOfDeliveryViewModelTests.swift in Sources */,
+				C200000000000000C200000A /* DeliveryCompleteViewModelTests.swift in Sources */,
 				D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */,
 				E200000000000000E2000002 /* WebSocketClientTests.swift in Sources */,
 				BEC13B12F121EAAE7B2A6C3A /* LoginViewSnapshotTests.swift in Sources */,

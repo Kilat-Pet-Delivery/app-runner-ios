@@ -16,7 +16,12 @@ enum APIEndpoint: Equatable {
     case bookingDetail(id: String)
     case acceptBooking(id: String)
     case declineBooking(id: String)
+    case arriveAtPickup(id: String)
     case markPickup(id: String)
+    case arriveAtDropoff(id: String)
+    case proofOfDelivery(id: String)
+    case completeDelivery(id: String)
+    case rateCustomer(id: String)
     case markDelivered(id: String)
     case trackingHistory(bookingId: String)
     case earnings(page: Int = 1, limit: Int = 20)
@@ -27,7 +32,8 @@ enum APIEndpoint: Equatable {
         switch self {
         case .login, .refresh, .logout, .forgotPassword, .resetPassword, .runnerApply,
                 .runnerOnline, .runnerOffline, .runnerLocation, .acceptBooking,
-                .declineBooking, .markPickup, .markDelivered, .cashOut:
+                .declineBooking, .arriveAtPickup, .markPickup, .arriveAtDropoff,
+                .proofOfDelivery, .completeDelivery, .rateCustomer, .markDelivered, .cashOut:
             return .post
         case .profile, .runnerMe, .availableJobs, .bookingDetail, .trackingHistory,
                 .earnings, .notifications:
@@ -67,8 +73,18 @@ enum APIEndpoint: Equatable {
             return "bookings/\(id)/accept"
         case let .declineBooking(id):
             return "bookings/\(id)/decline"
+        case let .arriveAtPickup(id):
+            return "bookings/\(id)/arrive-pickup"
         case let .markPickup(id):
             return "bookings/\(id)/pickup"
+        case let .arriveAtDropoff(id):
+            return "bookings/\(id)/arrive-dropoff"
+        case let .proofOfDelivery(id):
+            return "bookings/\(id)/proof-of-delivery"
+        case let .completeDelivery(id):
+            return "bookings/\(id)/complete"
+        case let .rateCustomer(id):
+            return "bookings/\(id)/rate-customer"
         case let .markDelivered(id):
             return "bookings/\(id)/deliver"
         case let .trackingHistory(bookingId):

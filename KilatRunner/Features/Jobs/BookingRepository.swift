@@ -5,12 +5,42 @@ protocol BookingRepositoryProtocol {
     func get(id: String) async throws -> Booking
     func accept(id: String) async throws -> Booking
     func decline(id: String, reason: DeclineReason) async throws
+    func arriveAtPickup(id: String) async throws -> Booking
+    func markPickedUp(id: String, qrCode: String?) async throws -> Booking
+    func arriveAtDropoff(id: String) async throws -> Booking
+    func submitProofOfDelivery(id: String, proof: ProofOfDeliveryRequest) async throws -> Booking
+    func completeDelivery(id: String) async throws -> Booking
+    func rateCustomer(id: String, rating: CustomerRatingRequest) async throws -> Booking
     func markPickup(id: String) async throws -> Booking
     func markDelivered(id: String) async throws -> Booking
 }
 
 extension BookingRepositoryProtocol {
     func decline(id: String, reason: DeclineReason) async throws {
+        throw NetworkError.invalidResponse
+    }
+
+    func arriveAtPickup(id: String) async throws -> Booking {
+        throw NetworkError.invalidResponse
+    }
+
+    func markPickedUp(id: String, qrCode: String?) async throws -> Booking {
+        try await markPickup(id: id)
+    }
+
+    func arriveAtDropoff(id: String) async throws -> Booking {
+        throw NetworkError.invalidResponse
+    }
+
+    func submitProofOfDelivery(id: String, proof: ProofOfDeliveryRequest) async throws -> Booking {
+        throw NetworkError.invalidResponse
+    }
+
+    func completeDelivery(id: String) async throws -> Booking {
+        try await markDelivered(id: id)
+    }
+
+    func rateCustomer(id: String, rating: CustomerRatingRequest) async throws -> Booking {
         throw NetworkError.invalidResponse
     }
 }
@@ -48,6 +78,42 @@ final class BookingRepository: BookingRepositoryProtocol {
         )
     }
 
+    func arriveAtPickup(id: String) async throws -> Booking {
+        let envelope: APIResponseEnvelope<Booking> = try await authInterceptor.perform(.arriveAtPickup(id: id))
+        return envelope.data
+    }
+
+    func markPickedUp(id: String, qrCode: String?) async throws -> Booking {
+        if let qrCode {
+            let envelope: APIResponseEnvelope<Booking> = try await authInterceptor.perform(
+                .markPickup(id: id),
+                body: MarkPickedUpRequest(qrCode: qrCode)
+            )
+            return envelope.data
+        }
+        return try await markPickup(id: id)
+    }
+
+    func arriveAtDropoff(id: String) async throws -> Booking {
+        let envelope: APIResponseEnvelope<Booking> = try await authInterceptor.perform(.arriveAtDropoff(id: id))
+        return envelope.data
+    }
+
+    func submitProofOfDelivery(id: String, proof: ProofOfDeliveryRequest) async throws -> Booking {
+        let envelope: APIResponseEnvelope<Booking> = try await authInterceptor.perform(.proofOfDelivery(id: id), body: proof)
+        return envelope.data
+    }
+
+    func completeDelivery(id: String) async throws -> Booking {
+        let envelope: APIResponseEnvelope<Booking> = try await authInterceptor.perform(.completeDelivery(id: id))
+        return envelope.data
+    }
+
+    func rateCustomer(id: String, rating: CustomerRatingRequest) async throws -> Booking {
+        let envelope: APIResponseEnvelope<Booking> = try await authInterceptor.perform(.rateCustomer(id: id), body: rating)
+        return envelope.data
+    }
+
     func markPickup(id: String) async throws -> Booking {
         let envelope: APIResponseEnvelope<Booking> = try await authInterceptor.perform(.markPickup(id: id))
         return envelope.data
@@ -57,6 +123,42 @@ final class BookingRepository: BookingRepositoryProtocol {
         let envelope: APIResponseEnvelope<Booking> = try await authInterceptor.perform(.markDelivered(id: id))
         return envelope.data
     }
+}
+
+struct MarkPickedUpRequest: Encodable, Equatable {
+    let qrCode: String?
+}
+
+enum ProofRecipient: String, CaseIterable, Identifiable, Encodable, Equatable {
+    case customer
+    case receptionist
+    case leftAtDoor = "left_at_door"
+
+    var id: String { rawValue }
+
+    var label: String {
+        switch self {
+        case .customer: return "Customer"
+        case .receptionist: return "Receptionist"
+        case .leftAtDoor: return "Left at door"
+        }
+    }
+
+    var requiresSignature: Bool {
+        self == .customer
+    }
+}
+
+struct ProofOfDeliveryRequest: Encodable, Equatable {
+    let photoStorageKey: String
+    let signatureStorageKey: String?
+    let recipient: ProofRecipient
+    let notes: String
+}
+
+struct CustomerRatingRequest: Encodable, Equatable {
+    let rating: Int
+    let tags: [String]
 }
 
 enum DeclineReason: String, CaseIterable, Identifiable, Encodable {
