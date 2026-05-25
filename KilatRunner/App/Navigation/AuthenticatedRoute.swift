@@ -8,6 +8,8 @@ enum AuthenticatedRoute: Hashable {
     case chat(threadID: String)
     case bankAccounts
     case documents
+    case jobHistory
+    case scheduledJobs
 }
 
 extension AuthenticatedRoute: Identifiable {
@@ -20,6 +22,8 @@ extension AuthenticatedRoute: Identifiable {
         case let .chat(threadID): return "chat-\(threadID)"
         case .bankAccounts: return "bank-accounts"
         case .documents: return "documents"
+        case .jobHistory: return "job-history"
+        case .scheduledJobs: return "scheduled-jobs"
         }
     }
 }

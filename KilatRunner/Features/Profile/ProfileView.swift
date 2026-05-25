@@ -101,6 +101,7 @@ struct ProfileView: View {
 
     private var navigationRows: some View {
         VStack(spacing: 0) {
+            NavigationLink(value: AuthenticatedRoute.jobHistory) { navRow("Job History", icon: "box") }
             NavigationLink(value: AuthenticatedRoute.settings) { navRow("Settings", icon: "sliders") }
             NavigationLink(value: AuthenticatedRoute.support) { navRow("Support", icon: "message") }
             NavigationLink(value: AuthenticatedRoute.bankAccounts) { navRow("Bank accounts", icon: "wallet") }

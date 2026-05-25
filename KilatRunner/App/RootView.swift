@@ -54,6 +54,10 @@ private struct AuthenticatedRootView: View {
         case .documents:
             Text("Documents")
                 .navigationTitle("Documents")
+        case .jobHistory:
+            JobHistoryView(viewModel: JobHistoryViewModel())
+        case .scheduledJobs:
+            ScheduledJobsView(viewModel: ScheduledJobsViewModel())
         }
     }
 }

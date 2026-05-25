@@ -53,7 +53,10 @@ struct DashboardView: View {
                 .accessibilityLabel("Profile")
             }
         }
-        .task { await viewModel.loadRunner() }
+        .task {
+            await viewModel.loadRunner()
+            await viewModel.loadScheduledHint()
+        }
         .sheet(isPresented: $showsPermissionRationale) {
             PermissionRationaleSheet {
                 showsPermissionRationale = false
@@ -65,37 +68,51 @@ struct DashboardView: View {
     }
 
     private var header: some View {
-        NavigationLink(value: AuthenticatedRoute.profile) {
-            HStack(spacing: Tokens.Space.sm) {
-                Avatar(name: viewModel.runner?.fullName ?? "Runner", size: 48)
-                VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
-                    Text("Hi, \(viewModel.runner?.fullName.components(separatedBy: " ").first ?? "Runner")")
-                        .font(Tokens.FontRole.titleL)
-                        .foregroundStyle(Tokens.Color.textPrimary)
-                        .lineLimit(2)
+        VStack(alignment: .leading, spacing: Tokens.Space.sm) {
+            NavigationLink(value: AuthenticatedRoute.profile) {
+                HStack(spacing: Tokens.Space.sm) {
+                    Avatar(name: viewModel.runner?.fullName ?? "Runner", size: 48)
+                    VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
+                        Text("Hi, \(viewModel.runner?.fullName.components(separatedBy: " ").first ?? "Runner")")
+                            .font(Tokens.FontRole.titleL)
+                            .foregroundStyle(Tokens.Color.textPrimary)
+                            .lineLimit(2)
 
-                    HStack(spacing: Tokens.Space.xs) {
-                        Image(kilatAsset: "scooter")
-                            .resizable()
-                            .renderingMode(.template)
-                            .frame(width: 16, height: 16)
-                        Text(viewModel.runner?.vehicleType.capitalized ?? "Vehicle")
-                        Text("·")
-                        Text(viewModel.runner?.vehiclePlate ?? "Pending")
+                        HStack(spacing: Tokens.Space.xs) {
+                            Image(kilatAsset: "scooter")
+                                .resizable()
+                                .renderingMode(.template)
+                                .frame(width: 16, height: 16)
+                            Text(viewModel.runner?.vehicleType.capitalized ?? "Vehicle")
+                            Text("·")
+                            Text(viewModel.runner?.vehiclePlate ?? "Pending")
+                        }
+                        .font(Tokens.FontRole.label)
+                        .foregroundStyle(Tokens.Color.textSecondary)
                     }
-                    .font(Tokens.FontRole.label)
-                    .foregroundStyle(Tokens.Color.textSecondary)
+                    Spacer()
+                    Image(kilatAsset: "chevron-right")
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 16, height: 16)
+                        .foregroundStyle(Tokens.Color.textSecondary)
                 }
-                Spacer()
-                Image(kilatAsset: "chevron-right")
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: 16, height: 16)
-                    .foregroundStyle(Tokens.Color.textSecondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .buttonStyle(.plain)
+
+            if let upcoming = viewModel.upcomingScheduledBooking {
+                NavigationLink(value: AuthenticatedRoute.scheduledJobs) {
+                    Label(upcomingLabel(for: upcoming), systemImage: "calendar.badge.clock")
+                        .font(Tokens.FontRole.caption)
+                        .foregroundStyle(Tokens.Color.primary)
+                        .padding(.horizontal, Tokens.Space.xs)
+                        .padding(.vertical, 3)
+                        .background(Tokens.Color.primaryTonal, in: Capsule())
+                }
+                .buttonStyle(.plain)
+            }
         }
-        .buttonStyle(.plain)
     }
 
     private var statusPanel: some View {
@@ -268,6 +285,19 @@ struct DashboardView: View {
         let mins = minutes % 60
         return "\(hours)h \(mins)m"
     }
+
+    private func upcomingLabel(for booking: Booking) -> String {
+        guard let scheduledAt = booking.scheduledAt else {
+            return "Upcoming jobs"
+        }
+        return "Upcoming \(Self.headerTimeFormatter.string(from: scheduledAt))"
+    }
+
+    private static let headerTimeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        return formatter
+    }()
 }
 
 #Preview("Dashboard (offline)") {

@@ -2,6 +2,8 @@ import Foundation
 
 protocol BookingRepositoryProtocol {
     func listAvailable() async throws -> [Booking]
+    func fetchHistory(filter: BookingHistoryFilter, cursor: String?, limit: Int) async throws -> BookingHistoryPage
+    func fetchScheduled() async throws -> [Booking]
     func get(id: String) async throws -> Booking
     func accept(id: String) async throws -> Booking
     func decline(id: String, reason: DeclineReason) async throws
@@ -17,6 +19,14 @@ protocol BookingRepositoryProtocol {
 
 extension BookingRepositoryProtocol {
     func decline(id: String, reason: DeclineReason) async throws {
+        throw NetworkError.invalidResponse
+    }
+
+    func fetchHistory(filter: BookingHistoryFilter, cursor: String?, limit: Int) async throws -> BookingHistoryPage {
+        throw NetworkError.invalidResponse
+    }
+
+    func fetchScheduled() async throws -> [Booking] {
         throw NetworkError.invalidResponse
     }
 
@@ -58,6 +68,15 @@ final class BookingRepository: BookingRepositoryProtocol {
 
     func listAvailable() async throws -> [Booking] {
         let envelope: APIResponseEnvelope<[Booking]> = try await authInterceptor.perform(.availableJobs())
+        return envelope.data
+    }
+
+    func fetchHistory(filter: BookingHistoryFilter, cursor: String? = nil, limit: Int = 20) async throws -> BookingHistoryPage {
+        try await authInterceptor.perform(.bookingHistory(filter: filter.rawValue, cursor: cursor, limit: limit))
+    }
+
+    func fetchScheduled() async throws -> [Booking] {
+        let envelope: APIResponseEnvelope<[Booking]> = try await authInterceptor.perform(.scheduledBookings)
         return envelope.data
     }
 
@@ -183,4 +202,25 @@ enum DeclineReason: String, CaseIterable, Identifiable, Encodable {
 
 struct DeclineBookingRequest: Encodable, Equatable {
     let reason: String
+}
+
+enum BookingHistoryFilter: String, CaseIterable, Identifiable, Equatable {
+    case all
+    case live
+    case cancelled
+
+    var id: String { rawValue }
+
+    var label: String {
+        switch self {
+        case .all: return "All"
+        case .live: return "Live"
+        case .cancelled: return "Cancelled"
+        }
+    }
+}
+
+struct BookingHistoryPage: Decodable, Equatable {
+    let items: [Booking]
+    let nextCursor: String
 }

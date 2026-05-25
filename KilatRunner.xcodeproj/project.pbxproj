@@ -95,6 +95,12 @@
 		E510000000000000E5100004 /* CancelActiveViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E510000000000000E5100003 /* CancelActiveViewModelTests.swift */; };
 		E510000000000000E5100006 /* ReportProblemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E510000000000000E5100005 /* ReportProblemViewModelTests.swift */; };
 		E510000000000000E5100008 /* SOSViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E510000000000000E5100007 /* SOSViewModelTests.swift */; };
+		F600000000000000F6000002 /* JobHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F600000000000000F6000001 /* JobHistoryViewModel.swift */; };
+		F600000000000000F6000004 /* JobHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F600000000000000F6000003 /* JobHistoryView.swift */; };
+		F600000000000000F6000006 /* ScheduledJobsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F600000000000000F6000005 /* ScheduledJobsViewModel.swift */; };
+		F600000000000000F6000008 /* ScheduledJobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F600000000000000F6000007 /* ScheduledJobsView.swift */; };
+		F610000000000000F6100002 /* JobHistoryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610000000000000F6100001 /* JobHistoryViewModelTests.swift */; };
+		F610000000000000F6100004 /* ScheduledJobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610000000000000F6100003 /* ScheduledJobsViewModelTests.swift */; };
 		B200000000000000B2000002 /* AvailableJobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */; };
 		B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000003 /* JobDetailViewModelTests.swift */; };
 		B2B2044477AA79FE464BBAD9 /* ChatSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B35156FBA7674EDC82116D /* ChatSocketClient.swift */; };
@@ -256,6 +262,12 @@
 		E510000000000000E5100003 /* CancelActiveViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CancelActiveViewModelTests.swift; sourceTree = "<group>"; };
 		E510000000000000E5100005 /* ReportProblemViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReportProblemViewModelTests.swift; sourceTree = "<group>"; };
 		E510000000000000E5100007 /* SOSViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SOSViewModelTests.swift; sourceTree = "<group>"; };
+		F600000000000000F6000001 /* JobHistoryViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobHistoryViewModel.swift; sourceTree = "<group>"; };
+		F600000000000000F6000003 /* JobHistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobHistoryView.swift; sourceTree = "<group>"; };
+		F600000000000000F6000005 /* ScheduledJobsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ScheduledJobsViewModel.swift; sourceTree = "<group>"; };
+		F600000000000000F6000007 /* ScheduledJobsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ScheduledJobsView.swift; sourceTree = "<group>"; };
+		F610000000000000F6100001 /* JobHistoryViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobHistoryViewModelTests.swift; sourceTree = "<group>"; };
+		F610000000000000F6100003 /* ScheduledJobsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ScheduledJobsViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000003 /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
 		C009AC4A54A76361B4CB53CA /* ForgotPasswordViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModelTests.swift; sourceTree = "<group>"; };
@@ -675,6 +687,8 @@
 				B200000000000000B2000003 /* JobDetailViewModelTests.swift */,
 				B500000000000000B5000001 /* PetProfileViewModelTests.swift */,
 				B500000000000000B5000003 /* VetPickupDetailViewModelTests.swift */,
+				F610000000000000F6100001 /* JobHistoryViewModelTests.swift */,
+				F610000000000000F6100003 /* ScheduledJobsViewModelTests.swift */,
 				9AEA715E11EAC209CD4DC6D9 /* AvailableJobsViewSnapshotTests.swift */,
 				54ED6F9FD7B89D29C73DBFE3 /* JobDetailViewSnapshotTests.swift */,
 				5C14809961BAE1435D34CAED /* DeclineReasonViewModelTests.swift */,
@@ -699,6 +713,10 @@
 				B400000000000000B4000007 /* PetProfileView.swift */,
 				B400000000000000B4000009 /* VetPickupDetailViewModel.swift */,
 				B400000000000000B400000B /* VetPickupDetailView.swift */,
+				F600000000000000F6000001 /* JobHistoryViewModel.swift */,
+				F600000000000000F6000003 /* JobHistoryView.swift */,
+				F600000000000000F6000005 /* ScheduledJobsViewModel.swift */,
+				F600000000000000F6000007 /* ScheduledJobsView.swift */,
 				66871F0C05A0AE356D40E442 /* JobRowCard.swift */,
 				7F2ADC46D956D8E75AF8B7AA /* DeclineReasonSheet.swift */,
 				CE7B0BDA15DC3CEC288729E8 /* DeclineReasonViewModel.swift */,
@@ -925,6 +943,10 @@
 				B400000000000000B4000008 /* PetProfileView.swift in Sources */,
 				B400000000000000B400000A /* VetPickupDetailViewModel.swift in Sources */,
 				B400000000000000B400000C /* VetPickupDetailView.swift in Sources */,
+				F600000000000000F6000002 /* JobHistoryViewModel.swift in Sources */,
+				F600000000000000F6000004 /* JobHistoryView.swift in Sources */,
+				F600000000000000F6000006 /* ScheduledJobsViewModel.swift in Sources */,
+				F600000000000000F6000008 /* ScheduledJobsView.swift in Sources */,
 				C100000000000000C1000002 /* TrackingModels.swift in Sources */,
 				C100000000000000C1000004 /* TrackingRepository.swift in Sources */,
 				C100000000000000C1000006 /* ActiveDeliveryViewModel.swift in Sources */,
@@ -1006,6 +1028,8 @@
 				B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */,
 				B500000000000000B5000002 /* PetProfileViewModelTests.swift in Sources */,
 				B500000000000000B5000004 /* VetPickupDetailViewModelTests.swift in Sources */,
+				F610000000000000F6100002 /* JobHistoryViewModelTests.swift in Sources */,
+				F610000000000000F6100004 /* ScheduledJobsViewModelTests.swift in Sources */,
 				C200000000000000C2000002 /* TrackingRepositoryTests.swift in Sources */,
 				C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */,
 				C200000000000000C2000006 /* ActiveDeliveryFixture.swift in Sources */,

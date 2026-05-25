@@ -60,6 +60,7 @@ final class DashboardViewModel {
     var deliveriesThisWeek: Int = 0
     var onlineMinutesThisWeek: Int = 0
     var activeJob: DashboardActiveJob? = nil
+    var upcomingScheduledBooking: Booking? = nil
 
     var weeklyGoalProgress: Double {
         guard weeklyGoalCents > 0 else { return 0 }
@@ -67,20 +68,24 @@ final class DashboardViewModel {
     }
 
     @ObservationIgnored private let repository: RunnerRepositoryProtocol
+    @ObservationIgnored private let bookingRepository: BookingRepositoryProtocol
     @ObservationIgnored private let locationPermissionProvider: LocationPermissionProvider
 
     init(
         repository: RunnerRepositoryProtocol,
-        locationPermissionProvider: LocationPermissionProvider
+        locationPermissionProvider: LocationPermissionProvider,
+        bookingRepository: BookingRepositoryProtocol = BookingRepository()
     ) {
         self.repository = repository
         self.locationPermissionProvider = locationPermissionProvider
+        self.bookingRepository = bookingRepository
     }
 
     convenience init() {
         self.init(
             repository: RunnerRepository(),
-            locationPermissionProvider: CoreLocationPermissionProvider()
+            locationPermissionProvider: CoreLocationPermissionProvider(),
+            bookingRepository: BookingRepository()
         )
     }
 
@@ -98,6 +103,22 @@ final class DashboardViewModel {
             errorMessage = error.userMessage
         } catch {
             errorMessage = NetworkError.unknown(error.localizedDescription).userMessage
+        }
+    }
+
+    @MainActor
+    func loadScheduledHint(now: Date = Date()) async {
+        do {
+            let scheduled = try await bookingRepository.fetchScheduled()
+            upcomingScheduledBooking = scheduled
+                .filter { booking in
+                    guard let scheduledAt = booking.scheduledAt else { return false }
+                    return scheduledAt >= now && scheduledAt <= now.addingTimeInterval(24 * 60 * 60)
+                }
+                .sorted { ($0.scheduledAt ?? .distantFuture) < ($1.scheduledAt ?? .distantFuture) }
+                .first
+        } catch {
+            upcomingScheduledBooking = nil
         }
     }
 

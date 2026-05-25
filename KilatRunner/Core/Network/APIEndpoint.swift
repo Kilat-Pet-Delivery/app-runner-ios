@@ -13,6 +13,8 @@ enum APIEndpoint: Equatable {
     case runnerOffline
     case runnerLocation
     case availableJobs(page: Int = 1, limit: Int = 20)
+    case bookingHistory(filter: String, cursor: String?, limit: Int = 20)
+    case scheduledBookings
     case bookingDetail(id: String)
     case bookingPet(id: String)
     case acceptBooking(id: String)
@@ -55,7 +57,7 @@ enum APIEndpoint: Equatable {
             return .post
         case .updateMe, .updateMeSettings:
             return .put
-        case .profile, .runnerMe, .availableJobs, .bookingDetail, .bookingPet, .trackingHistory,
+        case .profile, .runnerMe, .availableJobs, .bookingHistory, .scheduledBookings, .bookingDetail, .bookingPet, .trackingHistory,
                 .earnings, .notifications, .threads, .threadMessages, .quickReplies, .me, .meSettings, .tier,
                 .incidentDetail:
             return .get
@@ -88,6 +90,10 @@ enum APIEndpoint: Equatable {
             return "runners/me/location"
         case .availableJobs:
             return "bookings"
+        case .bookingHistory:
+            return "bookings/history"
+        case .scheduledBookings:
+            return "bookings/scheduled"
         case let .bookingDetail(id):
             return "bookings/\(id)"
         case let .bookingPet(id):
@@ -160,6 +166,15 @@ enum APIEndpoint: Equatable {
                 URLQueryItem(name: "page", value: String(page)),
                 URLQueryItem(name: "limit", value: String(limit))
             ]
+        case let .bookingHistory(filter, cursor, limit):
+            var items = [
+                URLQueryItem(name: "filter", value: filter),
+                URLQueryItem(name: "limit", value: String(limit))
+            ]
+            if let cursor, !cursor.isEmpty {
+                items.append(URLQueryItem(name: "cursor", value: cursor))
+            }
+            return items
         case let .earnings(page, limit):
             return [
                 URLQueryItem(name: "status", value: "completed"),
