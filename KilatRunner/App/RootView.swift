@@ -16,16 +16,31 @@ struct RootView: View {
 
 private struct AuthenticatedRootView: View {
     @Environment(AppSession.self) private var session
+    @AppStorage("permissions.completed") private var permissionsCompleted = false
     @State private var dashboardViewModel = DashboardViewModel()
+    @State private var coachMarksState = CoachMarksState()
 
     var body: some View {
         NavigationStack {
             DashboardView(viewModel: dashboardViewModel)
+                .overlay {
+                    CoachMarksOverlay(state: coachMarksState)
+                }
                 .navigationDestination(for: AuthenticatedRoute.self) { route in
                     destination(for: route)
                 }
         }
         .preferredColorScheme(session.colorSchemeOverride)
+        .fullScreenCover(isPresented: Binding(
+            get: { !permissionsCompleted },
+            set: { dismissed in
+                if !dismissed { permissionsCompleted = true }
+            }
+        )) {
+            PermissionsView(viewModel: PermissionsViewModel()) {
+                permissionsCompleted = true
+            }
+        }
     }
 
     @ViewBuilder
