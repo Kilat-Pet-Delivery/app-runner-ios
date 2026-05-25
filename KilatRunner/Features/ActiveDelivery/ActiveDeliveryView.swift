@@ -92,9 +92,20 @@ struct ActiveDeliveryView: View {
                     routeRow(dotColor: Tokens.Color.online,
                              label: "Pickup",
                              address: viewModel.booking.pickupAddress.singleLineLabel)
-                    routeRow(dotColor: Tokens.Color.destructive,
-                             label: "Drop-off",
-                             address: viewModel.booking.dropoffAddress.singleLineLabel)
+                    if isLivePetBooking {
+                        NavigationLink {
+                            PetProfileView(viewModel: PetProfileViewModel(bookingID: viewModel.booking.id))
+                        } label: {
+                            routeRow(dotColor: Tokens.Color.destructive,
+                                     label: "Drop-off",
+                                     address: viewModel.booking.dropoffAddress.singleLineLabel)
+                        }
+                        .buttonStyle(.plain)
+                    } else {
+                        routeRow(dotColor: Tokens.Color.destructive,
+                                 label: "Drop-off",
+                                 address: viewModel.booking.dropoffAddress.singleLineLabel)
+                    }
                 }
             }
 
@@ -189,7 +200,7 @@ struct ActiveDeliveryView: View {
                 viewModel: ProofOfDeliveryViewModel { proof in
                     try await viewModel.submitProofOfDelivery(proof)
                 },
-                isLivePet: !viewModel.booking.petSpec.petType.isEmpty
+                isLivePet: isLivePetBooking
             )
         case .proofSubmitted:
             DeliveryCompleteView(
@@ -337,6 +348,10 @@ struct ActiveDeliveryView: View {
     private var fareLabel: String {
         let cents = viewModel.booking.finalPriceCents ?? viewModel.booking.estimatedPriceCents
         return "\(viewModel.booking.currency) \(String(format: "%.2f", Double(cents) / 100))"
+    }
+
+    private var isLivePetBooking: Bool {
+        !viewModel.booking.petSpec.petType.isEmpty && viewModel.booking.petSpec.petType.lowercased() != "supplies"
     }
 
     private func presentChat() {

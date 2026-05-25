@@ -7,7 +7,9 @@ struct Booking: Decodable, Equatable, Identifiable {
     let ownerId: String
     let runnerId: String?
     let status: BookingStatus
+    var kind: BookingKind? = nil
     let petSpec: BookingPetSpec
+    var vetSpec: BookingVetSpec? = nil
     let pickupAddress: BookingAddress
     let dropoffAddress: BookingAddress
     let routeSpec: BookingRouteSpec?
@@ -33,6 +35,8 @@ struct Booking: Decodable, Equatable, Identifiable {
     }
 
     var distanceKm: Double? { routeSpec?.distanceKm }
+
+    var isVetBooking: Bool { kind == .vet || vetSpec != nil }
 }
 
 enum BookingStatus: String, Decodable, Equatable {
@@ -42,6 +46,11 @@ enum BookingStatus: String, Decodable, Equatable {
     case delivered
     case completed
     case cancelled
+}
+
+enum BookingKind: String, Decodable, Equatable {
+    case delivery
+    case vet
 }
 
 struct BookingAddress: Decodable, Equatable {
@@ -116,5 +125,55 @@ struct BookingRouteSpec: Decodable, Equatable {
         distanceKm = try container.decodeIfPresent(Double.self, forKey: .distanceKm) ?? 0
         estimatedDurationMin = try container.decodeIfPresent(Int.self, forKey: .estimatedDurationMin) ?? 0
         polyline = try container.decodeIfPresent(String.self, forKey: .polyline) ?? ""
+    }
+}
+
+struct BookingVetSpec: Decodable, Equatable {
+    let condition: String
+    let medications: [VetMedication]
+    let handlingInstructions: String
+    let vetName: String
+    let vetPhone: String
+    let requiresColdChain: Bool
+
+    private enum CodingKeys: String, CodingKey {
+        case condition
+        case medications
+        case handlingInstructions
+        case vetName
+        case vetPhone
+        case requiresColdChain
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        condition = try container.decodeIfPresent(String.self, forKey: .condition) ?? "Routine visit"
+        medications = try container.decodeIfPresent([VetMedication].self, forKey: .medications) ?? []
+        handlingInstructions = try container.decodeIfPresent(String.self, forKey: .handlingInstructions) ?? ""
+        vetName = try container.decodeIfPresent(String.self, forKey: .vetName) ?? ""
+        vetPhone = try container.decodeIfPresent(String.self, forKey: .vetPhone) ?? ""
+        requiresColdChain = try container.decodeIfPresent(Bool.self, forKey: .requiresColdChain) ?? false
+    }
+}
+
+struct VetMedication: Decodable, Equatable, Identifiable {
+    let id: String
+    let name: String
+    let dosage: String
+    let requiresColdChain: Bool
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case dosage
+        case requiresColdChain
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decodeIfPresent(String.self, forKey: .id) ?? UUID().uuidString
+        name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+        dosage = try container.decodeIfPresent(String.self, forKey: .dosage) ?? ""
+        requiresColdChain = try container.decodeIfPresent(Bool.self, forKey: .requiresColdChain) ?? false
     }
 }

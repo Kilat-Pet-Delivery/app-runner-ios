@@ -14,6 +14,7 @@ enum APIEndpoint: Equatable {
     case runnerLocation
     case availableJobs(page: Int = 1, limit: Int = 20)
     case bookingDetail(id: String)
+    case bookingPet(id: String)
     case acceptBooking(id: String)
     case declineBooking(id: String)
     case arriveAtPickup(id: String)
@@ -50,7 +51,7 @@ enum APIEndpoint: Equatable {
             return .post
         case .updateMe, .updateMeSettings:
             return .put
-        case .profile, .runnerMe, .availableJobs, .bookingDetail, .trackingHistory,
+        case .profile, .runnerMe, .availableJobs, .bookingDetail, .bookingPet, .trackingHistory,
                 .earnings, .notifications, .threads, .threadMessages, .quickReplies, .me, .meSettings, .tier:
             return .get
         }
@@ -84,6 +85,8 @@ enum APIEndpoint: Equatable {
             return "bookings"
         case let .bookingDetail(id):
             return "bookings/\(id)"
+        case let .bookingPet(id):
+            return "bookings/\(id)/pet"
         case let .acceptBooking(id):
             return "bookings/\(id)/accept"
         case let .declineBooking(id):

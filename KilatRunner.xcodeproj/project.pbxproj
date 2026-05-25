@@ -75,6 +75,14 @@
 		B100000000000000B1000004 /* AvailableJobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000000000000B1000003 /* AvailableJobsView.swift */; };
 		B100000000000000B1000006 /* JobDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000000000000B1000005 /* JobDetailViewModel.swift */; };
 		B100000000000000B1000008 /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000000000000B1000007 /* JobDetailView.swift */; };
+		B400000000000000B4000002 /* PetProfileModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B400000000000000B4000001 /* PetProfileModels.swift */; };
+		B400000000000000B4000004 /* PetProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B400000000000000B4000003 /* PetProfileRepository.swift */; };
+		B400000000000000B4000006 /* PetProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B400000000000000B4000005 /* PetProfileViewModel.swift */; };
+		B400000000000000B4000008 /* PetProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B400000000000000B4000007 /* PetProfileView.swift */; };
+		B400000000000000B400000A /* VetPickupDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B400000000000000B4000009 /* VetPickupDetailViewModel.swift */; };
+		B400000000000000B400000C /* VetPickupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B400000000000000B400000B /* VetPickupDetailView.swift */; };
+		B500000000000000B5000002 /* PetProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B500000000000000B5000001 /* PetProfileViewModelTests.swift */; };
+		B500000000000000B5000004 /* VetPickupDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B500000000000000B5000003 /* VetPickupDetailViewModelTests.swift */; };
 		B200000000000000B2000002 /* AvailableJobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */; };
 		B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000003 /* JobDetailViewModelTests.swift */; };
 		B2B2044477AA79FE464BBAD9 /* ChatSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B35156FBA7674EDC82116D /* ChatSocketClient.swift */; };
@@ -216,6 +224,14 @@
 		B100000000000000B1000003 /* AvailableJobsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsView.swift; sourceTree = "<group>"; };
 		B100000000000000B1000005 /* JobDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModel.swift; sourceTree = "<group>"; };
 		B100000000000000B1000007 /* JobDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
+		B400000000000000B4000001 /* PetProfileModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetProfileModels.swift; sourceTree = "<group>"; };
+		B400000000000000B4000003 /* PetProfileRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetProfileRepository.swift; sourceTree = "<group>"; };
+		B400000000000000B4000005 /* PetProfileViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetProfileViewModel.swift; sourceTree = "<group>"; };
+		B400000000000000B4000007 /* PetProfileView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetProfileView.swift; sourceTree = "<group>"; };
+		B400000000000000B4000009 /* VetPickupDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VetPickupDetailViewModel.swift; sourceTree = "<group>"; };
+		B400000000000000B400000B /* VetPickupDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VetPickupDetailView.swift; sourceTree = "<group>"; };
+		B500000000000000B5000001 /* PetProfileViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetProfileViewModelTests.swift; sourceTree = "<group>"; };
+		B500000000000000B5000003 /* VetPickupDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VetPickupDetailViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000003 /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
 		C009AC4A54A76361B4CB53CA /* ForgotPasswordViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModelTests.swift; sourceTree = "<group>"; };
@@ -605,6 +621,8 @@
 				9AC6ED1E3E0C8833694070BD /* BookingRepositoryTests.swift */,
 				B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */,
 				B200000000000000B2000003 /* JobDetailViewModelTests.swift */,
+				B500000000000000B5000001 /* PetProfileViewModelTests.swift */,
+				B500000000000000B5000003 /* VetPickupDetailViewModelTests.swift */,
 				9AEA715E11EAC209CD4DC6D9 /* AvailableJobsViewSnapshotTests.swift */,
 				54ED6F9FD7B89D29C73DBFE3 /* JobDetailViewSnapshotTests.swift */,
 				5C14809961BAE1435D34CAED /* DeclineReasonViewModelTests.swift */,
@@ -623,6 +641,12 @@
 				B100000000000000B1000003 /* AvailableJobsView.swift */,
 				B100000000000000B1000005 /* JobDetailViewModel.swift */,
 				B100000000000000B1000007 /* JobDetailView.swift */,
+				B400000000000000B4000001 /* PetProfileModels.swift */,
+				B400000000000000B4000003 /* PetProfileRepository.swift */,
+				B400000000000000B4000005 /* PetProfileViewModel.swift */,
+				B400000000000000B4000007 /* PetProfileView.swift */,
+				B400000000000000B4000009 /* VetPickupDetailViewModel.swift */,
+				B400000000000000B400000B /* VetPickupDetailView.swift */,
 				66871F0C05A0AE356D40E442 /* JobRowCard.swift */,
 				7F2ADC46D956D8E75AF8B7AA /* DeclineReasonSheet.swift */,
 				CE7B0BDA15DC3CEC288729E8 /* DeclineReasonViewModel.swift */,
@@ -843,6 +867,12 @@
 				B100000000000000B1000004 /* AvailableJobsView.swift in Sources */,
 				B100000000000000B1000006 /* JobDetailViewModel.swift in Sources */,
 				B100000000000000B1000008 /* JobDetailView.swift in Sources */,
+				B400000000000000B4000002 /* PetProfileModels.swift in Sources */,
+				B400000000000000B4000004 /* PetProfileRepository.swift in Sources */,
+				B400000000000000B4000006 /* PetProfileViewModel.swift in Sources */,
+				B400000000000000B4000008 /* PetProfileView.swift in Sources */,
+				B400000000000000B400000A /* VetPickupDetailViewModel.swift in Sources */,
+				B400000000000000B400000C /* VetPickupDetailView.swift in Sources */,
 				C100000000000000C1000002 /* TrackingModels.swift in Sources */,
 				C100000000000000C1000004 /* TrackingRepository.swift in Sources */,
 				C100000000000000C1000006 /* ActiveDeliveryViewModel.swift in Sources */,
@@ -914,6 +944,8 @@
 				5CE36A5B86F166AB8F2404FA /* BookingRepositoryTests.swift in Sources */,
 				B200000000000000B2000002 /* AvailableJobsViewModelTests.swift in Sources */,
 				B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */,
+				B500000000000000B5000002 /* PetProfileViewModelTests.swift in Sources */,
+				B500000000000000B5000004 /* VetPickupDetailViewModelTests.swift in Sources */,
 				C200000000000000C2000002 /* TrackingRepositoryTests.swift in Sources */,
 				C200000000000000C2000004 /* ActiveDeliveryViewModelTests.swift in Sources */,
 				C200000000000000C2000006 /* ActiveDeliveryFixture.swift in Sources */,

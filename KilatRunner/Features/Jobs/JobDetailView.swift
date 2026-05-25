@@ -11,6 +11,14 @@ struct JobDetailView: View {
     }
 
     var body: some View {
+        if viewModel.booking.isVetBooking {
+            VetPickupDetailView(viewModel: VetPickupDetailViewModel(jobDetailViewModel: viewModel))
+        } else {
+            standardBody
+        }
+    }
+
+    private var standardBody: some View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: Tokens.Space.md) {
