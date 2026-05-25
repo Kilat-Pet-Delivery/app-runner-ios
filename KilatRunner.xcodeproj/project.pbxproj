@@ -126,6 +126,13 @@
 		FB00000000000000FB000008 /* OfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB00000000000000FB000007 /* OfflineView.swift */; };
 		FB10000000000000FB100002 /* NetworkReachabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10000000000000FB100001 /* NetworkReachabilityTests.swift */; };
 		FB10000000000000FB100004 /* OfflineViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10000000000000FB100003 /* OfflineViewModelTests.swift */; };
+		FC00000000000000FC000002 /* BankAccountsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00000000000000FC000001 /* BankAccountsViewModel.swift */; };
+		FC00000000000000FC000004 /* BankAccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00000000000000FC000003 /* BankAccountsView.swift */; };
+		FC00000000000000FC000006 /* AddBankAccountSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00000000000000FC000005 /* AddBankAccountSheet.swift */; };
+		FC00000000000000FC000008 /* PreTripChecklistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00000000000000FC000007 /* PreTripChecklistViewModel.swift */; };
+		FC00000000000000FC00000A /* PreTripChecklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC00000000000000FC000009 /* PreTripChecklistView.swift */; };
+		FC10000000000000FC100002 /* BankAccountsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC10000000000000FC100001 /* BankAccountsViewModelTests.swift */; };
+		FC10000000000000FC100004 /* PreTripChecklistViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC10000000000000FC100003 /* PreTripChecklistViewModelTests.swift */; };
 		F800000000000000F8000002 /* ZoneModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000001 /* ZoneModels.swift */; };
 		F800000000000000F8000004 /* ZonesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000003 /* ZonesRepository.swift */; };
 		F800000000000000F8000006 /* HotZonesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000005 /* HotZonesViewModel.swift */; };
@@ -328,6 +335,13 @@
 		FB00000000000000FB000007 /* OfflineView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OfflineView.swift; sourceTree = "<group>"; };
 		FB10000000000000FB100001 /* NetworkReachabilityTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityTests.swift; sourceTree = "<group>"; };
 		FB10000000000000FB100003 /* OfflineViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OfflineViewModelTests.swift; sourceTree = "<group>"; };
+		FC00000000000000FC000001 /* BankAccountsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BankAccountsViewModel.swift; sourceTree = "<group>"; };
+		FC00000000000000FC000003 /* BankAccountsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BankAccountsView.swift; sourceTree = "<group>"; };
+		FC00000000000000FC000005 /* AddBankAccountSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddBankAccountSheet.swift; sourceTree = "<group>"; };
+		FC00000000000000FC000007 /* PreTripChecklistViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreTripChecklistViewModel.swift; sourceTree = "<group>"; };
+		FC00000000000000FC000009 /* PreTripChecklistView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreTripChecklistView.swift; sourceTree = "<group>"; };
+		FC10000000000000FC100001 /* BankAccountsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BankAccountsViewModelTests.swift; sourceTree = "<group>"; };
+		FC10000000000000FC100003 /* PreTripChecklistViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreTripChecklistViewModelTests.swift; sourceTree = "<group>"; };
 		F800000000000000F8000001 /* ZoneModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZoneModels.swift; sourceTree = "<group>"; };
 		F800000000000000F8000003 /* ZonesRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZonesRepository.swift; sourceTree = "<group>"; };
 		F800000000000000F8000005 /* HotZonesViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HotZonesViewModel.swift; sourceTree = "<group>"; };
@@ -918,6 +932,7 @@
 				C61D4F9C7ABC7014ED8A7528 /* CashOutSentViewTests.swift */,
 				F7BD814B762926F5CD154706 /* CashOutViewModelTests.swift */,
 				9F86245590014CAE83864A45 /* PayoutRepositoryTests.swift */,
+				FC10000000000000FC100001 /* BankAccountsViewModelTests.swift */,
 			);
 			name = Earnings;
 			path = Earnings;
@@ -935,6 +950,8 @@
 				C100000000000000C100000D /* ProofOfDeliveryView.swift */,
 				C100000000000000C100000F /* DeliveryCompleteViewModel.swift */,
 				C100000000000000C1000011 /* DeliveryCompleteView.swift */,
+				FC00000000000000FC000007 /* PreTripChecklistViewModel.swift */,
+				FC00000000000000FC000009 /* PreTripChecklistView.swift */,
 			);
 			name = ActiveDelivery;
 			path = ActiveDelivery;
@@ -948,6 +965,7 @@
 				C200000000000000C2000005 /* ActiveDeliveryFixture.swift */,
 				C200000000000000C2000007 /* ProofOfDeliveryViewModelTests.swift */,
 				C200000000000000C2000009 /* DeliveryCompleteViewModelTests.swift */,
+				FC10000000000000FC100003 /* PreTripChecklistViewModelTests.swift */,
 				E8A4813B2E1F3E2FBE1C62E1 /* ActiveDeliveryViewSnapshotTests.swift */,
 			);
 			name = ActiveDelivery;
@@ -982,6 +1000,9 @@
 				F3A77CAE26B5189E95F9AD20 /* CashOutView.swift */,
 				319AFDF3361EF6068479E08C /* CashOutViewModel.swift */,
 				C528D7CA61D5E9AF840DFBB2 /* PayoutRepository.swift */,
+				FC00000000000000FC000001 /* BankAccountsViewModel.swift */,
+				FC00000000000000FC000003 /* BankAccountsView.swift */,
+				FC00000000000000FC000005 /* AddBankAccountSheet.swift */,
 			);
 			path = Earnings;
 			sourceTree = "<group>";
@@ -1217,6 +1238,11 @@
 				FB00000000000000FB000004 /* OfflineViewModel.swift in Sources */,
 				FB00000000000000FB000006 /* OfflineBannerView.swift in Sources */,
 				FB00000000000000FB000008 /* OfflineView.swift in Sources */,
+				FC00000000000000FC000002 /* BankAccountsViewModel.swift in Sources */,
+				FC00000000000000FC000004 /* BankAccountsView.swift in Sources */,
+				FC00000000000000FC000006 /* AddBankAccountSheet.swift in Sources */,
+				FC00000000000000FC000008 /* PreTripChecklistViewModel.swift in Sources */,
+				FC00000000000000FC00000A /* PreTripChecklistView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1285,6 +1311,8 @@
 				FA10000000000000FA100004 /* CoachMarksOverlayTests.swift in Sources */,
 				FB10000000000000FB100002 /* NetworkReachabilityTests.swift in Sources */,
 				FB10000000000000FB100004 /* OfflineViewModelTests.swift in Sources */,
+				FC10000000000000FC100002 /* BankAccountsViewModelTests.swift in Sources */,
+				FC10000000000000FC100004 /* PreTripChecklistViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

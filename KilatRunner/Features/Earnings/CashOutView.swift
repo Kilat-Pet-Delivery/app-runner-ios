@@ -106,12 +106,19 @@ struct CashOutView: View {
                     .foregroundStyle(Tokens.Color.textSecondary)
             }
             Spacer()
-            Text("DEFAULT")
-                .font(Tokens.FontRole.caption)
-                .foregroundStyle(Tokens.Color.onPrimaryTonal)
-                .padding(.horizontal, Tokens.Space.xs)
-                .padding(.vertical, Tokens.Space.xxs)
-                .background(Tokens.Color.primaryTonal, in: Capsule())
+            VStack(alignment: .trailing, spacing: Tokens.Space.xxs) {
+                Text("DEFAULT")
+                    .font(Tokens.FontRole.caption)
+                    .foregroundStyle(Tokens.Color.onPrimaryTonal)
+                    .padding(.horizontal, Tokens.Space.xs)
+                    .padding(.vertical, Tokens.Space.xxs)
+                    .background(Tokens.Color.primaryTonal, in: Capsule())
+                NavigationLink(value: AuthenticatedRoute.bankAccounts) {
+                    Text("Change")
+                        .font(Tokens.FontRole.caption)
+                        .foregroundStyle(Tokens.Color.primary)
+                }
+            }
         }
         .padding(Tokens.Space.md)
         .background(Tokens.Color.surface, in: RoundedRectangle(cornerRadius: Tokens.Radius.md))

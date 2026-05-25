@@ -9,6 +9,16 @@ struct JobAcceptedView: View {
     let onBackToDashboard: () -> Void
     @State private var animate = false
     @State private var startsRoute = false
+    @State private var startsPreTrip = false
+
+    enum StartDestination: Equatable {
+        case preTripChecklist
+        case activeDelivery
+    }
+
+    var startDestination: StartDestination {
+        booking.isLivePet ? .preTripChecklist : .activeDelivery
+    }
 
     init(
         booking: Booking,
@@ -29,7 +39,7 @@ struct JobAcceptedView: View {
                     livePetBanner
                 }
                 PrimaryButton(title: "Start route", icon: "location.fill") {
-                    startsRoute = true
+                    startRoute()
                 }
                 Button("5-minute grace cancel") { onCancel() }
                     .font(Tokens.FontRole.label)
@@ -47,6 +57,13 @@ struct JobAcceptedView: View {
                 onBackToDashboard: onBackToDashboard
             )
         }
+        .navigationDestination(isPresented: $startsPreTrip) {
+            PreTripChecklistView(
+                booking: booking,
+                viewModel: PreTripChecklistViewModel(bookingID: booking.id),
+                onBackToDashboard: onBackToDashboard
+            )
+        }
         .onAppear {
             guard !reduceMotion else {
                 animate = true
@@ -55,6 +72,15 @@ struct JobAcceptedView: View {
             withAnimation(.spring(response: 0.7, dampingFraction: 0.7)) {
                 animate = true
             }
+        }
+    }
+
+    private func startRoute() {
+        switch startDestination {
+        case .preTripChecklist:
+            startsPreTrip = true
+        case .activeDelivery:
+            startsRoute = true
         }
     }
 

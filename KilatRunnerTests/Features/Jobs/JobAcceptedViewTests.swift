@@ -19,6 +19,18 @@ final class JobAcceptedViewTests: XCTestCase {
         XCTAssertFalse(Self.makeBooking(petType: "supplies").isLivePet)
     }
 
+    func test_livePet_routesToPreTripChecklist() {
+        let view = JobAcceptedView(booking: Self.makeBooking(petType: "cat"))
+
+        XCTAssertEqual(view.startDestination, .preTripChecklist)
+    }
+
+    func test_nonLivePet_routesDirectlyToActiveDelivery() {
+        let view = JobAcceptedView(booking: Self.makeBooking(petType: "supplies"))
+
+        XCTAssertEqual(view.startDestination, .activeDelivery)
+    }
+
     private static func makeBooking(petType: String) -> Booking {
         let json = """
         {

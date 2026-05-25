@@ -64,8 +64,7 @@ private struct AuthenticatedRootView: View {
                 participantName: "Support"
             )
         case .bankAccounts:
-            Text("Bank accounts")
-                .navigationTitle("Bank accounts")
+            BankAccountsView(viewModel: BankAccountsViewModel())
         case .documents:
             Text("Documents")
                 .navigationTitle("Documents")

@@ -30,6 +30,10 @@ enum APIEndpoint: Equatable {
     case trackingHistory(bookingId: String)
     case earnings(page: Int = 1, limit: Int = 20)
     case cashOut
+    case bankAccounts
+    case addBankAccount
+    case setDefaultBankAccount(id: String)
+    case deleteBankAccount(id: String)
     case notifications(cursor: String?, limit: Int = 20)
     case threads
     case threadMessages(threadId: String, cursor: String?, limit: Int = 50)
@@ -54,6 +58,7 @@ enum APIEndpoint: Equatable {
     case referrals
     case referralCode
     case redeemReferral(id: String)
+    case preTripChecklist(id: String)
 
     var method: HTTPMethod {
         switch self {
@@ -61,13 +66,16 @@ enum APIEndpoint: Equatable {
                 .runnerOnline, .runnerOffline, .runnerLocation, .jobAlerts, .acceptBooking,
                 .declineBooking, .arriveAtPickup, .markPickup, .arriveAtDropoff,
                 .proofOfDelivery, .completeDelivery, .rateCustomer, .markDelivered, .cashOut,
+                .addBankAccount, .setDefaultBankAccount, .preTripChecklist,
                 .sendThreadMessage, .sendThreadAttachment, .markThreadRead, .mePhoto,
                 .incidents, .incidentTransition, .redeemQuest, .referralCode, .redeemReferral:
             return .post
+        case .deleteBankAccount:
+            return .delete
         case .updateMe, .updateMeSettings:
             return .put
         case .profile, .runnerMe, .availableJobs, .bookingHistory, .scheduledBookings, .bookingDetail, .bookingPet, .trackingHistory,
-                .earnings, .notifications, .threads, .threadMessages, .quickReplies, .me, .meSettings, .tier,
+                .earnings, .bankAccounts, .notifications, .threads, .threadMessages, .quickReplies, .me, .meSettings, .tier,
                 .incidentDetail, .quests, .zones, .zoneAt, .reviews, .referrals:
             return .get
         }
@@ -134,6 +142,12 @@ enum APIEndpoint: Equatable {
             return "bookings"
         case .cashOut:
             return "payouts/cash-out"
+        case .bankAccounts, .addBankAccount:
+            return "me/bank-accounts"
+        case let .setDefaultBankAccount(id):
+            return "me/bank-accounts/\(id)/set-default"
+        case let .deleteBankAccount(id):
+            return "me/bank-accounts/\(id)"
         case .notifications:
             return "notifications"
         case .threads:
@@ -182,6 +196,8 @@ enum APIEndpoint: Equatable {
             return "referrals/code"
         case let .redeemReferral(id):
             return "referrals/\(id)/redeem"
+        case let .preTripChecklist(id):
+            return "bookings/\(id)/pretrip-checklist"
         }
     }
 
