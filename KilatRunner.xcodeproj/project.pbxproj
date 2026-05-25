@@ -83,6 +83,18 @@
 		B400000000000000B400000C /* VetPickupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B400000000000000B400000B /* VetPickupDetailView.swift */; };
 		B500000000000000B5000002 /* PetProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B500000000000000B5000001 /* PetProfileViewModelTests.swift */; };
 		B500000000000000B5000004 /* VetPickupDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B500000000000000B5000003 /* VetPickupDetailViewModelTests.swift */; };
+		E500000000000000E5000002 /* IncidentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500000000000000E5000001 /* IncidentModels.swift */; };
+		E500000000000000E5000004 /* IncidentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500000000000000E5000003 /* IncidentRepository.swift */; };
+		E500000000000000E5000006 /* CancelActiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500000000000000E5000005 /* CancelActiveViewModel.swift */; };
+		E500000000000000E5000008 /* CancelActiveDeliverySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500000000000000E5000007 /* CancelActiveDeliverySheet.swift */; };
+		E500000000000000E500000A /* ReportProblemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500000000000000E5000009 /* ReportProblemViewModel.swift */; };
+		E500000000000000E500000C /* ReportProblemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500000000000000E500000B /* ReportProblemView.swift */; };
+		E500000000000000E500000E /* SOSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500000000000000E500000D /* SOSViewModel.swift */; };
+		E500000000000000E5000010 /* SOSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500000000000000E500000F /* SOSView.swift */; };
+		E510000000000000E5100002 /* IncidentRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E510000000000000E5100001 /* IncidentRepositoryTests.swift */; };
+		E510000000000000E5100004 /* CancelActiveViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E510000000000000E5100003 /* CancelActiveViewModelTests.swift */; };
+		E510000000000000E5100006 /* ReportProblemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E510000000000000E5100005 /* ReportProblemViewModelTests.swift */; };
+		E510000000000000E5100008 /* SOSViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E510000000000000E5100007 /* SOSViewModelTests.swift */; };
 		B200000000000000B2000002 /* AvailableJobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */; };
 		B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000003 /* JobDetailViewModelTests.swift */; };
 		B2B2044477AA79FE464BBAD9 /* ChatSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B35156FBA7674EDC82116D /* ChatSocketClient.swift */; };
@@ -232,6 +244,18 @@
 		B400000000000000B400000B /* VetPickupDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VetPickupDetailView.swift; sourceTree = "<group>"; };
 		B500000000000000B5000001 /* PetProfileViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PetProfileViewModelTests.swift; sourceTree = "<group>"; };
 		B500000000000000B5000003 /* VetPickupDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VetPickupDetailViewModelTests.swift; sourceTree = "<group>"; };
+		E500000000000000E5000001 /* IncidentModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IncidentModels.swift; sourceTree = "<group>"; };
+		E500000000000000E5000003 /* IncidentRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IncidentRepository.swift; sourceTree = "<group>"; };
+		E500000000000000E5000005 /* CancelActiveViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CancelActiveViewModel.swift; sourceTree = "<group>"; };
+		E500000000000000E5000007 /* CancelActiveDeliverySheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CancelActiveDeliverySheet.swift; sourceTree = "<group>"; };
+		E500000000000000E5000009 /* ReportProblemViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReportProblemViewModel.swift; sourceTree = "<group>"; };
+		E500000000000000E500000B /* ReportProblemView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReportProblemView.swift; sourceTree = "<group>"; };
+		E500000000000000E500000D /* SOSViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SOSViewModel.swift; sourceTree = "<group>"; };
+		E500000000000000E500000F /* SOSView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SOSView.swift; sourceTree = "<group>"; };
+		E510000000000000E5100001 /* IncidentRepositoryTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IncidentRepositoryTests.swift; sourceTree = "<group>"; };
+		E510000000000000E5100003 /* CancelActiveViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CancelActiveViewModelTests.swift; sourceTree = "<group>"; };
+		E510000000000000E5100005 /* ReportProblemViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReportProblemViewModelTests.swift; sourceTree = "<group>"; };
+		E510000000000000E5100007 /* SOSViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SOSViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000003 /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
 		C009AC4A54A76361B4CB53CA /* ForgotPasswordViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModelTests.swift; sourceTree = "<group>"; };
@@ -485,6 +509,7 @@
 				D310000000000000D3100001 /* Profile */,
 				D320000000000000D3200001 /* Settings */,
 				D330000000000000D3300001 /* Support */,
+				E520000000000000E5200001 /* Incident */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -524,6 +549,7 @@
 				D310000000000000D3100002 /* Profile */,
 				D320000000000000D3200002 /* Settings */,
 				D330000000000000D3300002 /* Support */,
+				E520000000000000E5200002 /* Incident */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -580,6 +606,32 @@
 				D330000000000000D3300030 /* SupportViewModelTests.swift */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		E520000000000000E5200001 /* Incident */ = {
+			isa = PBXGroup;
+			children = (
+				E500000000000000E5000001 /* IncidentModels.swift */,
+				E500000000000000E5000003 /* IncidentRepository.swift */,
+				E500000000000000E5000005 /* CancelActiveViewModel.swift */,
+				E500000000000000E5000007 /* CancelActiveDeliverySheet.swift */,
+				E500000000000000E5000009 /* ReportProblemViewModel.swift */,
+				E500000000000000E500000B /* ReportProblemView.swift */,
+				E500000000000000E500000D /* SOSViewModel.swift */,
+				E500000000000000E500000F /* SOSView.swift */,
+			);
+			path = Incident;
+			sourceTree = "<group>";
+		};
+		E520000000000000E5200002 /* Incident */ = {
+			isa = PBXGroup;
+			children = (
+				E510000000000000E5100001 /* IncidentRepositoryTests.swift */,
+				E510000000000000E5100003 /* CancelActiveViewModelTests.swift */,
+				E510000000000000E5100005 /* ReportProblemViewModelTests.swift */,
+				E510000000000000E5100007 /* SOSViewModelTests.swift */,
+			);
+			path = Incident;
 			sourceTree = "<group>";
 		};
 		A00000000000000000000137 /* Dashboard */ = {
@@ -925,6 +977,14 @@
 				D320000000000000D3200023 /* SettingsView.swift in Sources */,
 				D330000000000000D3300021 /* SupportViewModel.swift in Sources */,
 				D330000000000000D3300022 /* SupportView.swift in Sources */,
+				E500000000000000E5000002 /* IncidentModels.swift in Sources */,
+				E500000000000000E5000004 /* IncidentRepository.swift in Sources */,
+				E500000000000000E5000006 /* CancelActiveViewModel.swift in Sources */,
+				E500000000000000E5000008 /* CancelActiveDeliverySheet.swift in Sources */,
+				E500000000000000E500000A /* ReportProblemViewModel.swift in Sources */,
+				E500000000000000E500000C /* ReportProblemView.swift in Sources */,
+				E500000000000000E500000E /* SOSViewModel.swift in Sources */,
+				E500000000000000E5000010 /* SOSView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -977,6 +1037,10 @@
 				D310000000000000D3100031 /* ProfileViewModelTests.swift in Sources */,
 				D320000000000000D3200031 /* SettingsViewModelTests.swift in Sources */,
 				D330000000000000D3300031 /* SupportViewModelTests.swift in Sources */,
+				E510000000000000E5100002 /* IncidentRepositoryTests.swift in Sources */,
+				E510000000000000E5100004 /* CancelActiveViewModelTests.swift in Sources */,
+				E510000000000000E5100006 /* ReportProblemViewModelTests.swift in Sources */,
+				E510000000000000E5100008 /* SOSViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

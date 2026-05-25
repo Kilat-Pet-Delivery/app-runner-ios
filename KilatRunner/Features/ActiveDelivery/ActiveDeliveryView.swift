@@ -6,6 +6,8 @@ struct ActiveDeliveryView: View {
     @Bindable private var viewModel: ActiveDeliveryViewModel
     private let onBackToDashboard: () -> Void
     @State private var chatPresentation: ChatPresentation?
+    @State private var incidentPresentation: IncidentPresentation?
+    @State private var showsCancelSheet = false
 
     init(viewModel: ActiveDeliveryViewModel, onBackToDashboard: @escaping () -> Void = {}) {
         self.viewModel = viewModel
@@ -16,6 +18,18 @@ struct ActiveDeliveryView: View {
         let id: String
         let viewModel: ChatViewModel
         let participantName: String
+    }
+
+    private enum IncidentPresentation: Identifiable {
+        case report
+        case sos
+
+        var id: String {
+            switch self {
+            case .report: return "report"
+            case .sos: return "sos"
+            }
+        }
     }
 
     var body: some View {
@@ -35,6 +49,11 @@ struct ActiveDeliveryView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.onAppear() }
         .onDisappear { Task { await viewModel.onDisappear() } }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                alertButton
+            }
+        }
         .sheet(item: $chatPresentation) { presentation in
             NavigationStack {
                 ChatThreadView(viewModel: presentation.viewModel, participantName: presentation.participantName)
@@ -60,6 +79,39 @@ struct ActiveDeliveryView: View {
                 }
             }
         }
+        .sheet(isPresented: $showsCancelSheet) {
+            CancelActiveDeliverySheet(
+                viewModel: CancelActiveViewModel(bookingID: viewModel.booking.id),
+                onClose: { showsCancelSheet = false },
+                onSOS: {
+                    showsCancelSheet = false
+                    incidentPresentation = .sos
+                }
+            )
+            .presentationDetents([.large])
+        }
+        .fullScreenCover(item: $incidentPresentation) { presentation in
+            NavigationStack {
+                switch presentation {
+                case .report:
+                    ReportProblemView(
+                        viewModel: ReportProblemViewModel(bookingID: viewModel.booking.id),
+                        onSOS: { incidentPresentation = .sos },
+                        onDone: { incidentPresentation = nil }
+                    )
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button("Done") { incidentPresentation = nil }
+                        }
+                    }
+                case .sos:
+                    SOSView(
+                        viewModel: SOSViewModel(bookingID: viewModel.booking.id),
+                        onClose: { incidentPresentation = nil }
+                    )
+                }
+            }
+        }
     }
 
     private var runnerPin: some View {
@@ -73,6 +125,20 @@ struct ActiveDeliveryView: View {
                 .overlay(Circle().stroke(.white, lineWidth: 2))
         }
         .accessibilityIdentifier("runnerPin")
+    }
+
+    private var alertButton: some View {
+        Button {
+            incidentPresentation = .report
+        } label: {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(Tokens.Color.destructive)
+        }
+        .simultaneousGesture(
+            LongPressGesture(minimumDuration: 1)
+                .onEnded { _ in incidentPresentation = .sos }
+        )
+        .accessibilityLabel("Report problem")
     }
 
     private var bottomSheet: some View {
@@ -214,14 +280,22 @@ struct ActiveDeliveryView: View {
         case .complete:
             PrimaryButton(title: "Back to dashboard", icon: "house.fill", action: onBackToDashboard)
         default:
-            PrimaryButton(
-                title: stageCtaTitle,
-                icon: stageCtaIcon,
-                isLoading: viewModel.isMarkingPickup || viewModel.isMarkingDelivered,
-                isEnabled: stageCtaEnabled,
-                action: stageCtaAction
-            )
-            .accessibilityIdentifier("activeDeliveryCTA")
+            VStack(spacing: Tokens.Space.sm) {
+                PrimaryButton(
+                    title: stageCtaTitle,
+                    icon: stageCtaIcon,
+                    isLoading: viewModel.isMarkingPickup || viewModel.isMarkingDelivered,
+                    isEnabled: stageCtaEnabled,
+                    action: stageCtaAction
+                )
+                .accessibilityIdentifier("activeDeliveryCTA")
+
+                SecondaryButton(
+                    title: "Cancel delivery",
+                    icon: "xmark.circle.fill",
+                    action: { showsCancelSheet = true }
+                )
+            }
         }
     }
 

@@ -40,6 +40,9 @@ enum APIEndpoint: Equatable {
     case meSettings
     case updateMeSettings
     case tier
+    case incidents
+    case incidentDetail(id: String)
+    case incidentTransition(id: String)
 
     var method: HTTPMethod {
         switch self {
@@ -47,12 +50,14 @@ enum APIEndpoint: Equatable {
                 .runnerOnline, .runnerOffline, .runnerLocation, .acceptBooking,
                 .declineBooking, .arriveAtPickup, .markPickup, .arriveAtDropoff,
                 .proofOfDelivery, .completeDelivery, .rateCustomer, .markDelivered, .cashOut,
-                .sendThreadMessage, .sendThreadAttachment, .markThreadRead, .mePhoto:
+                .sendThreadMessage, .sendThreadAttachment, .markThreadRead, .mePhoto,
+                .incidents, .incidentTransition:
             return .post
         case .updateMe, .updateMeSettings:
             return .put
         case .profile, .runnerMe, .availableJobs, .bookingDetail, .bookingPet, .trackingHistory,
-                .earnings, .notifications, .threads, .threadMessages, .quickReplies, .me, .meSettings, .tier:
+                .earnings, .notifications, .threads, .threadMessages, .quickReplies, .me, .meSettings, .tier,
+                .incidentDetail:
             return .get
         }
     }
@@ -138,6 +143,12 @@ enum APIEndpoint: Equatable {
             return "me/settings"
         case .tier:
             return "tier"
+        case .incidents:
+            return "incidents"
+        case let .incidentDetail(id):
+            return "incidents/\(id)"
+        case let .incidentTransition(id):
+            return "incidents/\(id)/transition"
         }
     }
 
