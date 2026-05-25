@@ -27,16 +27,23 @@ enum APIEndpoint: Equatable {
     case earnings(page: Int = 1, limit: Int = 20)
     case cashOut
     case notifications(cursor: String?, limit: Int = 20)
+    case threads
+    case threadMessages(threadId: String, cursor: String?, limit: Int = 50)
+    case sendThreadMessage(threadId: String)
+    case sendThreadAttachment(threadId: String)
+    case markThreadRead(threadId: String)
+    case quickReplies
 
     var method: HTTPMethod {
         switch self {
         case .login, .refresh, .logout, .forgotPassword, .resetPassword, .runnerApply,
                 .runnerOnline, .runnerOffline, .runnerLocation, .acceptBooking,
                 .declineBooking, .arriveAtPickup, .markPickup, .arriveAtDropoff,
-                .proofOfDelivery, .completeDelivery, .rateCustomer, .markDelivered, .cashOut:
+                .proofOfDelivery, .completeDelivery, .rateCustomer, .markDelivered, .cashOut,
+                .sendThreadMessage, .sendThreadAttachment, .markThreadRead:
             return .post
         case .profile, .runnerMe, .availableJobs, .bookingDetail, .trackingHistory,
-                .earnings, .notifications:
+                .earnings, .notifications, .threads, .threadMessages, .quickReplies:
             return .get
         }
     }
@@ -96,6 +103,18 @@ enum APIEndpoint: Equatable {
             return "payouts/cash-out"
         case .notifications:
             return "notifications"
+        case .threads:
+            return "threads"
+        case let .threadMessages(threadId, _, _):
+            return "threads/\(threadId)/messages"
+        case let .sendThreadMessage(threadId):
+            return "threads/\(threadId)/messages"
+        case let .sendThreadAttachment(threadId):
+            return "threads/\(threadId)/attachments"
+        case let .markThreadRead(threadId):
+            return "threads/\(threadId)/read"
+        case .quickReplies:
+            return "quick-replies"
         }
     }
 
@@ -114,6 +133,12 @@ enum APIEndpoint: Equatable {
                 URLQueryItem(name: "limit", value: String(limit))
             ]
         case let .notifications(cursor, limit):
+            var items = [URLQueryItem(name: "limit", value: String(limit))]
+            if let cursor, !cursor.isEmpty {
+                items.append(URLQueryItem(name: "cursor", value: cursor))
+            }
+            return items
+        case let .threadMessages(_, cursor, limit):
             var items = [URLQueryItem(name: "limit", value: String(limit))]
             if let cursor, !cursor.isEmpty {
                 items.append(URLQueryItem(name: "cursor", value: cursor))

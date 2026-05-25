@@ -55,6 +55,31 @@ final class WebSocketClientTests: XCTestCase {
         ])
     }
 
+    func test_channelRouter_dispatchesToCorrectSubscriber() async throws {
+        let trackingTransport = RecordingWebSocketTransport()
+        let chatTransport = RecordingWebSocketTransport()
+        let presenceTransport = RecordingWebSocketTransport()
+        let baseURL = URL(string: "ws://localhost:8080")!
+
+        let trackingClient = WebSocketClient(transport: trackingTransport)
+        let chatClient = WebSocketClient(transport: chatTransport)
+        let presenceClient = WebSocketClient(transport: presenceTransport)
+
+        try await trackingClient.connect(channel: .tracking(bookingID: "booking-1"), baseURL: baseURL, accessToken: "tok-1")
+        try await chatClient.connect(channel: .chat, baseURL: baseURL, accessToken: "tok-1")
+        try await presenceClient.connect(channel: .presence, baseURL: baseURL, accessToken: "tok-1")
+
+        let trackingURL = await trackingTransport.lastConnectedURL
+        let chatURL = await chatTransport.lastConnectedURL
+        let presenceURL = await presenceTransport.lastConnectedURL
+
+        XCTAssertEqual(trackingURL?.path, "/ws/tracking/booking-1")
+        XCTAssertEqual(chatURL?.path, "/ws/chat")
+        XCTAssertEqual(presenceURL?.path, "/ws/presence")
+
+        XCTAssertEqual(URLComponents(url: trackingURL!, resolvingAgainstBaseURL: false)?.queryItems?.first?.value, "tok-1")
+    }
+
     func test_exceedMaxAttempts_surfacesDisconnectedState() async throws {
         let transport = FakeWebSocketTransport()
         let sleeper = SleepRecorder()
@@ -101,6 +126,46 @@ private actor SleepRecorder {
 
     func recordedCount() -> Int {
         recorded.count
+    }
+}
+
+private final class RecordingWebSocketTransport: WebSocketTransport, @unchecked Sendable {
+    private let core = RecordingWebSocketTransportCore()
+
+    var lastConnectedURL: URL? {
+        get async { await core.lastConnectedURL }
+    }
+
+    func connect(url: URL) async throws {
+        await core.connect(url: url)
+    }
+
+    func disconnect() {
+        Task { await core.disconnect() }
+    }
+
+    func receive() async throws -> Data {
+        try await core.receive()
+    }
+}
+
+private actor RecordingWebSocketTransportCore {
+    private(set) var lastConnectedURL: URL?
+    private var continuation: CheckedContinuation<Data, Error>?
+
+    func connect(url: URL) {
+        lastConnectedURL = url
+    }
+
+    func disconnect() {
+        continuation?.resume(throwing: URLError(.cancelled))
+        continuation = nil
+    }
+
+    func receive() async throws -> Data {
+        try await withCheckedThrowingContinuation { continuation in
+            self.continuation = continuation
+        }
     }
 }
 

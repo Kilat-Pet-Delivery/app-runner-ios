@@ -5,10 +5,17 @@ import KilatUI
 struct ActiveDeliveryView: View {
     @Bindable private var viewModel: ActiveDeliveryViewModel
     private let onBackToDashboard: () -> Void
+    @State private var chatPresentation: ChatPresentation?
 
     init(viewModel: ActiveDeliveryViewModel, onBackToDashboard: @escaping () -> Void = {}) {
         self.viewModel = viewModel
         self.onBackToDashboard = onBackToDashboard
+    }
+
+    private struct ChatPresentation: Identifiable {
+        let id: String
+        let viewModel: ChatViewModel
+        let participantName: String
     }
 
     var body: some View {
@@ -28,6 +35,17 @@ struct ActiveDeliveryView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.onAppear() }
         .onDisappear { Task { await viewModel.onDisappear() } }
+        .sheet(item: $chatPresentation) { presentation in
+            NavigationStack {
+                ChatThreadView(viewModel: presentation.viewModel, participantName: presentation.participantName)
+                    .navigationTitle(presentation.participantName)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Done") { chatPresentation = nil }
+                        }
+                    }
+            }
+        }
     }
 
     private var map: some View {
@@ -113,7 +131,9 @@ struct ActiveDeliveryView: View {
                     .foregroundStyle(Tokens.Color.primary)
             }
             .accessibilityLabel("Call customer")
-            Button {} label: {
+            Button {
+                presentChat()
+            } label: {
                 Image(kilatAsset: "message")
                     .resizable()
                     .renderingMode(.template)
@@ -317,5 +337,21 @@ struct ActiveDeliveryView: View {
     private var fareLabel: String {
         let cents = viewModel.booking.finalPriceCents ?? viewModel.booking.estimatedPriceCents
         return "\(viewModel.booking.currency) \(String(format: "%.2f", Double(cents) / 100))"
+    }
+
+    private func presentChat() {
+        let booking = viewModel.booking
+        let selfUserID = booking.runnerId ?? ""
+        let chatViewModel = ChatViewModel(
+            threadID: booking.id,
+            selfUserID: selfUserID,
+            remoteUserID: booking.ownerId
+        )
+        let participantName = booking.petSpec.name.isEmpty ? "Customer" : "\(booking.petSpec.name)'s owner"
+        chatPresentation = ChatPresentation(
+            id: booking.id,
+            viewModel: chatViewModel,
+            participantName: participantName
+        )
     }
 }
