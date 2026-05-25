@@ -47,6 +47,8 @@ enum APIEndpoint: Equatable {
     case incidentTransition(id: String)
     case quests
     case redeemQuest(id: String)
+    case zones
+    case zoneAt(lat: Double, lon: Double)
 
     var method: HTTPMethod {
         switch self {
@@ -61,7 +63,7 @@ enum APIEndpoint: Equatable {
             return .put
         case .profile, .runnerMe, .availableJobs, .bookingHistory, .scheduledBookings, .bookingDetail, .bookingPet, .trackingHistory,
                 .earnings, .notifications, .threads, .threadMessages, .quickReplies, .me, .meSettings, .tier,
-                .incidentDetail, .quests:
+                .incidentDetail, .quests, .zones, .zoneAt:
             return .get
         }
     }
@@ -161,6 +163,10 @@ enum APIEndpoint: Equatable {
             return "quests"
         case let .redeemQuest(id):
             return "quests/\(id)/redeem"
+        case .zones:
+            return "zones"
+        case .zoneAt:
+            return "zones/at"
         }
     }
 
@@ -199,6 +205,11 @@ enum APIEndpoint: Equatable {
                 items.append(URLQueryItem(name: "cursor", value: cursor))
             }
             return items
+        case let .zoneAt(lat, lon):
+            return [
+                URLQueryItem(name: "lat", value: String(lat)),
+                URLQueryItem(name: "lon", value: String(lon))
+            ]
         default:
             return []
         }

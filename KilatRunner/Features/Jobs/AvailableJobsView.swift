@@ -94,6 +94,19 @@ struct AvailableJobsView: View {
                 .font(Tokens.FontRole.label)
                 .foregroundStyle(Tokens.Color.textSecondary)
                 .multilineTextAlignment(.center)
+            NavigationLink(value: AuthenticatedRoute.hotZones) {
+                Label("Try a hot zone", systemImage: "map.fill")
+                    .font(Tokens.FontRole.label)
+                    .foregroundStyle(Tokens.Color.onPrimary)
+                    .padding(.horizontal, Tokens.Space.md)
+                    .padding(.vertical, Tokens.Space.sm)
+                    .background(Tokens.Color.primary, in: Capsule())
+            }
+            NavigationLink(value: AuthenticatedRoute.scheduledJobs) {
+                Text("Notify me when available")
+                    .font(Tokens.FontRole.label)
+                    .foregroundStyle(Tokens.Color.primary)
+            }
         }
         .padding(Tokens.Space.xl)
         .frame(maxWidth: .infinity, maxHeight: .infinity)

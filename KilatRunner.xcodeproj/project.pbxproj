@@ -109,6 +109,16 @@
 		F700000000000000F700000C /* TipReceivedSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F700000000000000F700000B /* TipReceivedSheet.swift */; };
 		F710000000000000F7100002 /* QuestsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F710000000000000F7100001 /* QuestsViewModelTests.swift */; };
 		F710000000000000F7100004 /* TipReceivedViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F710000000000000F7100003 /* TipReceivedViewModelTests.swift */; };
+		F800000000000000F8000002 /* ZoneModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000001 /* ZoneModels.swift */; };
+		F800000000000000F8000004 /* ZonesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000003 /* ZonesRepository.swift */; };
+		F800000000000000F8000006 /* HotZonesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000005 /* HotZonesViewModel.swift */; };
+		F800000000000000F8000008 /* HotZonesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000007 /* HotZonesView.swift */; };
+		F810000000000000F8100002 /* PerformanceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F810000000000000F8100001 /* PerformanceModels.swift */; };
+		F810000000000000F8100004 /* PerformanceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F810000000000000F8100003 /* PerformanceRepository.swift */; };
+		F810000000000000F8100006 /* PerformanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F810000000000000F8100005 /* PerformanceViewModel.swift */; };
+		F810000000000000F8100008 /* PerformanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F810000000000000F8100007 /* PerformanceView.swift */; };
+		F820000000000000F8200002 /* HotZonesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F820000000000000F8200001 /* HotZonesViewModelTests.swift */; };
+		F830000000000000F8300002 /* PerformanceViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F830000000000000F8300001 /* PerformanceViewModelTests.swift */; };
 		B200000000000000B2000002 /* AvailableJobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */; };
 		B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000003 /* JobDetailViewModelTests.swift */; };
 		B2B2044477AA79FE464BBAD9 /* ChatSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B35156FBA7674EDC82116D /* ChatSocketClient.swift */; };
@@ -284,6 +294,16 @@
 		F700000000000000F700000B /* TipReceivedSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TipReceivedSheet.swift; sourceTree = "<group>"; };
 		F710000000000000F7100001 /* QuestsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuestsViewModelTests.swift; sourceTree = "<group>"; };
 		F710000000000000F7100003 /* TipReceivedViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TipReceivedViewModelTests.swift; sourceTree = "<group>"; };
+		F800000000000000F8000001 /* ZoneModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZoneModels.swift; sourceTree = "<group>"; };
+		F800000000000000F8000003 /* ZonesRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZonesRepository.swift; sourceTree = "<group>"; };
+		F800000000000000F8000005 /* HotZonesViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HotZonesViewModel.swift; sourceTree = "<group>"; };
+		F800000000000000F8000007 /* HotZonesView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HotZonesView.swift; sourceTree = "<group>"; };
+		F810000000000000F8100001 /* PerformanceModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PerformanceModels.swift; sourceTree = "<group>"; };
+		F810000000000000F8100003 /* PerformanceRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PerformanceRepository.swift; sourceTree = "<group>"; };
+		F810000000000000F8100005 /* PerformanceViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PerformanceViewModel.swift; sourceTree = "<group>"; };
+		F810000000000000F8100007 /* PerformanceView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PerformanceView.swift; sourceTree = "<group>"; };
+		F820000000000000F8200001 /* HotZonesViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HotZonesViewModelTests.swift; sourceTree = "<group>"; };
+		F830000000000000F8300001 /* PerformanceViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PerformanceViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000003 /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
 		C009AC4A54A76361B4CB53CA /* ForgotPasswordViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModelTests.swift; sourceTree = "<group>"; };
@@ -539,6 +559,8 @@
 				D330000000000000D3300001 /* Support */,
 				E520000000000000E5200001 /* Incident */,
 				F720000000000000F7200001 /* Loyalty */,
+				F840000000000000F8400001 /* Zones */,
+				F850000000000000F8500001 /* Performance */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -580,6 +602,8 @@
 				D330000000000000D3300002 /* Support */,
 				E520000000000000E5200002 /* Incident */,
 				F720000000000000F7200002 /* Loyalty */,
+				F840000000000000F8400002 /* Zones */,
+				F850000000000000F8500002 /* Performance */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -684,6 +708,44 @@
 				F710000000000000F7100003 /* TipReceivedViewModelTests.swift */,
 			);
 			path = Loyalty;
+			sourceTree = "<group>";
+		};
+		F840000000000000F8400001 /* Zones */ = {
+			isa = PBXGroup;
+			children = (
+				F800000000000000F8000001 /* ZoneModels.swift */,
+				F800000000000000F8000003 /* ZonesRepository.swift */,
+				F800000000000000F8000005 /* HotZonesViewModel.swift */,
+				F800000000000000F8000007 /* HotZonesView.swift */,
+			);
+			path = Zones;
+			sourceTree = "<group>";
+		};
+		F840000000000000F8400002 /* Zones */ = {
+			isa = PBXGroup;
+			children = (
+				F820000000000000F8200001 /* HotZonesViewModelTests.swift */,
+			);
+			path = Zones;
+			sourceTree = "<group>";
+		};
+		F850000000000000F8500001 /* Performance */ = {
+			isa = PBXGroup;
+			children = (
+				F810000000000000F8100001 /* PerformanceModels.swift */,
+				F810000000000000F8100003 /* PerformanceRepository.swift */,
+				F810000000000000F8100005 /* PerformanceViewModel.swift */,
+				F810000000000000F8100007 /* PerformanceView.swift */,
+			);
+			path = Performance;
+			sourceTree = "<group>";
+		};
+		F850000000000000F8500002 /* Performance */ = {
+			isa = PBXGroup;
+			children = (
+				F830000000000000F8300001 /* PerformanceViewModelTests.swift */,
+			);
+			path = Performance;
 			sourceTree = "<group>";
 		};
 		A00000000000000000000137 /* Dashboard */ = {
@@ -1053,6 +1115,14 @@
 				F700000000000000F7000008 /* QuestsView.swift in Sources */,
 				F700000000000000F700000A /* TipReceivedViewModel.swift in Sources */,
 				F700000000000000F700000C /* TipReceivedSheet.swift in Sources */,
+				F800000000000000F8000002 /* ZoneModels.swift in Sources */,
+				F800000000000000F8000004 /* ZonesRepository.swift in Sources */,
+				F800000000000000F8000006 /* HotZonesViewModel.swift in Sources */,
+				F800000000000000F8000008 /* HotZonesView.swift in Sources */,
+				F810000000000000F8100002 /* PerformanceModels.swift in Sources */,
+				F810000000000000F8100004 /* PerformanceRepository.swift in Sources */,
+				F810000000000000F8100006 /* PerformanceViewModel.swift in Sources */,
+				F810000000000000F8100008 /* PerformanceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1113,6 +1183,8 @@
 				E510000000000000E5100008 /* SOSViewModelTests.swift in Sources */,
 				F710000000000000F7100002 /* QuestsViewModelTests.swift in Sources */,
 				F710000000000000F7100004 /* TipReceivedViewModelTests.swift in Sources */,
+				F820000000000000F8200002 /* HotZonesViewModelTests.swift in Sources */,
+				F830000000000000F8300002 /* PerformanceViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

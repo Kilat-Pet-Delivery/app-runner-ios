@@ -80,23 +80,31 @@ struct ProfileView: View {
     }
 
     private func tierCard(_ state: ProfileViewState) -> some View {
-        VStack(alignment: .leading, spacing: Tokens.Space.sm) {
-            HStack {
-                Text("Tier progress")
-                    .font(Tokens.FontRole.titleM)
-                    .foregroundStyle(Tokens.Color.textPrimary)
-                Spacer()
-                Text(state.tier.tier.nextTierName)
+        NavigationLink(value: AuthenticatedRoute.performance) {
+            VStack(alignment: .leading, spacing: Tokens.Space.sm) {
+                HStack {
+                    Text("Tier progress")
+                        .font(Tokens.FontRole.titleM)
+                        .foregroundStyle(Tokens.Color.textPrimary)
+                    Spacer()
+                    Text(state.tier.tier.nextTierName)
+                        .font(Tokens.FontRole.caption)
+                        .foregroundStyle(Tokens.Color.textSecondary)
+                    Image(kilatAsset: "chevron-right")
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 14, height: 14)
+                        .foregroundStyle(Tokens.Color.textSecondary)
+                }
+                ProgressBar(progress: state.tierProgress)
+                Text("\(state.tier.deliveries30D) of \(state.tier.tier.progressTarget) deliveries this month")
                     .font(Tokens.FontRole.caption)
                     .foregroundStyle(Tokens.Color.textSecondary)
             }
-            ProgressBar(progress: state.tierProgress)
-            Text("\(state.tier.deliveries30D) of \(state.tier.tier.progressTarget) deliveries this month")
-                .font(Tokens.FontRole.caption)
-                .foregroundStyle(Tokens.Color.textSecondary)
+            .padding(Tokens.Space.md)
+            .background(Tokens.Color.surface, in: RoundedRectangle(cornerRadius: Tokens.Radius.lg, style: .continuous))
         }
-        .padding(Tokens.Space.md)
-        .background(Tokens.Color.surface, in: RoundedRectangle(cornerRadius: Tokens.Radius.lg, style: .continuous))
+        .buttonStyle(.plain)
     }
 
     private var navigationRows: some View {

@@ -60,6 +60,10 @@ private struct AuthenticatedRootView: View {
             ScheduledJobsView(viewModel: ScheduledJobsViewModel())
         case .quests:
             QuestsView(viewModel: QuestsViewModel())
+        case .hotZones:
+            HotZonesView(viewModel: HotZonesViewModel())
+        case .performance:
+            PerformanceView(viewModel: PerformanceViewModel())
         }
     }
 }
