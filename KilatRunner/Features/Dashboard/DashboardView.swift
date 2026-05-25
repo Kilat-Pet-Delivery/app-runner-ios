@@ -1,9 +1,7 @@
 import SwiftUI
-import UIKit
 import KilatUI
 
 struct DashboardView: View {
-    @Environment(AppSession.self) private var session
     @Environment(\.openURL) private var openURL
     @Bindable private var viewModel: DashboardViewModel
     @State private var showsPermissionRationale = false
@@ -34,9 +32,7 @@ struct DashboardView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                NavigationLink {
-                    NotificationsInboxView(viewModel: NotificationsViewModel())
-                } label: {
+                NavigationLink(value: AuthenticatedRoute.notifications) {
                     Image(kilatAsset: "bell")
                         .resizable()
                         .renderingMode(.template)
@@ -47,10 +43,14 @@ struct DashboardView: View {
                 .accessibilityIdentifier("notificationsBell")
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Button { session.logout() } label: {
-                    Label("Log Out", systemImage: "rectangle.portrait.and.arrow.right")
+                NavigationLink(value: AuthenticatedRoute.profile) {
+                    Image(kilatAsset: "menu")
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 22, height: 22)
                         .foregroundStyle(Tokens.Color.textPrimary)
                 }
+                .accessibilityLabel("Profile")
             }
         }
         .task { await viewModel.loadRunner() }
@@ -65,25 +65,37 @@ struct DashboardView: View {
     }
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
-            Text(viewModel.runner?.fullName ?? "Runner")
-                .font(Tokens.FontRole.titleL)
-                .foregroundStyle(Tokens.Color.textPrimary)
-                .lineLimit(2)
+        NavigationLink(value: AuthenticatedRoute.profile) {
+            HStack(spacing: Tokens.Space.sm) {
+                Avatar(name: viewModel.runner?.fullName ?? "Runner", size: 48)
+                VStack(alignment: .leading, spacing: Tokens.Space.xxs) {
+                    Text("Hi, \(viewModel.runner?.fullName.components(separatedBy: " ").first ?? "Runner")")
+                        .font(Tokens.FontRole.titleL)
+                        .foregroundStyle(Tokens.Color.textPrimary)
+                        .lineLimit(2)
 
-            HStack(spacing: Tokens.Space.xs) {
-                Image(kilatAsset: "scooter")
+                    HStack(spacing: Tokens.Space.xs) {
+                        Image(kilatAsset: "scooter")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 16, height: 16)
+                        Text(viewModel.runner?.vehicleType.capitalized ?? "Vehicle")
+                        Text("·")
+                        Text(viewModel.runner?.vehiclePlate ?? "Pending")
+                    }
+                    .font(Tokens.FontRole.label)
+                    .foregroundStyle(Tokens.Color.textSecondary)
+                }
+                Spacer()
+                Image(kilatAsset: "chevron-right")
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 16, height: 16)
-                Text(viewModel.runner?.vehicleType.capitalized ?? "Vehicle")
-                Text("·")
-                Text(viewModel.runner?.vehiclePlate ?? "Pending")
+                    .foregroundStyle(Tokens.Color.textSecondary)
             }
-            .font(Tokens.FontRole.label)
-            .foregroundStyle(Tokens.Color.textSecondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .buttonStyle(.plain)
     }
 
     private var statusPanel: some View {

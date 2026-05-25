@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 import Observation
 
 @Observable
@@ -11,6 +12,7 @@ final class AppSession {
     @ObservationIgnored private let tokenStore: TokenStore
 
     var state: State
+    var colorSchemeOverride: ColorScheme?
 
     init(tokenStore: TokenStore = KeychainStore()) {
         self.tokenStore = tokenStore
@@ -24,5 +26,16 @@ final class AppSession {
     func logout() {
         tokenStore.clear()
         state = .unauthenticated
+    }
+
+    func apply(theme: RunnerTheme) {
+        switch theme {
+        case .system:
+            colorSchemeOverride = nil
+        case .light:
+            colorSchemeOverride = .light
+        case .dark:
+            colorSchemeOverride = .dark
+        }
     }
 }

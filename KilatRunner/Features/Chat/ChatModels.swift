@@ -22,6 +22,13 @@ struct ChatParticipant: Decodable, Equatable, Identifiable {
     let displayName: String
     let avatarURL: URL?
     let role: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case displayName
+        case avatarURL = "avatarUrl"
+        case role
+    }
 }
 
 struct ChatThread: Decodable, Equatable, Identifiable {
@@ -31,6 +38,15 @@ struct ChatThread: Decodable, Equatable, Identifiable {
     let lastMessagePreview: String?
     let lastMessageAt: Date?
     let unreadCount: Int
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case bookingID = "bookingId"
+        case participants
+        case lastMessagePreview
+        case lastMessageAt
+        case unreadCount
+    }
 }
 
 struct ChatMessage: Decodable, Equatable, Identifiable {
@@ -42,6 +58,17 @@ struct ChatMessage: Decodable, Equatable, Identifiable {
     let attachmentURL: URL?
     let deliveryState: ChatDeliveryState
     let timestamp: Date
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case threadID = "threadId"
+        case senderID = "senderId"
+        case senderSide
+        case body
+        case attachmentURL = "attachmentUrl"
+        case deliveryState
+        case timestamp
+    }
 }
 
 struct ChatQuickReply: Decodable, Equatable, Identifiable {

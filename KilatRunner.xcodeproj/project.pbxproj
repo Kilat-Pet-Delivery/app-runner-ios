@@ -99,6 +99,19 @@
 		C200000000000000C2000006 /* ActiveDeliveryFixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000005 /* ActiveDeliveryFixture.swift */; };
 		C200000000000000C2000008 /* ProofOfDeliveryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000007 /* ProofOfDeliveryViewModelTests.swift */; };
 		C200000000000000C200000A /* DeliveryCompleteViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C200000000000000C2000009 /* DeliveryCompleteViewModelTests.swift */; };
+		D300000000000000D3000012 /* AuthenticatedRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = D300000000000000D3000011 /* AuthenticatedRoute.swift */; };
+		D310000000000000D3100021 /* ProfileModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D310000000000000D3100011 /* ProfileModels.swift */; };
+		D310000000000000D3100022 /* IdentityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D310000000000000D3100012 /* IdentityRepository.swift */; };
+		D310000000000000D3100023 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D310000000000000D3100013 /* ProfileViewModel.swift */; };
+		D310000000000000D3100024 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D310000000000000D3100014 /* ProfileView.swift */; };
+		D310000000000000D3100031 /* ProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D310000000000000D3100030 /* ProfileViewModelTests.swift */; };
+		D320000000000000D3200021 /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D320000000000000D3200011 /* SettingsModels.swift */; };
+		D320000000000000D3200022 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D320000000000000D3200012 /* SettingsViewModel.swift */; };
+		D320000000000000D3200023 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D320000000000000D3200013 /* SettingsView.swift */; };
+		D320000000000000D3200031 /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D320000000000000D3200030 /* SettingsViewModelTests.swift */; };
+		D330000000000000D3300021 /* SupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D330000000000000D3300011 /* SupportViewModel.swift */; };
+		D330000000000000D3300022 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D330000000000000D3300012 /* SupportView.swift */; };
+		D330000000000000D3300031 /* SupportViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D330000000000000D3300030 /* SupportViewModelTests.swift */; };
 		D100000000000000D1000002 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000001 /* LocationManager.swift */; };
 		D100000000000000D1000004 /* WaypointBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D100000000000000D1000003 /* WaypointBuffer.swift */; };
 		D200000000000000D2000002 /* WaypointBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D200000000000000D2000001 /* WaypointBufferTests.swift */; };
@@ -222,6 +235,19 @@
 		C200000000000000C2000005 /* ActiveDeliveryFixture.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActiveDeliveryFixture.swift; sourceTree = "<group>"; };
 		C200000000000000C2000007 /* ProofOfDeliveryViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProofOfDeliveryViewModelTests.swift; sourceTree = "<group>"; };
 		C200000000000000C2000009 /* DeliveryCompleteViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeliveryCompleteViewModelTests.swift; sourceTree = "<group>"; };
+		D300000000000000D3000011 /* AuthenticatedRoute.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AuthenticatedRoute.swift; sourceTree = "<group>"; };
+		D310000000000000D3100011 /* ProfileModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfileModels.swift; sourceTree = "<group>"; };
+		D310000000000000D3100012 /* IdentityRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IdentityRepository.swift; sourceTree = "<group>"; };
+		D310000000000000D3100013 /* ProfileViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		D310000000000000D3100014 /* ProfileView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		D310000000000000D3100030 /* ProfileViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTests.swift; sourceTree = "<group>"; };
+		D320000000000000D3200011 /* SettingsModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsModels.swift; sourceTree = "<group>"; };
+		D320000000000000D3200012 /* SettingsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		D320000000000000D3200013 /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D320000000000000D3200030 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
+		D330000000000000D3300011 /* SupportViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SupportViewModel.swift; sourceTree = "<group>"; };
+		D330000000000000D3300012 /* SupportView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
+		D330000000000000D3300030 /* SupportViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SupportViewModelTests.swift; sourceTree = "<group>"; };
 		C528D7CA61D5E9AF840DFBB2 /* PayoutRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PayoutRepository.swift; sourceTree = "<group>"; };
 		C61D4F9C7ABC7014ED8A7528 /* CashOutSentViewTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CashOutSentViewTests.swift; sourceTree = "<group>"; };
 		C8A58C20706E86ABA46009AD /* CashOutSentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CashOutSentView.swift; sourceTree = "<group>"; };
@@ -344,8 +370,17 @@
 				A00000000000000000000002 /* AppEnvironment.swift */,
 				A00000000000000000000003 /* AppSession.swift */,
 				A00000000000000000000004 /* RootView.swift */,
+				D340000000000000D3400001 /* Navigation */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		D340000000000000D3400001 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				D300000000000000D3000011 /* AuthenticatedRoute.swift */,
+			);
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 		A00000000000000000000025 /* Resources */ = {
@@ -431,6 +466,9 @@
 				F300000000000000F3000001 /* Earnings */,
 				9BDCB06509A00611688155E8 /* Notifications */,
 				90F5A9F52BA09DE41BB9539F /* Chat */,
+				D310000000000000D3100001 /* Profile */,
+				D320000000000000D3200001 /* Settings */,
+				D330000000000000D3300001 /* Support */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -467,8 +505,65 @@
 				000A7AB882B3CE1088830A60 /* Auth */,
 				64C184D4A628E7BB85E7974F /* Notifications */,
 				A98FCF00095FD908E49836DF /* Chat */,
+				D310000000000000D3100002 /* Profile */,
+				D320000000000000D3200002 /* Settings */,
+				D330000000000000D3300002 /* Support */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		D310000000000000D3100001 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				D310000000000000D3100011 /* ProfileModels.swift */,
+				D310000000000000D3100012 /* IdentityRepository.swift */,
+				D310000000000000D3100013 /* ProfileViewModel.swift */,
+				D310000000000000D3100014 /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		D310000000000000D3100002 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				D310000000000000D3100030 /* ProfileViewModelTests.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		D320000000000000D3200001 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D320000000000000D3200011 /* SettingsModels.swift */,
+				D320000000000000D3200012 /* SettingsViewModel.swift */,
+				D320000000000000D3200013 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D320000000000000D3200002 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D320000000000000D3200030 /* SettingsViewModelTests.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D330000000000000D3300001 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				D330000000000000D3300011 /* SupportViewModel.swift */,
+				D330000000000000D3300012 /* SupportView.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		D330000000000000D3300002 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				D330000000000000D3300030 /* SupportViewModelTests.swift */,
+			);
+			path = Support;
 			sourceTree = "<group>";
 		};
 		A00000000000000000000137 /* Dashboard */ = {
@@ -725,6 +820,7 @@
 				A00000000000000000000012 /* AppEnvironment.swift in Sources */,
 				A00000000000000000000013 /* AppSession.swift in Sources */,
 				A00000000000000000000014 /* RootView.swift in Sources */,
+				D300000000000000D3000012 /* AuthenticatedRoute.swift in Sources */,
 				A00000000000000000000111 /* HTTPMethod.swift in Sources */,
 				A00000000000000000000112 /* APIEndpoint.swift in Sources */,
 				A00000000000000000000113 /* NetworkError.swift in Sources */,
@@ -790,6 +886,15 @@
 				44710ADD2048BB04B27DAAB0 /* PresenceSocketClient.swift in Sources */,
 				2D41ED7B583B3B2BB71BD3C5 /* ChatViewModel.swift in Sources */,
 				341510E932110E67A3AA91AB /* ChatThreadView.swift in Sources */,
+				D310000000000000D3100021 /* ProfileModels.swift in Sources */,
+				D310000000000000D3100022 /* IdentityRepository.swift in Sources */,
+				D310000000000000D3100023 /* ProfileViewModel.swift in Sources */,
+				D310000000000000D3100024 /* ProfileView.swift in Sources */,
+				D320000000000000D3200021 /* SettingsModels.swift in Sources */,
+				D320000000000000D3200022 /* SettingsViewModel.swift in Sources */,
+				D320000000000000D3200023 /* SettingsView.swift in Sources */,
+				D330000000000000D3300021 /* SupportViewModel.swift in Sources */,
+				D330000000000000D3300022 /* SupportView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -837,6 +942,9 @@
 				9570A1D5AD3BD450EE095DFD /* NotificationsViewModelTests.swift in Sources */,
 				EE9002BB5204F00B44764C7E /* ChatViewModelTests.swift in Sources */,
 				F733D2AC1C95137464A9372D /* ChatSocketClientTests.swift in Sources */,
+				D310000000000000D3100031 /* ProfileViewModelTests.swift in Sources */,
+				D320000000000000D3200031 /* SettingsViewModelTests.swift in Sources */,
+				D330000000000000D3300031 /* SupportViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

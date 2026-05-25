@@ -33,6 +33,12 @@ enum APIEndpoint: Equatable {
     case sendThreadAttachment(threadId: String)
     case markThreadRead(threadId: String)
     case quickReplies
+    case me
+    case updateMe
+    case mePhoto
+    case meSettings
+    case updateMeSettings
+    case tier
 
     var method: HTTPMethod {
         switch self {
@@ -40,10 +46,12 @@ enum APIEndpoint: Equatable {
                 .runnerOnline, .runnerOffline, .runnerLocation, .acceptBooking,
                 .declineBooking, .arriveAtPickup, .markPickup, .arriveAtDropoff,
                 .proofOfDelivery, .completeDelivery, .rateCustomer, .markDelivered, .cashOut,
-                .sendThreadMessage, .sendThreadAttachment, .markThreadRead:
+                .sendThreadMessage, .sendThreadAttachment, .markThreadRead, .mePhoto:
             return .post
+        case .updateMe, .updateMeSettings:
+            return .put
         case .profile, .runnerMe, .availableJobs, .bookingDetail, .trackingHistory,
-                .earnings, .notifications, .threads, .threadMessages, .quickReplies:
+                .earnings, .notifications, .threads, .threadMessages, .quickReplies, .me, .meSettings, .tier:
             return .get
         }
     }
@@ -115,6 +123,18 @@ enum APIEndpoint: Equatable {
             return "threads/\(threadId)/read"
         case .quickReplies:
             return "quick-replies"
+        case .me:
+            return "me"
+        case .updateMe:
+            return "me"
+        case .mePhoto:
+            return "me/photo"
+        case .meSettings:
+            return "me/settings"
+        case .updateMeSettings:
+            return "me/settings"
+        case .tier:
+            return "tier"
         }
     }
 

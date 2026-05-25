@@ -94,6 +94,11 @@ private struct ChatMessageDeliveredPayload: Decodable {
     struct Body: Decodable {
         let messageID: String
         let threadID: String
+
+        enum CodingKeys: String, CodingKey {
+            case messageID = "messageId"
+            case threadID = "threadId"
+        }
     }
     let payload: Body
 }
@@ -103,6 +108,12 @@ private struct ChatMessageReadPayload: Decodable {
         let messageID: String
         let threadID: String
         let at: Date
+
+        enum CodingKeys: String, CodingKey {
+            case messageID = "messageId"
+            case threadID = "threadId"
+            case at
+        }
     }
     let payload: Body
 }
@@ -112,6 +123,12 @@ private struct ChatTypingPayload: Decodable {
         let threadID: String
         let senderID: String
         let isActive: Bool
+
+        enum CodingKeys: String, CodingKey {
+            case threadID = "threadId"
+            case senderID = "senderId"
+            case isActive
+        }
     }
     let payload: Body
 }
