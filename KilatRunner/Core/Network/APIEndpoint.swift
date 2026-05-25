@@ -13,6 +13,7 @@ enum APIEndpoint: Equatable {
     case runnerOffline
     case runnerLocation
     case availableJobs(page: Int = 1, limit: Int = 20)
+    case jobAlerts
     case bookingHistory(filter: String, cursor: String?, limit: Int = 20)
     case scheduledBookings
     case bookingDetail(id: String)
@@ -57,7 +58,7 @@ enum APIEndpoint: Equatable {
     var method: HTTPMethod {
         switch self {
         case .login, .refresh, .logout, .forgotPassword, .resetPassword, .runnerApply,
-                .runnerOnline, .runnerOffline, .runnerLocation, .acceptBooking,
+                .runnerOnline, .runnerOffline, .runnerLocation, .jobAlerts, .acceptBooking,
                 .declineBooking, .arriveAtPickup, .markPickup, .arriveAtDropoff,
                 .proofOfDelivery, .completeDelivery, .rateCustomer, .markDelivered, .cashOut,
                 .sendThreadMessage, .sendThreadAttachment, .markThreadRead, .mePhoto,
@@ -98,6 +99,8 @@ enum APIEndpoint: Equatable {
             return "runners/me/location"
         case .availableJobs:
             return "bookings"
+        case .jobAlerts:
+            return "me/job-alerts"
         case .bookingHistory:
             return "bookings/history"
         case .scheduledBookings:

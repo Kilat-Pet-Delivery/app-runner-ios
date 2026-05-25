@@ -129,6 +129,10 @@ final class ActiveDeliveryViewModel {
         await stopRealtimeAndFlush()
     }
 
+    func queuedWaypointCount() async -> Int {
+        await buffer.queuedCount()
+    }
+
     func markPickup() async {
         await markPickedUp()
     }

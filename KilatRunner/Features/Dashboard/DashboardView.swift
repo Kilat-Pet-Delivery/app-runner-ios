@@ -4,10 +4,17 @@ import KilatUI
 struct DashboardView: View {
     @Environment(\.openURL) private var openURL
     @Bindable private var viewModel: DashboardViewModel
+    @Bindable private var reachability: NetworkReachability
     @State private var showsPermissionRationale = false
 
+    @MainActor
     init(viewModel: DashboardViewModel) {
+        self.init(viewModel: viewModel, reachability: NetworkReachability.shared)
+    }
+
+    init(viewModel: DashboardViewModel, reachability: NetworkReachability) {
         self.viewModel = viewModel
+        self.reachability = reachability
     }
 
     var body: some View {
@@ -33,6 +40,9 @@ struct DashboardView: View {
         }
         .background(Tokens.Color.background.ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .top, spacing: 0) {
+            OfflineBannerView(reachability: reachability)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 NavigationLink(value: AuthenticatedRoute.notifications) {
@@ -241,7 +251,7 @@ struct DashboardView: View {
     private var actionGrid: some View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: Tokens.Space.sm) {
             NavigationLink {
-                AvailableJobsView(viewModel: AvailableJobsViewModel())
+                AvailableJobsView(viewModel: AvailableJobsViewModel(), reachability: reachability)
             } label: {
                 actionTile(title: "Jobs", subtitle: "Available", icon: "box")
             }

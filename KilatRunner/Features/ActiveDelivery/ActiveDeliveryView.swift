@@ -4,13 +4,31 @@ import KilatUI
 
 struct ActiveDeliveryView: View {
     @Bindable private var viewModel: ActiveDeliveryViewModel
+    @Bindable private var reachability: NetworkReachability
     private let onBackToDashboard: () -> Void
     @State private var chatPresentation: ChatPresentation?
     @State private var incidentPresentation: IncidentPresentation?
     @State private var showsCancelSheet = false
 
-    init(viewModel: ActiveDeliveryViewModel, onBackToDashboard: @escaping () -> Void = {}) {
+    @MainActor
+    init(
+        viewModel: ActiveDeliveryViewModel,
+        onBackToDashboard: @escaping () -> Void = {}
+    ) {
+        self.init(
+            viewModel: viewModel,
+            reachability: NetworkReachability.shared,
+            onBackToDashboard: onBackToDashboard
+        )
+    }
+
+    init(
+        viewModel: ActiveDeliveryViewModel,
+        reachability: NetworkReachability,
+        onBackToDashboard: @escaping () -> Void = {}
+    ) {
         self.viewModel = viewModel
+        self.reachability = reachability
         self.onBackToDashboard = onBackToDashboard
     }
 
@@ -47,6 +65,11 @@ struct ActiveDeliveryView: View {
         }
         .navigationTitle("Active delivery")
         .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .top, spacing: 0) {
+            OfflineBannerView(reachability: reachability) {
+                await viewModel.queuedWaypointCount()
+            }
+        }
         .onAppear { viewModel.onAppear() }
         .onDisappear { Task { await viewModel.onDisappear() } }
         .toolbar {

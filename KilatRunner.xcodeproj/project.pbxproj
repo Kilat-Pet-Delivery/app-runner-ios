@@ -120,6 +120,12 @@
 		FA00000000000000FA000006 /* CoachMarksOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA00000000000000FA000005 /* CoachMarksOverlay.swift */; };
 		FA10000000000000FA100002 /* PermissionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA10000000000000FA100001 /* PermissionsViewModelTests.swift */; };
 		FA10000000000000FA100004 /* CoachMarksOverlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA10000000000000FA100003 /* CoachMarksOverlayTests.swift */; };
+		FB00000000000000FB000002 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB00000000000000FB000001 /* NetworkReachability.swift */; };
+		FB00000000000000FB000004 /* OfflineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB00000000000000FB000003 /* OfflineViewModel.swift */; };
+		FB00000000000000FB000006 /* OfflineBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB00000000000000FB000005 /* OfflineBannerView.swift */; };
+		FB00000000000000FB000008 /* OfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB00000000000000FB000007 /* OfflineView.swift */; };
+		FB10000000000000FB100002 /* NetworkReachabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10000000000000FB100001 /* NetworkReachabilityTests.swift */; };
+		FB10000000000000FB100004 /* OfflineViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10000000000000FB100003 /* OfflineViewModelTests.swift */; };
 		F800000000000000F8000002 /* ZoneModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000001 /* ZoneModels.swift */; };
 		F800000000000000F8000004 /* ZonesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000003 /* ZonesRepository.swift */; };
 		F800000000000000F8000006 /* HotZonesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000005 /* HotZonesViewModel.swift */; };
@@ -316,6 +322,12 @@
 		FA00000000000000FA000005 /* CoachMarksOverlay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CoachMarksOverlay.swift; sourceTree = "<group>"; };
 		FA10000000000000FA100001 /* PermissionsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PermissionsViewModelTests.swift; sourceTree = "<group>"; };
 		FA10000000000000FA100003 /* CoachMarksOverlayTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CoachMarksOverlayTests.swift; sourceTree = "<group>"; };
+		FB00000000000000FB000001 /* NetworkReachability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
+		FB00000000000000FB000003 /* OfflineViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OfflineViewModel.swift; sourceTree = "<group>"; };
+		FB00000000000000FB000005 /* OfflineBannerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OfflineBannerView.swift; sourceTree = "<group>"; };
+		FB00000000000000FB000007 /* OfflineView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OfflineView.swift; sourceTree = "<group>"; };
+		FB10000000000000FB100001 /* NetworkReachabilityTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityTests.swift; sourceTree = "<group>"; };
+		FB10000000000000FB100003 /* OfflineViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OfflineViewModelTests.swift; sourceTree = "<group>"; };
 		F800000000000000F8000001 /* ZoneModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZoneModels.swift; sourceTree = "<group>"; };
 		F800000000000000F8000003 /* ZonesRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZonesRepository.swift; sourceTree = "<group>"; };
 		F800000000000000F8000005 /* HotZonesViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HotZonesViewModel.swift; sourceTree = "<group>"; };
@@ -584,6 +596,7 @@
 				F840000000000000F8400001 /* Zones */,
 				F850000000000000F8500001 /* Performance */,
 				FA20000000000000FA200001 /* Onboarding */,
+				FB20000000000000FB200001 /* Connectivity */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -628,6 +641,7 @@
 				F840000000000000F8400002 /* Zones */,
 				F850000000000000F8500002 /* Performance */,
 				FA20000000000000FA200002 /* Onboarding */,
+				FB20000000000000FB200002 /* Connectivity */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -795,6 +809,26 @@
 				FA10000000000000FA100003 /* CoachMarksOverlayTests.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		FB20000000000000FB200001 /* Connectivity */ = {
+			isa = PBXGroup;
+			children = (
+				FB00000000000000FB000001 /* NetworkReachability.swift */,
+				FB00000000000000FB000003 /* OfflineViewModel.swift */,
+				FB00000000000000FB000005 /* OfflineBannerView.swift */,
+				FB00000000000000FB000007 /* OfflineView.swift */,
+			);
+			path = Connectivity;
+			sourceTree = "<group>";
+		};
+		FB20000000000000FB200002 /* Connectivity */ = {
+			isa = PBXGroup;
+			children = (
+				FB10000000000000FB100001 /* NetworkReachabilityTests.swift */,
+				FB10000000000000FB100003 /* OfflineViewModelTests.swift */,
+			);
+			path = Connectivity;
 			sourceTree = "<group>";
 		};
 		A00000000000000000000137 /* Dashboard */ = {
@@ -1179,6 +1213,10 @@
 				FA00000000000000FA000002 /* PermissionsViewModel.swift in Sources */,
 				FA00000000000000FA000004 /* PermissionsView.swift in Sources */,
 				FA00000000000000FA000006 /* CoachMarksOverlay.swift in Sources */,
+				FB00000000000000FB000002 /* NetworkReachability.swift in Sources */,
+				FB00000000000000FB000004 /* OfflineViewModel.swift in Sources */,
+				FB00000000000000FB000006 /* OfflineBannerView.swift in Sources */,
+				FB00000000000000FB000008 /* OfflineView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1245,6 +1283,8 @@
 				F830000000000000F8300002 /* PerformanceViewModelTests.swift in Sources */,
 				FA10000000000000FA100002 /* PermissionsViewModelTests.swift in Sources */,
 				FA10000000000000FA100004 /* CoachMarksOverlayTests.swift in Sources */,
+				FB10000000000000FB100002 /* NetworkReachabilityTests.swift in Sources */,
+				FB10000000000000FB100004 /* OfflineViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

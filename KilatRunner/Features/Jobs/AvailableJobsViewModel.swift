@@ -23,6 +23,9 @@ final class AvailableJobsViewModel {
     private(set) var isLoading = false
     var errorMessage: String?
     var selectedSort: AvailableJobsSort = .bestPay
+    private(set) var searchRadiusKm = 8
+    private(set) var isCreatingJobAlert = false
+    var noticeMessage: String?
 
     var sortedJobs: [Booking] {
         switch selectedSort {
@@ -71,5 +74,29 @@ final class AvailableJobsViewModel {
     @MainActor
     func refresh() async {
         await load()
+    }
+
+    @MainActor
+    func widenRadius() {
+        searchRadiusKm += 4
+        noticeMessage = "Search radius widened to \(searchRadiusKm) km."
+    }
+
+    @MainActor
+    func createJobAlert() async {
+        guard !isCreatingJobAlert else { return }
+        noticeMessage = nil
+        errorMessage = nil
+        isCreatingJobAlert = true
+        defer { isCreatingJobAlert = false }
+
+        do {
+            try await repository.createJobAlert(radiusKm: searchRadiusKm)
+            noticeMessage = "We'll notify you when jobs are available nearby."
+        } catch let error as NetworkError {
+            errorMessage = error.userMessage
+        } catch {
+            errorMessage = NetworkError.unknown(error.localizedDescription).userMessage
+        }
     }
 }

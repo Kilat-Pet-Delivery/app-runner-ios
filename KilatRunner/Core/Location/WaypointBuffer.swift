@@ -52,6 +52,10 @@ actor WaypointBuffer {
 
     var count: Int { waypoints.count }
 
+    func queuedCount() -> Int {
+        waypoints.count
+    }
+
     private func shouldFlushByCount() -> Bool {
         waypoints.count >= flushCount
     }

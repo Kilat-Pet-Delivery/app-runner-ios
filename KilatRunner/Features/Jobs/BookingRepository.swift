@@ -2,6 +2,7 @@ import Foundation
 
 protocol BookingRepositoryProtocol {
     func listAvailable() async throws -> [Booking]
+    func createJobAlert(radiusKm: Int) async throws
     func fetchHistory(filter: BookingHistoryFilter, cursor: String?, limit: Int) async throws -> BookingHistoryPage
     func fetchScheduled() async throws -> [Booking]
     func get(id: String) async throws -> Booking
@@ -19,6 +20,10 @@ protocol BookingRepositoryProtocol {
 
 extension BookingRepositoryProtocol {
     func decline(id: String, reason: DeclineReason) async throws {
+        throw NetworkError.invalidResponse
+    }
+
+    func createJobAlert(radiusKm: Int) async throws {
         throw NetworkError.invalidResponse
     }
 
@@ -69,6 +74,13 @@ final class BookingRepository: BookingRepositoryProtocol {
     func listAvailable() async throws -> [Booking] {
         let envelope: APIResponseEnvelope<[Booking]> = try await authInterceptor.perform(.availableJobs())
         return envelope.data
+    }
+
+    func createJobAlert(radiusKm: Int) async throws {
+        let _: EmptyResponse = try await authInterceptor.perform(
+            .jobAlerts,
+            body: JobAlertRequest(radiusKm: radiusKm)
+        )
     }
 
     func fetchHistory(filter: BookingHistoryFilter, cursor: String? = nil, limit: Int = 20) async throws -> BookingHistoryPage {
@@ -202,6 +214,10 @@ enum DeclineReason: String, CaseIterable, Identifiable, Encodable {
 
 struct DeclineBookingRequest: Encodable, Equatable {
     let reason: String
+}
+
+struct JobAlertRequest: Encodable, Equatable {
+    let radiusKm: Int
 }
 
 enum BookingHistoryFilter: String, CaseIterable, Identifiable, Equatable {

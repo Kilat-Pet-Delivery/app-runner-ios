@@ -3,9 +3,16 @@ import KilatUI
 
 struct AvailableJobsView: View {
     @Bindable private var viewModel: AvailableJobsViewModel
+    @Bindable private var reachability: NetworkReachability
 
+    @MainActor
     init(viewModel: AvailableJobsViewModel) {
+        self.init(viewModel: viewModel, reachability: NetworkReachability.shared)
+    }
+
+    init(viewModel: AvailableJobsViewModel, reachability: NetworkReachability) {
         self.viewModel = viewModel
+        self.reachability = reachability
     }
 
     var body: some View {
@@ -19,6 +26,9 @@ struct AvailableJobsView: View {
         .background(Tokens.Color.background.ignoresSafeArea())
         .navigationTitle("Available jobs")
         .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .top, spacing: 0) {
+            OfflineBannerView(reachability: reachability)
+        }
         .refreshable { await viewModel.refresh() }
         .task { await viewModel.load() }
     }
@@ -81,34 +91,76 @@ struct AvailableJobsView: View {
     }
 
     private var emptyState: some View {
-        VStack(spacing: Tokens.Space.md) {
-            Image(kilatAsset: "box")
-                .resizable()
-                .renderingMode(.template)
-                .frame(width: 64, height: 64)
-                .foregroundStyle(Tokens.Color.textTertiary)
-            Text("No available jobs")
-                .font(Tokens.FontRole.titleM)
-                .foregroundStyle(Tokens.Color.textPrimary)
-            Text("Pull to refresh when new bookings come in.")
-                .font(Tokens.FontRole.label)
-                .foregroundStyle(Tokens.Color.textSecondary)
-                .multilineTextAlignment(.center)
-            NavigationLink(value: AuthenticatedRoute.hotZones) {
-                Label("Try a hot zone", systemImage: "map.fill")
-                    .font(Tokens.FontRole.label)
-                    .foregroundStyle(Tokens.Color.onPrimary)
-                    .padding(.horizontal, Tokens.Space.md)
-                    .padding(.vertical, Tokens.Space.sm)
-                    .background(Tokens.Color.primary, in: Capsule())
+        ScrollView {
+            VStack(spacing: Tokens.Space.lg) {
+                ZStack(alignment: .topTrailing) {
+                    Circle()
+                        .fill(Tokens.Color.primaryTonal)
+                        .frame(width: 112, height: 112)
+                    Image(systemName: "pawprint.fill")
+                        .font(.system(size: 52, weight: .semibold))
+                        .foregroundStyle(Tokens.Color.primary)
+                        .frame(width: 112, height: 112)
+                    Text("Zzz")
+                        .font(Tokens.FontRole.caption)
+                        .foregroundStyle(Tokens.Color.textSecondary)
+                        .padding(.trailing, Tokens.Space.xs)
+                }
+
+                VStack(spacing: Tokens.Space.xs) {
+                    Text("No jobs nearby")
+                        .font(Tokens.FontRole.titleM)
+                        .foregroundStyle(Tokens.Color.textPrimary)
+                    Text("Try a busy zone, widen your search to \(viewModel.searchRadiusKm) km, or ask Kilat to alert you when bookings open up.")
+                        .font(Tokens.FontRole.label)
+                        .foregroundStyle(Tokens.Color.textSecondary)
+                        .multilineTextAlignment(.center)
+                }
+
+                if let noticeMessage = viewModel.noticeMessage {
+                    Label(noticeMessage, systemImage: "checkmark.circle.fill")
+                        .font(Tokens.FontRole.caption)
+                        .foregroundStyle(Tokens.Color.online)
+                        .multilineTextAlignment(.center)
+                }
+
+                VStack(spacing: Tokens.Space.sm) {
+                    NavigationLink(value: AuthenticatedRoute.hotZones) {
+                        Label("Try a hot zone", systemImage: "map.fill")
+                            .font(Tokens.FontRole.label)
+                            .foregroundStyle(Tokens.Color.onPrimary)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, Tokens.Space.sm)
+                            .background(Tokens.Color.primary, in: Capsule())
+                    }
+
+                    SecondaryButton(title: "Widen radius", icon: "scope") {
+                        viewModel.widenRadius()
+                    }
+
+                    Button {
+                        Task { await viewModel.createJobAlert() }
+                    } label: {
+                        HStack {
+                            if viewModel.isCreatingJobAlert {
+                                ProgressView()
+                                    .tint(Tokens.Color.primary)
+                            } else {
+                                Image(systemName: "bell.badge.fill")
+                            }
+                            Text("Notify me when available")
+                        }
+                        .font(Tokens.FontRole.label)
+                        .foregroundStyle(Tokens.Color.primary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, Tokens.Space.sm)
+                    }
+                    .disabled(viewModel.isCreatingJobAlert)
+                }
             }
-            NavigationLink(value: AuthenticatedRoute.scheduledJobs) {
-                Text("Notify me when available")
-                    .font(Tokens.FontRole.label)
-                    .foregroundStyle(Tokens.Color.primary)
-            }
+            .padding(Tokens.Space.xl)
+            .frame(maxWidth: .infinity)
         }
-        .padding(Tokens.Space.xl)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 

@@ -37,6 +37,26 @@ final class AvailableJobsViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.errorMessage, NetworkError.serverError(500).userMessage)
     }
 
+    func test_widenRadius_increasesSearchRadius_andSetsNotice() {
+        let viewModel = AvailableJobsViewModel(repository: MockBookingRepository())
+
+        viewModel.widenRadius()
+
+        XCTAssertEqual(viewModel.searchRadiusKm, 12)
+        XCTAssertEqual(viewModel.noticeMessage, "Search radius widened to 12 km.")
+    }
+
+    func test_createJobAlert_postsRadius_andSetsNotice() async {
+        let repository = MockBookingRepository()
+        let viewModel = AvailableJobsViewModel(repository: repository)
+
+        await viewModel.createJobAlert()
+
+        XCTAssertEqual(repository.createJobAlertRadiusKm, 8)
+        XCTAssertEqual(viewModel.noticeMessage, "We'll notify you when jobs are available nearby.")
+        XCTAssertFalse(viewModel.isCreatingJobAlert)
+    }
+
     // MARK: - Fixtures
 
     private static let booking1 = AvailableJobsViewModelTests.makeBooking(id: "10000000-0000-4000-8000-000000000001", bookingNumber: "BK-AB12CD")
@@ -104,6 +124,7 @@ final class AvailableJobsViewModelTests: XCTestCase {
 private final class MockBookingRepository: BookingRepositoryProtocol {
     private let listAvailableResult: Result<[Booking], Error>
     private(set) var listAvailableCallCount = 0
+    private(set) var createJobAlertRadiusKm: Int?
 
     init(listAvailableResult: Result<[Booking], Error> = .success([])) {
         self.listAvailableResult = listAvailableResult
@@ -112,6 +133,10 @@ private final class MockBookingRepository: BookingRepositoryProtocol {
     func listAvailable() async throws -> [Booking] {
         listAvailableCallCount += 1
         return try listAvailableResult.get()
+    }
+
+    func createJobAlert(radiusKm: Int) async throws {
+        createJobAlertRadiusKm = radiusKm
     }
 
     func get(id: String) async throws -> Booking {
