@@ -13,6 +13,8 @@ enum AuthenticatedRoute: Hashable {
     case quests
     case hotZones
     case performance
+    case reviews
+    case referFriend
 }
 
 extension AuthenticatedRoute: Identifiable {
@@ -30,6 +32,8 @@ extension AuthenticatedRoute: Identifiable {
         case .quests: return "quests"
         case .hotZones: return "hot-zones"
         case .performance: return "performance"
+        case .reviews: return "reviews"
+        case .referFriend: return "refer-friend"
         }
     }
 }

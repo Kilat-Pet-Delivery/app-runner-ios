@@ -49,6 +49,10 @@ enum APIEndpoint: Equatable {
     case redeemQuest(id: String)
     case zones
     case zoneAt(lat: Double, lon: Double)
+    case reviews
+    case referrals
+    case referralCode
+    case redeemReferral(id: String)
 
     var method: HTTPMethod {
         switch self {
@@ -57,13 +61,13 @@ enum APIEndpoint: Equatable {
                 .declineBooking, .arriveAtPickup, .markPickup, .arriveAtDropoff,
                 .proofOfDelivery, .completeDelivery, .rateCustomer, .markDelivered, .cashOut,
                 .sendThreadMessage, .sendThreadAttachment, .markThreadRead, .mePhoto,
-                .incidents, .incidentTransition, .redeemQuest:
+                .incidents, .incidentTransition, .redeemQuest, .referralCode, .redeemReferral:
             return .post
         case .updateMe, .updateMeSettings:
             return .put
         case .profile, .runnerMe, .availableJobs, .bookingHistory, .scheduledBookings, .bookingDetail, .bookingPet, .trackingHistory,
                 .earnings, .notifications, .threads, .threadMessages, .quickReplies, .me, .meSettings, .tier,
-                .incidentDetail, .quests, .zones, .zoneAt:
+                .incidentDetail, .quests, .zones, .zoneAt, .reviews, .referrals:
             return .get
         }
     }
@@ -167,6 +171,14 @@ enum APIEndpoint: Equatable {
             return "zones"
         case .zoneAt:
             return "zones/at"
+        case .reviews:
+            return "me/reviews"
+        case .referrals:
+            return "referrals"
+        case .referralCode:
+            return "referrals/code"
+        case let .redeemReferral(id):
+            return "referrals/\(id)/redeem"
         }
     }
 

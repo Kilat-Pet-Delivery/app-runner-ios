@@ -52,3 +52,41 @@ struct TipReceivedPayload: Decodable, Equatable {
         case threadID = "thread_id"
     }
 }
+
+struct RunnerReview: Decodable, Equatable, Identifiable {
+    let id: String
+    let customerName: String
+    let rating: Int
+    let comment: String
+    let tipCents: Int?
+    let createdAt: Date
+}
+
+enum ReferralPayoutStatus: String, Decodable, Equatable {
+    case invited
+    case active
+    case eligible
+    case pending
+    case paid
+}
+
+struct ReferralFriend: Decodable, Equatable, Identifiable {
+    let id: String
+    let name: String
+    let signupDate: Date
+    let deliveriesToDate: Int
+    var payoutStatus: ReferralPayoutStatus
+
+    var isPayoutEligible: Bool {
+        payoutStatus == .eligible
+    }
+}
+
+struct ReferralListResponse: Decodable, Equatable {
+    let code: String?
+    let friends: [ReferralFriend]
+}
+
+struct ReferralCodeResponse: Decodable, Equatable {
+    let code: String
+}

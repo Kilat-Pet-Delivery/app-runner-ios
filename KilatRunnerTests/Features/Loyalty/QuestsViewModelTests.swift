@@ -67,7 +67,13 @@ final class LoyaltyRepositorySpy: LoyaltyRepositoryProtocol {
     var questResponse = QuestListResponse(streakDays: 0, daily: [], weekly: [])
     var redeemedQuest: RunnerQuest?
     var redeemError: Error?
+    var reviews: [RunnerReview] = []
+    var referralResponse = ReferralListResponse(code: nil, friends: [])
+    var createdCode = "RUNNER50"
     private(set) var redeemCalls: [String] = []
+    private(set) var reviewFetches = 0
+    private(set) var createCodeCalls = 0
+    private(set) var redeemReferralCalls: [String] = []
 
     func fetchQuests() async throws -> QuestListResponse {
         questResponse
@@ -79,5 +85,23 @@ final class LoyaltyRepositorySpy: LoyaltyRepositoryProtocol {
             throw redeemError
         }
         return redeemedQuest ?? QuestFixture.quest(id: id, cadence: .daily, status: .redeemed)
+    }
+
+    func fetchReviews() async throws -> [RunnerReview] {
+        reviewFetches += 1
+        return reviews
+    }
+
+    func fetchReferrals() async throws -> ReferralListResponse {
+        referralResponse
+    }
+
+    func createReferralCode() async throws -> String {
+        createCodeCalls += 1
+        return createdCode
+    }
+
+    func redeemReferral(id: String) async throws {
+        redeemReferralCalls.append(id)
     }
 }

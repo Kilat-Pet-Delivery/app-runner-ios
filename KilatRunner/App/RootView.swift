@@ -64,6 +64,10 @@ private struct AuthenticatedRootView: View {
             HotZonesView(viewModel: HotZonesViewModel())
         case .performance:
             PerformanceView(viewModel: PerformanceViewModel())
+        case .reviews:
+            ReviewsView(viewModel: ReviewsViewModel())
+        case .referFriend:
+            ReferFriendView(viewModel: ReferFriendViewModel())
         }
     }
 }

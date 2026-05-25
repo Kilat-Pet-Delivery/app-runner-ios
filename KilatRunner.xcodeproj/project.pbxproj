@@ -109,6 +109,12 @@
 		F700000000000000F700000C /* TipReceivedSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F700000000000000F700000B /* TipReceivedSheet.swift */; };
 		F710000000000000F7100002 /* QuestsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F710000000000000F7100001 /* QuestsViewModelTests.swift */; };
 		F710000000000000F7100004 /* TipReceivedViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F710000000000000F7100003 /* TipReceivedViewModelTests.swift */; };
+		F900000000000000F9000002 /* ReviewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F900000000000000F9000001 /* ReviewsViewModel.swift */; };
+		F900000000000000F9000004 /* ReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F900000000000000F9000003 /* ReviewsView.swift */; };
+		F900000000000000F9000006 /* ReferFriendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F900000000000000F9000005 /* ReferFriendViewModel.swift */; };
+		F900000000000000F9000008 /* ReferFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F900000000000000F9000007 /* ReferFriendView.swift */; };
+		F910000000000000F9100002 /* ReviewsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F910000000000000F9100001 /* ReviewsViewModelTests.swift */; };
+		F910000000000000F9100004 /* ReferFriendViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F910000000000000F9100003 /* ReferFriendViewModelTests.swift */; };
 		F800000000000000F8000002 /* ZoneModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000001 /* ZoneModels.swift */; };
 		F800000000000000F8000004 /* ZonesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000003 /* ZonesRepository.swift */; };
 		F800000000000000F8000006 /* HotZonesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800000000000000F8000005 /* HotZonesViewModel.swift */; };
@@ -294,6 +300,12 @@
 		F700000000000000F700000B /* TipReceivedSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TipReceivedSheet.swift; sourceTree = "<group>"; };
 		F710000000000000F7100001 /* QuestsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuestsViewModelTests.swift; sourceTree = "<group>"; };
 		F710000000000000F7100003 /* TipReceivedViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TipReceivedViewModelTests.swift; sourceTree = "<group>"; };
+		F900000000000000F9000001 /* ReviewsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReviewsViewModel.swift; sourceTree = "<group>"; };
+		F900000000000000F9000003 /* ReviewsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReviewsView.swift; sourceTree = "<group>"; };
+		F900000000000000F9000005 /* ReferFriendViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReferFriendViewModel.swift; sourceTree = "<group>"; };
+		F900000000000000F9000007 /* ReferFriendView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReferFriendView.swift; sourceTree = "<group>"; };
+		F910000000000000F9100001 /* ReviewsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReviewsViewModelTests.swift; sourceTree = "<group>"; };
+		F910000000000000F9100003 /* ReferFriendViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReferFriendViewModelTests.swift; sourceTree = "<group>"; };
 		F800000000000000F8000001 /* ZoneModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZoneModels.swift; sourceTree = "<group>"; };
 		F800000000000000F8000003 /* ZonesRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZonesRepository.swift; sourceTree = "<group>"; };
 		F800000000000000F8000005 /* HotZonesViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HotZonesViewModel.swift; sourceTree = "<group>"; };
@@ -697,6 +709,10 @@
 				F700000000000000F7000007 /* QuestsView.swift */,
 				F700000000000000F7000009 /* TipReceivedViewModel.swift */,
 				F700000000000000F700000B /* TipReceivedSheet.swift */,
+				F900000000000000F9000001 /* ReviewsViewModel.swift */,
+				F900000000000000F9000003 /* ReviewsView.swift */,
+				F900000000000000F9000005 /* ReferFriendViewModel.swift */,
+				F900000000000000F9000007 /* ReferFriendView.swift */,
 			);
 			path = Loyalty;
 			sourceTree = "<group>";
@@ -706,6 +722,8 @@
 			children = (
 				F710000000000000F7100001 /* QuestsViewModelTests.swift */,
 				F710000000000000F7100003 /* TipReceivedViewModelTests.swift */,
+				F910000000000000F9100001 /* ReviewsViewModelTests.swift */,
+				F910000000000000F9100003 /* ReferFriendViewModelTests.swift */,
 			);
 			path = Loyalty;
 			sourceTree = "<group>";
@@ -1115,6 +1133,10 @@
 				F700000000000000F7000008 /* QuestsView.swift in Sources */,
 				F700000000000000F700000A /* TipReceivedViewModel.swift in Sources */,
 				F700000000000000F700000C /* TipReceivedSheet.swift in Sources */,
+				F900000000000000F9000002 /* ReviewsViewModel.swift in Sources */,
+				F900000000000000F9000004 /* ReviewsView.swift in Sources */,
+				F900000000000000F9000006 /* ReferFriendViewModel.swift in Sources */,
+				F900000000000000F9000008 /* ReferFriendView.swift in Sources */,
 				F800000000000000F8000002 /* ZoneModels.swift in Sources */,
 				F800000000000000F8000004 /* ZonesRepository.swift in Sources */,
 				F800000000000000F8000006 /* HotZonesViewModel.swift in Sources */,
@@ -1183,6 +1205,8 @@
 				E510000000000000E5100008 /* SOSViewModelTests.swift in Sources */,
 				F710000000000000F7100002 /* QuestsViewModelTests.swift in Sources */,
 				F710000000000000F7100004 /* TipReceivedViewModelTests.swift in Sources */,
+				F910000000000000F9100002 /* ReviewsViewModelTests.swift in Sources */,
+				F910000000000000F9100004 /* ReferFriendViewModelTests.swift in Sources */,
 				F820000000000000F8200002 /* HotZonesViewModelTests.swift in Sources */,
 				F830000000000000F8300002 /* PerformanceViewModelTests.swift in Sources */,
 			);
