@@ -15,6 +15,7 @@ enum AuthenticatedRoute: Hashable {
     case performance
     case reviews
     case referFriend
+    case proofRequired(bookingID: String)
 }
 
 extension AuthenticatedRoute: Identifiable {
@@ -34,6 +35,7 @@ extension AuthenticatedRoute: Identifiable {
         case .performance: return "performance"
         case .reviews: return "reviews"
         case .referFriend: return "refer-friend"
+        case let .proofRequired(bookingID): return "proof-required-\(bookingID)"
         }
     }
 }
