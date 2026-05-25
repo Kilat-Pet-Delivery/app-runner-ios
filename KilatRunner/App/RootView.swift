@@ -58,6 +58,8 @@ private struct AuthenticatedRootView: View {
             JobHistoryView(viewModel: JobHistoryViewModel())
         case .scheduledJobs:
             ScheduledJobsView(viewModel: ScheduledJobsViewModel())
+        case .quests:
+            QuestsView(viewModel: QuestsViewModel())
         }
     }
 }

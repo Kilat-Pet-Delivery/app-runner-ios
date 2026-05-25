@@ -61,6 +61,7 @@ final class DashboardViewModel {
     var onlineMinutesThisWeek: Int = 0
     var activeJob: DashboardActiveJob? = nil
     var upcomingScheduledBooking: Booking? = nil
+    var topQuest: RunnerQuest? = nil
 
     var weeklyGoalProgress: Double {
         guard weeklyGoalCents > 0 else { return 0 }
@@ -69,23 +70,27 @@ final class DashboardViewModel {
 
     @ObservationIgnored private let repository: RunnerRepositoryProtocol
     @ObservationIgnored private let bookingRepository: BookingRepositoryProtocol
+    @ObservationIgnored private let loyaltyRepository: LoyaltyRepositoryProtocol
     @ObservationIgnored private let locationPermissionProvider: LocationPermissionProvider
 
     init(
         repository: RunnerRepositoryProtocol,
         locationPermissionProvider: LocationPermissionProvider,
-        bookingRepository: BookingRepositoryProtocol = BookingRepository()
+        bookingRepository: BookingRepositoryProtocol = BookingRepository(),
+        loyaltyRepository: LoyaltyRepositoryProtocol = LoyaltyRepository()
     ) {
         self.repository = repository
         self.locationPermissionProvider = locationPermissionProvider
         self.bookingRepository = bookingRepository
+        self.loyaltyRepository = loyaltyRepository
     }
 
     convenience init() {
         self.init(
             repository: RunnerRepository(),
             locationPermissionProvider: CoreLocationPermissionProvider(),
-            bookingRepository: BookingRepository()
+            bookingRepository: BookingRepository(),
+            loyaltyRepository: LoyaltyRepository()
         )
     }
 
@@ -119,6 +124,16 @@ final class DashboardViewModel {
                 .first
         } catch {
             upcomingScheduledBooking = nil
+        }
+    }
+
+    @MainActor
+    func loadQuestHint() async {
+        do {
+            let response = try await loyaltyRepository.fetchQuests()
+            topQuest = (response.daily + response.weekly).first { $0.status == .active || $0.status == .completed }
+        } catch {
+            topQuest = nil
         }
     }
 

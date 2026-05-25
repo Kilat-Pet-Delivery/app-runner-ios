@@ -20,6 +20,9 @@ struct DashboardView: View {
                 if viewModel.activeJob != nil {
                     activeJobCard
                 }
+                if let topQuest = viewModel.topQuest {
+                    questCard(topQuest)
+                }
                 weeklyGoal
                 actionGrid
                 if let errorMessage = viewModel.errorMessage {
@@ -56,6 +59,7 @@ struct DashboardView: View {
         .task {
             await viewModel.loadRunner()
             await viewModel.loadScheduledHint()
+            await viewModel.loadQuestHint()
         }
         .sheet(isPresented: $showsPermissionRationale) {
             PermissionRationaleSheet {
@@ -208,6 +212,30 @@ struct DashboardView: View {
         }
         .padding(Tokens.Space.md)
         .background(Tokens.Color.surface, in: RoundedRectangle(cornerRadius: Tokens.Radius.md, style: .continuous))
+    }
+
+    private func questCard(_ quest: RunnerQuest) -> some View {
+        NavigationLink(value: AuthenticatedRoute.quests) {
+            VStack(alignment: .leading, spacing: Tokens.Space.sm) {
+                HStack {
+                    Label("Quest", systemImage: "sparkles")
+                        .font(Tokens.FontRole.caption)
+                        .foregroundStyle(Tokens.Color.primary)
+                    Spacer()
+                    Text("\(quest.progressCurrent)/\(quest.progressTarget)")
+                        .font(Tokens.FontRole.caption)
+                        .foregroundStyle(Tokens.Color.textSecondary)
+                }
+                Text(quest.title)
+                    .font(Tokens.FontRole.bodyBold)
+                    .foregroundStyle(Tokens.Color.textPrimary)
+                    .lineLimit(2)
+                ProgressBar(progress: quest.progress)
+            }
+            .padding(Tokens.Space.md)
+            .background(Tokens.Color.surface, in: RoundedRectangle(cornerRadius: Tokens.Radius.md, style: .continuous))
+        }
+        .buttonStyle(.plain)
     }
 
     private var actionGrid: some View {

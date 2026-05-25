@@ -101,6 +101,14 @@
 		F600000000000000F6000008 /* ScheduledJobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F600000000000000F6000007 /* ScheduledJobsView.swift */; };
 		F610000000000000F6100002 /* JobHistoryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610000000000000F6100001 /* JobHistoryViewModelTests.swift */; };
 		F610000000000000F6100004 /* ScheduledJobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610000000000000F6100003 /* ScheduledJobsViewModelTests.swift */; };
+		F700000000000000F7000002 /* LoyaltyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F700000000000000F7000001 /* LoyaltyModels.swift */; };
+		F700000000000000F7000004 /* LoyaltyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F700000000000000F7000003 /* LoyaltyRepository.swift */; };
+		F700000000000000F7000006 /* QuestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F700000000000000F7000005 /* QuestsViewModel.swift */; };
+		F700000000000000F7000008 /* QuestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F700000000000000F7000007 /* QuestsView.swift */; };
+		F700000000000000F700000A /* TipReceivedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F700000000000000F7000009 /* TipReceivedViewModel.swift */; };
+		F700000000000000F700000C /* TipReceivedSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F700000000000000F700000B /* TipReceivedSheet.swift */; };
+		F710000000000000F7100002 /* QuestsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F710000000000000F7100001 /* QuestsViewModelTests.swift */; };
+		F710000000000000F7100004 /* TipReceivedViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F710000000000000F7100003 /* TipReceivedViewModelTests.swift */; };
 		B200000000000000B2000002 /* AvailableJobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */; };
 		B200000000000000B2000004 /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B200000000000000B2000003 /* JobDetailViewModelTests.swift */; };
 		B2B2044477AA79FE464BBAD9 /* ChatSocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B35156FBA7674EDC82116D /* ChatSocketClient.swift */; };
@@ -268,6 +276,14 @@
 		F600000000000000F6000007 /* ScheduledJobsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ScheduledJobsView.swift; sourceTree = "<group>"; };
 		F610000000000000F6100001 /* JobHistoryViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobHistoryViewModelTests.swift; sourceTree = "<group>"; };
 		F610000000000000F6100003 /* ScheduledJobsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ScheduledJobsViewModelTests.swift; sourceTree = "<group>"; };
+		F700000000000000F7000001 /* LoyaltyModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoyaltyModels.swift; sourceTree = "<group>"; };
+		F700000000000000F7000003 /* LoyaltyRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoyaltyRepository.swift; sourceTree = "<group>"; };
+		F700000000000000F7000005 /* QuestsViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuestsViewModel.swift; sourceTree = "<group>"; };
+		F700000000000000F7000007 /* QuestsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuestsView.swift; sourceTree = "<group>"; };
+		F700000000000000F7000009 /* TipReceivedViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TipReceivedViewModel.swift; sourceTree = "<group>"; };
+		F700000000000000F700000B /* TipReceivedSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TipReceivedSheet.swift; sourceTree = "<group>"; };
+		F710000000000000F7100001 /* QuestsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuestsViewModelTests.swift; sourceTree = "<group>"; };
+		F710000000000000F7100003 /* TipReceivedViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TipReceivedViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000001 /* AvailableJobsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AvailableJobsViewModelTests.swift; sourceTree = "<group>"; };
 		B200000000000000B2000003 /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
 		C009AC4A54A76361B4CB53CA /* ForgotPasswordViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModelTests.swift; sourceTree = "<group>"; };
@@ -522,6 +538,7 @@
 				D320000000000000D3200001 /* Settings */,
 				D330000000000000D3300001 /* Support */,
 				E520000000000000E5200001 /* Incident */,
+				F720000000000000F7200001 /* Loyalty */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -562,6 +579,7 @@
 				D320000000000000D3200002 /* Settings */,
 				D330000000000000D3300002 /* Support */,
 				E520000000000000E5200002 /* Incident */,
+				F720000000000000F7200002 /* Loyalty */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -644,6 +662,28 @@
 				E510000000000000E5100007 /* SOSViewModelTests.swift */,
 			);
 			path = Incident;
+			sourceTree = "<group>";
+		};
+		F720000000000000F7200001 /* Loyalty */ = {
+			isa = PBXGroup;
+			children = (
+				F700000000000000F7000001 /* LoyaltyModels.swift */,
+				F700000000000000F7000003 /* LoyaltyRepository.swift */,
+				F700000000000000F7000005 /* QuestsViewModel.swift */,
+				F700000000000000F7000007 /* QuestsView.swift */,
+				F700000000000000F7000009 /* TipReceivedViewModel.swift */,
+				F700000000000000F700000B /* TipReceivedSheet.swift */,
+			);
+			path = Loyalty;
+			sourceTree = "<group>";
+		};
+		F720000000000000F7200002 /* Loyalty */ = {
+			isa = PBXGroup;
+			children = (
+				F710000000000000F7100001 /* QuestsViewModelTests.swift */,
+				F710000000000000F7100003 /* TipReceivedViewModelTests.swift */,
+			);
+			path = Loyalty;
 			sourceTree = "<group>";
 		};
 		A00000000000000000000137 /* Dashboard */ = {
@@ -1007,6 +1047,12 @@
 				E500000000000000E500000C /* ReportProblemView.swift in Sources */,
 				E500000000000000E500000E /* SOSViewModel.swift in Sources */,
 				E500000000000000E5000010 /* SOSView.swift in Sources */,
+				F700000000000000F7000002 /* LoyaltyModels.swift in Sources */,
+				F700000000000000F7000004 /* LoyaltyRepository.swift in Sources */,
+				F700000000000000F7000006 /* QuestsViewModel.swift in Sources */,
+				F700000000000000F7000008 /* QuestsView.swift in Sources */,
+				F700000000000000F700000A /* TipReceivedViewModel.swift in Sources */,
+				F700000000000000F700000C /* TipReceivedSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1065,6 +1111,8 @@
 				E510000000000000E5100004 /* CancelActiveViewModelTests.swift in Sources */,
 				E510000000000000E5100006 /* ReportProblemViewModelTests.swift in Sources */,
 				E510000000000000E5100008 /* SOSViewModelTests.swift in Sources */,
+				F710000000000000F7100002 /* QuestsViewModelTests.swift in Sources */,
+				F710000000000000F7100004 /* TipReceivedViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

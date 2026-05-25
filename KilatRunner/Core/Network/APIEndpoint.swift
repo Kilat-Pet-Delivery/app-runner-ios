@@ -45,6 +45,8 @@ enum APIEndpoint: Equatable {
     case incidents
     case incidentDetail(id: String)
     case incidentTransition(id: String)
+    case quests
+    case redeemQuest(id: String)
 
     var method: HTTPMethod {
         switch self {
@@ -53,13 +55,13 @@ enum APIEndpoint: Equatable {
                 .declineBooking, .arriveAtPickup, .markPickup, .arriveAtDropoff,
                 .proofOfDelivery, .completeDelivery, .rateCustomer, .markDelivered, .cashOut,
                 .sendThreadMessage, .sendThreadAttachment, .markThreadRead, .mePhoto,
-                .incidents, .incidentTransition:
+                .incidents, .incidentTransition, .redeemQuest:
             return .post
         case .updateMe, .updateMeSettings:
             return .put
         case .profile, .runnerMe, .availableJobs, .bookingHistory, .scheduledBookings, .bookingDetail, .bookingPet, .trackingHistory,
                 .earnings, .notifications, .threads, .threadMessages, .quickReplies, .me, .meSettings, .tier,
-                .incidentDetail:
+                .incidentDetail, .quests:
             return .get
         }
     }
@@ -155,6 +157,10 @@ enum APIEndpoint: Equatable {
             return "incidents/\(id)"
         case let .incidentTransition(id):
             return "incidents/\(id)/transition"
+        case .quests:
+            return "quests"
+        case let .redeemQuest(id):
+            return "quests/\(id)/redeem"
         }
     }
 

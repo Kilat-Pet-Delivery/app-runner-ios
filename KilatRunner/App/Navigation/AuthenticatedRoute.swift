@@ -10,6 +10,7 @@ enum AuthenticatedRoute: Hashable {
     case documents
     case jobHistory
     case scheduledJobs
+    case quests
 }
 
 extension AuthenticatedRoute: Identifiable {
@@ -24,6 +25,7 @@ extension AuthenticatedRoute: Identifiable {
         case .documents: return "documents"
         case .jobHistory: return "job-history"
         case .scheduledJobs: return "scheduled-jobs"
+        case .quests: return "quests"
         }
     }
 }
