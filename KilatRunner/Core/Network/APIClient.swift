@@ -2,6 +2,11 @@ import Foundation
 
 struct EmptyRequest: Encodable {}
 
+struct EmptyResponse: Decodable, Equatable {
+    init() {}
+    init(from decoder: Decoder) throws {}
+}
+
 final class APIClient {
     private let baseURL: URL
     private let session: URLSession
@@ -27,6 +32,73 @@ final class APIClient {
         try await request(endpoint, body: Optional<EmptyRequest>.none, token: token)
     }
 
+    func uploadMultipart<Response: Decodable>(
+        _ endpoint: APIEndpoint,
+        fields: [String: String],
+        fileField: String,
+        fileName: String,
+        fileMIMEType: String,
+        fileData: Data,
+        token: String? = nil
+    ) async throws -> Response {
+        let boundary = "Boundary-\(UUID().uuidString)"
+        let body = makeMultipartBody(
+            boundary: boundary,
+            fields: fields,
+            fileField: fileField,
+            fileName: fileName,
+            fileMIMEType: fileMIMEType,
+            fileData: fileData
+        )
+        var request = try makeRequest(endpoint, body: Optional<EmptyRequest>.none, token: token)
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.httpBody = body
+
+        let (data, response): (Data, URLResponse)
+        do {
+            (data, response) = try await session.data(for: request)
+        } catch let urlError as URLError where urlError.code == .notConnectedToInternet {
+            throw NetworkError.offline
+        } catch {
+            throw NetworkError.unknown(error.localizedDescription)
+        }
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+
+        try validate(httpResponse)
+
+        do {
+            return try decoder.decode(Response.self, from: data)
+        } catch {
+            throw NetworkError.decodingFailed(error.localizedDescription)
+        }
+    }
+
+    private func makeMultipartBody(
+        boundary: String,
+        fields: [String: String],
+        fileField: String,
+        fileName: String,
+        fileMIMEType: String,
+        fileData: Data
+    ) -> Data {
+        var body = Data()
+        let lineBreak = "\r\n"
+        for (name, value) in fields {
+            body.append("--\(boundary)\(lineBreak)".data(using: .utf8)!)
+            body.append("Content-Disposition: form-data; name=\"\(name)\"\(lineBreak)\(lineBreak)".data(using: .utf8)!)
+            body.append("\(value)\(lineBreak)".data(using: .utf8)!)
+        }
+        body.append("--\(boundary)\(lineBreak)".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"\(fileField)\"; filename=\"\(fileName)\"\(lineBreak)".data(using: .utf8)!)
+        body.append("Content-Type: \(fileMIMEType)\(lineBreak)\(lineBreak)".data(using: .utf8)!)
+        body.append(fileData)
+        body.append("\(lineBreak)--\(boundary)--\(lineBreak)".data(using: .utf8)!)
+        return body
+    }
+
     func request<Body: Encodable, Response: Decodable>(
         _ endpoint: APIEndpoint,
         body: Body?,
@@ -48,6 +120,10 @@ final class APIClient {
         }
 
         try validate(httpResponse)
+
+        if data.isEmpty, Response.self == EmptyResponse.self {
+            return EmptyResponse() as! Response
+        }
 
         do {
             return try decoder.decode(Response.self, from: data)
@@ -107,9 +183,13 @@ final class APIClient {
         }
     }
 
-    private static func makeEncoder() -> JSONEncoder {
+    static func makeCamelCaseEncoder() -> JSONEncoder {
+        makeEncoder(keyEncodingStrategy: .useDefaultKeys)
+    }
+
+    private static func makeEncoder(keyEncodingStrategy: JSONEncoder.KeyEncodingStrategy = .convertToSnakeCase) -> JSONEncoder {
         let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.keyEncodingStrategy = keyEncodingStrategy
         encoder.dateEncodingStrategy = .iso8601
         return encoder
     }

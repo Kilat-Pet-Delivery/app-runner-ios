@@ -4,25 +4,46 @@ enum APIEndpoint: Equatable {
     case login
     case refresh
     case logout
+    case forgotPassword
+    case resetPassword
     case profile
     case runnerMe
+    case runnerApply
     case runnerOnline
     case runnerOffline
     case runnerLocation
     case availableJobs(page: Int = 1, limit: Int = 20)
     case bookingDetail(id: String)
     case acceptBooking(id: String)
+    case declineBooking(id: String)
+    case arriveAtPickup(id: String)
     case markPickup(id: String)
+    case arriveAtDropoff(id: String)
+    case proofOfDelivery(id: String)
+    case completeDelivery(id: String)
+    case rateCustomer(id: String)
     case markDelivered(id: String)
     case trackingHistory(bookingId: String)
     case earnings(page: Int = 1, limit: Int = 20)
+    case cashOut
+    case notifications(cursor: String?, limit: Int = 20)
+    case threads
+    case threadMessages(threadId: String, cursor: String?, limit: Int = 50)
+    case sendThreadMessage(threadId: String)
+    case sendThreadAttachment(threadId: String)
+    case markThreadRead(threadId: String)
+    case quickReplies
 
     var method: HTTPMethod {
         switch self {
-        case .login, .refresh, .logout, .runnerOnline, .runnerOffline, .runnerLocation,
-                .acceptBooking, .markPickup, .markDelivered:
+        case .login, .refresh, .logout, .forgotPassword, .resetPassword, .runnerApply,
+                .runnerOnline, .runnerOffline, .runnerLocation, .acceptBooking,
+                .declineBooking, .arriveAtPickup, .markPickup, .arriveAtDropoff,
+                .proofOfDelivery, .completeDelivery, .rateCustomer, .markDelivered, .cashOut,
+                .sendThreadMessage, .sendThreadAttachment, .markThreadRead:
             return .post
-        case .profile, .runnerMe, .availableJobs, .bookingDetail, .trackingHistory, .earnings:
+        case .profile, .runnerMe, .availableJobs, .bookingDetail, .trackingHistory,
+                .earnings, .notifications, .threads, .threadMessages, .quickReplies:
             return .get
         }
     }
@@ -35,10 +56,16 @@ enum APIEndpoint: Equatable {
             return "auth/refresh"
         case .logout:
             return "auth/logout"
+        case .forgotPassword:
+            return "auth/forgot-password"
+        case .resetPassword:
+            return "auth/reset-password"
         case .profile:
             return "auth/profile"
         case .runnerMe:
             return "runners/me"
+        case .runnerApply:
+            return "runners/apply"
         case .runnerOnline:
             return "runners/me/online"
         case .runnerOffline:
@@ -51,8 +78,20 @@ enum APIEndpoint: Equatable {
             return "bookings/\(id)"
         case let .acceptBooking(id):
             return "bookings/\(id)/accept"
+        case let .declineBooking(id):
+            return "bookings/\(id)/decline"
+        case let .arriveAtPickup(id):
+            return "bookings/\(id)/arrive-pickup"
         case let .markPickup(id):
             return "bookings/\(id)/pickup"
+        case let .arriveAtDropoff(id):
+            return "bookings/\(id)/arrive-dropoff"
+        case let .proofOfDelivery(id):
+            return "bookings/\(id)/proof-of-delivery"
+        case let .completeDelivery(id):
+            return "bookings/\(id)/complete"
+        case let .rateCustomer(id):
+            return "bookings/\(id)/rate-customer"
         case let .markDelivered(id):
             return "bookings/\(id)/deliver"
         case let .trackingHistory(bookingId):
@@ -60,6 +99,22 @@ enum APIEndpoint: Equatable {
         case .earnings:
             // The backend currently derives runner earnings from completed bookings.
             return "bookings"
+        case .cashOut:
+            return "payouts/cash-out"
+        case .notifications:
+            return "notifications"
+        case .threads:
+            return "threads"
+        case let .threadMessages(threadId, _, _):
+            return "threads/\(threadId)/messages"
+        case let .sendThreadMessage(threadId):
+            return "threads/\(threadId)/messages"
+        case let .sendThreadAttachment(threadId):
+            return "threads/\(threadId)/attachments"
+        case let .markThreadRead(threadId):
+            return "threads/\(threadId)/read"
+        case .quickReplies:
+            return "quick-replies"
         }
     }
 
@@ -77,6 +132,18 @@ enum APIEndpoint: Equatable {
                 URLQueryItem(name: "page", value: String(page)),
                 URLQueryItem(name: "limit", value: String(limit))
             ]
+        case let .notifications(cursor, limit):
+            var items = [URLQueryItem(name: "limit", value: String(limit))]
+            if let cursor, !cursor.isEmpty {
+                items.append(URLQueryItem(name: "cursor", value: cursor))
+            }
+            return items
+        case let .threadMessages(_, cursor, limit):
+            var items = [URLQueryItem(name: "limit", value: String(limit))]
+            if let cursor, !cursor.isEmpty {
+                items.append(URLQueryItem(name: "cursor", value: cursor))
+            }
+            return items
         default:
             return []
         }
@@ -84,7 +151,7 @@ enum APIEndpoint: Equatable {
 
     var requiresAuth: Bool {
         switch self {
-        case .login, .refresh:
+        case .login, .refresh, .forgotPassword, .resetPassword, .runnerApply:
             return false
         default:
             return true

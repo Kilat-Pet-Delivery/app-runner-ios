@@ -84,15 +84,21 @@ struct LoginView: View {
 
     private var inlineLinks: some View {
         HStack(spacing: Tokens.Space.xl) {
-            // TODO(phase-9): wire to ForgotPasswordView (catalog 3.5)
-            Button("Forgot password?") {}
-                .font(Tokens.FontRole.label)
-                .foregroundStyle(Tokens.Color.primary)
+            NavigationLink {
+                ForgotPasswordView(viewModel: ForgotPasswordViewModel(email: viewModel.email))
+            } label: {
+                Text("Forgot password?")
+                    .font(Tokens.FontRole.label)
+                    .foregroundStyle(Tokens.Color.primary)
+            }
 
-            // TODO(phase-9): wire to ApplyView (catalog 3.5)
-            Button("Apply to join") {}
-                .font(Tokens.FontRole.label)
-                .foregroundStyle(Tokens.Color.primary)
+            NavigationLink {
+                ApplyView(viewModel: ApplyViewModel())
+            } label: {
+                Text("Apply to join")
+                    .font(Tokens.FontRole.label)
+                    .foregroundStyle(Tokens.Color.primary)
+            }
         }
     }
 }

@@ -33,8 +33,12 @@ struct JobDetailView: View {
         .navigationTitle(viewModel.booking.bookingNumber)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $viewModel.showsDeclineSheet) {
-            // TODO(phase-9-9.6): replace with DeclineReasonSheet content
-            declineStubSheet
+            if let declineViewModel = viewModel.declineViewModel {
+                DeclineReasonSheet(viewModel: declineViewModel) {
+                    viewModel.closeAfterDecline()
+                    dismiss()
+                }
+            }
         }
         .navigationDestination(
             isPresented: Binding(
@@ -42,8 +46,10 @@ struct JobDetailView: View {
                 set: { newValue in if !newValue { viewModel.acceptedBookingId = nil } }
             )
         ) {
-            // TODO(phase-9-9.5): route via JobAcceptedView celebration screen before ActiveDelivery
-            ActiveDeliveryView(viewModel: ActiveDeliveryViewModel(booking: viewModel.booking)) {
+            JobAcceptedView(booking: viewModel.booking) {
+                viewModel.acceptedBookingId = nil
+                dismiss()
+            } onBackToDashboard: {
                 viewModel.acceptedBookingId = nil
                 dismiss()
             }
@@ -150,7 +156,7 @@ struct JobDetailView: View {
     private var stickyFooter: some View {
         HStack(spacing: Tokens.Space.sm) {
             SecondaryButton(title: "Decline") {
-                viewModel.showsDeclineSheet = true
+                viewModel.presentDeclineSheet()
             }
             PrimaryButton(
                 title: viewModel.isAccepting ? "Accepting" : "Accept \(fareLabel)",
@@ -163,23 +169,6 @@ struct JobDetailView: View {
         .background(Tokens.Color.surface)
         .tokenShadow(Tokens.Shadow.raised)
         .accessibilityIdentifier("jobDetailStickyFooter")
-    }
-
-    private var declineStubSheet: some View {
-        VStack(spacing: Tokens.Space.lg) {
-            Text("Decline job")
-                .font(Tokens.FontRole.titleL)
-                .foregroundStyle(Tokens.Color.textPrimary)
-            Text("Reason picker comes in Phase 9.")
-                .font(Tokens.FontRole.label)
-                .foregroundStyle(Tokens.Color.textSecondary)
-                .multilineTextAlignment(.center)
-            PrimaryButton(title: "Close") {
-                viewModel.showsDeclineSheet = false
-            }
-        }
-        .padding(Tokens.Space.xl)
-        .presentationDetents([.medium])
     }
 
     private func routeRow(dotColor: Color, title: String, address: String) -> some View {

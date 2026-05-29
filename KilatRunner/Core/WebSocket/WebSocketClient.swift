@@ -8,6 +8,31 @@ enum WebSocketConnectionState: Equatable {
     case disconnected
 }
 
+enum WebSocketChannel: Equatable {
+    case tracking(bookingID: String)
+    case chat
+    case presence
+
+    var path: String {
+        switch self {
+        case let .tracking(bookingID): return "ws/tracking/\(bookingID)"
+        case .chat: return "ws/chat"
+        case .presence: return "ws/presence"
+        }
+    }
+
+    func url(base: URL, accessToken: String?) -> URL? {
+        let candidate = base.appending(path: path)
+        guard var components = URLComponents(url: candidate, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+        if let accessToken, !accessToken.isEmpty {
+            components.queryItems = [URLQueryItem(name: "token", value: accessToken)]
+        }
+        return components.url
+    }
+}
+
 protocol WebSocketTransport: Sendable {
     func connect(url: URL) async throws
     func disconnect()
@@ -47,11 +72,24 @@ final class WebSocketClient: RealtimeTrackingClient {
         self.sleep = sleep
     }
 
+    deinit {
+        receiveTask?.cancel()
+        messageContinuation?.finish()
+        transport.disconnect()
+    }
+
     func connect(url: URL) async throws {
         receiveTask?.cancel()
         try await transport.connect(url: url)
         state = .connected
         startReceiving(url: url)
+    }
+
+    func connect(channel: WebSocketChannel, baseURL: URL, accessToken: String?) async throws {
+        guard let url = channel.url(base: baseURL, accessToken: accessToken) else {
+            throw URLError(.badURL)
+        }
+        try await connect(url: url)
     }
 
     func disconnect() {
@@ -62,15 +100,15 @@ final class WebSocketClient: RealtimeTrackingClient {
     }
 
     private func startReceiving(url: URL) {
+        let transport = transport
+        let continuation = messageContinuation
         receiveTask = Task { [weak self] in
-            guard let self else { return }
-
             while !Task.isCancelled {
                 do {
                     let data = try await transport.receive()
-                    messageContinuation?.yield(data)
+                    continuation?.yield(data)
                 } catch {
-                    await reconnect(url: url)
+                    await self?.reconnect(url: url)
                     return
                 }
             }

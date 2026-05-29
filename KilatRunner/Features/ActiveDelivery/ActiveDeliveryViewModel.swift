@@ -5,15 +5,22 @@ import Observation
 enum DeliveryPhase: Equatable {
     case enroute
     case pickedUp
+    case proofSubmitted
     case delivered
 }
 
 enum ActiveDeliveryPresentationStage: String, Equatable {
     case toPickup
-    case atPickup
+    case arrivedAtPickup
+    case pickedUp
     case toDropoff
-    case atDropoff
-    case delivered
+    case arrivedAtDropoff
+    case proofSubmitted
+    case complete
+
+    static var atPickup: Self { .arrivedAtPickup }
+    static var atDropoff: Self { .arrivedAtDropoff }
+    static var delivered: Self { .complete }
 }
 
 @MainActor
@@ -24,16 +31,19 @@ final class ActiveDeliveryViewModel {
     var deliveryPhase: DeliveryPhase = .enroute
     private(set) var isMarkingPickup = false
     private(set) var isMarkingDelivered = false
+    private(set) var isSubmittingProof = false
+    private(set) var isCompletingDelivery = false
     var errorMessage: String?
     var hasArrivedAtCurrentWaypoint: Bool = false
 
     var presentationStage: ActiveDeliveryPresentationStage {
         switch (deliveryPhase, hasArrivedAtCurrentWaypoint) {
         case (.enroute, false):   return .toPickup
-        case (.enroute, true):    return .atPickup
+        case (.enroute, true):    return .arrivedAtPickup
         case (.pickedUp, false):  return .toDropoff
-        case (.pickedUp, true):   return .atDropoff
-        case (.delivered, _):     return .delivered
+        case (.pickedUp, true):   return .arrivedAtDropoff
+        case (.proofSubmitted, _): return .proofSubmitted
+        case (.delivered, _):     return .complete
         }
     }
 
@@ -120,15 +130,19 @@ final class ActiveDeliveryViewModel {
     }
 
     func markPickup() async {
-        guard deliveryPhase == .enroute, !isMarkingPickup else { return }
+        await markPickedUp()
+    }
+
+    func arriveAtPickup() async {
+        guard presentationStage == .toPickup, !isMarkingPickup else { return }
         errorMessage = nil
         isMarkingPickup = true
         defer { isMarkingPickup = false }
 
         do {
-            let updated = try await bookingRepository.markPickup(id: booking.id)
+            let updated = try await bookingRepository.arriveAtPickup(id: booking.id)
             booking = updated
-            deliveryPhase = .pickedUp
+            hasArrivedAtCurrentWaypoint = true
         } catch let error as NetworkError {
             errorMessage = error.userMessage
         } catch {
@@ -136,22 +150,98 @@ final class ActiveDeliveryViewModel {
         }
     }
 
-    func markDelivered() async {
-        guard deliveryPhase == .pickedUp, !isMarkingDelivered else { return }
+    func markPickedUp(qrCode: String? = nil) async {
+        guard presentationStage == .arrivedAtPickup, !isMarkingPickup else { return }
         errorMessage = nil
-        isMarkingDelivered = true
-        defer { isMarkingDelivered = false }
+        isMarkingPickup = true
+        defer { isMarkingPickup = false }
 
         do {
-            let updated = try await bookingRepository.markDelivered(id: booking.id)
+            let updated = try await bookingRepository.markPickedUp(id: booking.id, qrCode: qrCode)
             booking = updated
-            deliveryPhase = .delivered
-            await stopRealtimeAndFlush()
+            deliveryPhase = .pickedUp
+            hasArrivedAtCurrentWaypoint = false
         } catch let error as NetworkError {
             errorMessage = error.userMessage
         } catch {
             errorMessage = NetworkError.unknown(error.localizedDescription).userMessage
         }
+    }
+
+    func arriveAtDropoff() async {
+        guard presentationStage == .toDropoff, !isMarkingDelivered else { return }
+        errorMessage = nil
+        isMarkingDelivered = true
+        defer { isMarkingDelivered = false }
+
+        do {
+            let updated = try await bookingRepository.arriveAtDropoff(id: booking.id)
+            booking = updated
+            hasArrivedAtCurrentWaypoint = true
+        } catch let error as NetworkError {
+            errorMessage = error.userMessage
+        } catch {
+            errorMessage = NetworkError.unknown(error.localizedDescription).userMessage
+        }
+    }
+
+    @discardableResult
+    func submitProofOfDelivery(_ proof: ProofOfDeliveryRequest) async throws -> Booking {
+        guard presentationStage == .arrivedAtDropoff, !isSubmittingProof else {
+            throw NetworkError.invalidResponse
+        }
+        errorMessage = nil
+        isSubmittingProof = true
+        defer { isSubmittingProof = false }
+
+        do {
+            let updated = try await bookingRepository.submitProofOfDelivery(id: booking.id, proof: proof)
+            booking = updated
+            deliveryPhase = .proofSubmitted
+            hasArrivedAtCurrentWaypoint = false
+            return updated
+        } catch let error as NetworkError {
+            errorMessage = error.userMessage
+            throw error
+        } catch {
+            let networkError = NetworkError.unknown(error.localizedDescription)
+            errorMessage = networkError.userMessage
+            throw networkError
+        }
+    }
+
+    func markDelivered() async {
+        await completeDelivery()
+    }
+
+    @discardableResult
+    func completeDelivery() async -> Booking? {
+        guard (presentationStage == .proofSubmitted || presentationStage == .arrivedAtDropoff), !isCompletingDelivery else {
+            return nil
+        }
+        errorMessage = nil
+        isCompletingDelivery = true
+        defer { isCompletingDelivery = false }
+
+        do {
+            let updated = try await bookingRepository.completeDelivery(id: booking.id)
+            booking = updated
+            deliveryPhase = .delivered
+            await stopRealtimeAndFlush()
+            return updated
+        } catch let error as NetworkError {
+            errorMessage = error.userMessage
+        } catch {
+            errorMessage = NetworkError.unknown(error.localizedDescription).userMessage
+        }
+        return nil
+    }
+
+    @discardableResult
+    func submitCustomerRatingAndComplete(_ rating: CustomerRatingRequest) async throws -> Booking {
+        let rated = try await bookingRepository.rateCustomer(id: booking.id, rating: rating)
+        booking = rated
+        return await completeDelivery() ?? rated
     }
 
     private func handleLocation(_ location: CLLocation) async {

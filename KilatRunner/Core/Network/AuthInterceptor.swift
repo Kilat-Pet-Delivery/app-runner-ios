@@ -28,6 +28,38 @@ final class AuthInterceptor {
         }
     }
 
+    func uploadMultipart<Response: Decodable>(
+        _ endpoint: APIEndpoint,
+        fields: [String: String] = [:],
+        fileField: String,
+        fileName: String,
+        fileMIMEType: String,
+        fileData: Data
+    ) async throws -> Response {
+        do {
+            return try await apiClient.uploadMultipart(
+                endpoint,
+                fields: fields,
+                fileField: fileField,
+                fileName: fileName,
+                fileMIMEType: fileMIMEType,
+                fileData: fileData,
+                token: token(for: endpoint)
+            )
+        } catch NetworkError.unauthorized where endpoint.requiresAuth {
+            let tokenPair = try await refreshTokens()
+            return try await apiClient.uploadMultipart(
+                endpoint,
+                fields: fields,
+                fileField: fileField,
+                fileName: fileName,
+                fileMIMEType: fileMIMEType,
+                fileData: fileData,
+                token: tokenPair.accessToken
+            )
+        }
+    }
+
     private func token(for endpoint: APIEndpoint) -> String? {
         endpoint.requiresAuth ? tokenStore.accessToken() : nil
     }

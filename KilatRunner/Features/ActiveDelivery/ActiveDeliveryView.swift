@@ -5,10 +5,17 @@ import KilatUI
 struct ActiveDeliveryView: View {
     @Bindable private var viewModel: ActiveDeliveryViewModel
     private let onBackToDashboard: () -> Void
+    @State private var chatPresentation: ChatPresentation?
 
     init(viewModel: ActiveDeliveryViewModel, onBackToDashboard: @escaping () -> Void = {}) {
         self.viewModel = viewModel
         self.onBackToDashboard = onBackToDashboard
+    }
+
+    private struct ChatPresentation: Identifiable {
+        let id: String
+        let viewModel: ChatViewModel
+        let participantName: String
     }
 
     var body: some View {
@@ -20,7 +27,7 @@ struct ActiveDeliveryView: View {
                 bottomSheet
             }
 
-            if viewModel.deliveryPhase == .delivered {
+            if viewModel.presentationStage == .complete {
                 tripCompleteOverlay
             }
         }
@@ -28,6 +35,17 @@ struct ActiveDeliveryView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.onAppear() }
         .onDisappear { Task { await viewModel.onDisappear() } }
+        .sheet(item: $chatPresentation) { presentation in
+            NavigationStack {
+                ChatThreadView(viewModel: presentation.viewModel, participantName: presentation.participantName)
+                    .navigationTitle(presentation.participantName)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Done") { chatPresentation = nil }
+                        }
+                    }
+            }
+        }
     }
 
     private var map: some View {
@@ -67,29 +85,24 @@ struct ActiveDeliveryView: View {
                 StatusBadge(status: .inTransit)
             }
 
-            customerContactRow
+            if showsDefaultRouteContent {
+                customerContactRow
 
-            VStack(alignment: .leading, spacing: Tokens.Space.xs) {
-                routeRow(dotColor: Tokens.Color.online,
-                         label: "Pickup",
-                         address: viewModel.booking.pickupAddress.singleLineLabel)
-                routeRow(dotColor: Tokens.Color.destructive,
-                         label: "Drop-off",
-                         address: viewModel.booking.dropoffAddress.singleLineLabel)
+                VStack(alignment: .leading, spacing: Tokens.Space.xs) {
+                    routeRow(dotColor: Tokens.Color.online,
+                             label: "Pickup",
+                             address: viewModel.booking.pickupAddress.singleLineLabel)
+                    routeRow(dotColor: Tokens.Color.destructive,
+                             label: "Drop-off",
+                             address: viewModel.booking.dropoffAddress.singleLineLabel)
+                }
             }
 
             if let errorMessage = viewModel.errorMessage {
                 errorBanner(message: errorMessage)
             }
 
-            PrimaryButton(
-                title: stageCtaTitle,
-                icon: stageCtaIcon,
-                isLoading: viewModel.isMarkingPickup || viewModel.isMarkingDelivered,
-                isEnabled: stageCtaEnabled,
-                action: stageCtaAction
-            )
-            .accessibilityIdentifier("activeDeliveryCTA")
+            stageContent
         }
         .padding(Tokens.Space.lg)
         .background(Tokens.Color.surface)
@@ -118,7 +131,9 @@ struct ActiveDeliveryView: View {
                     .foregroundStyle(Tokens.Color.primary)
             }
             .accessibilityLabel("Call customer")
-            Button {} label: {
+            Button {
+                presentChat()
+            } label: {
                 Image(kilatAsset: "message")
                     .resizable()
                     .renderingMode(.template)
@@ -157,6 +172,46 @@ struct ActiveDeliveryView: View {
                             in: RoundedRectangle(cornerRadius: Tokens.Radius.xl, style: .continuous))
                 .padding(.horizontal, Tokens.Space.xl)
             }
+    }
+
+    @ViewBuilder private var stageContent: some View {
+        switch viewModel.presentationStage {
+        case .arrivedAtPickup:
+            ArrivedAtPickupView(
+                vendorName: viewModel.booking.pickupAddress.line1,
+                orderID: viewModel.booking.bookingNumber,
+                isLoading: viewModel.isMarkingPickup,
+                onConfirmPickup: { Task { await viewModel.markPickedUp() } },
+                onItemMissing: { viewModel.errorMessage = "Contact support to report a missing item." }
+            )
+        case .arrivedAtDropoff:
+            ProofOfDeliveryView(
+                viewModel: ProofOfDeliveryViewModel { proof in
+                    try await viewModel.submitProofOfDelivery(proof)
+                },
+                isLivePet: !viewModel.booking.petSpec.petType.isEmpty
+            )
+        case .proofSubmitted:
+            DeliveryCompleteView(
+                viewModel: DeliveryCompleteViewModel { request in
+                    try await viewModel.submitCustomerRatingAndComplete(request)
+                },
+                fareLabel: fareLabel,
+                onDone: onBackToDashboard,
+                onViewEarnings: onBackToDashboard
+            )
+        case .complete:
+            PrimaryButton(title: "Back to dashboard", icon: "house.fill", action: onBackToDashboard)
+        default:
+            PrimaryButton(
+                title: stageCtaTitle,
+                icon: stageCtaIcon,
+                isLoading: viewModel.isMarkingPickup || viewModel.isMarkingDelivered,
+                isEnabled: stageCtaEnabled,
+                action: stageCtaAction
+            )
+            .accessibilityIdentifier("activeDeliveryCTA")
+        }
     }
 
     private func routeRow(dotColor: Color, label: String, address: String) -> some View {
@@ -207,67 +262,96 @@ struct ActiveDeliveryView: View {
 
     private var stageHeading: String {
         switch viewModel.presentationStage {
-        case .toPickup:   return "Heading to pickup"
-        case .atPickup:   return "Arrived at pickup"
-        case .toDropoff:  return "Heading to drop-off"
-        case .atDropoff:  return "Arrived at drop-off"
-        case .delivered:  return "Delivered"
+        case .toPickup:          return "Heading to pickup"
+        case .arrivedAtPickup:   return "Arrived at pickup"
+        case .pickedUp:          return "Picked up"
+        case .toDropoff:         return "Heading to drop-off"
+        case .arrivedAtDropoff:  return "Arrived at drop-off"
+        case .proofSubmitted:    return "Proof submitted"
+        case .complete:          return "Delivered"
         }
     }
 
     private var stageCtaTitle: String {
         switch viewModel.presentationStage {
-        case .toPickup:   return "I have arrived"
-        case .atPickup:   return "Picked up"
-        case .toDropoff:  return "I have arrived"
-        case .atDropoff:  return "Mark delivered"
-        case .delivered:  return "Back to dashboard"
+        case .toPickup:          return "I have arrived"
+        case .arrivedAtPickup:   return "Picked up"
+        case .pickedUp:          return "Continue"
+        case .toDropoff:         return "I have arrived"
+        case .arrivedAtDropoff:  return "Submit proof"
+        case .proofSubmitted:    return "Complete delivery"
+        case .complete:          return "Back to dashboard"
         }
     }
 
     private var stageCtaIcon: String? {
         switch viewModel.presentationStage {
         case .toPickup, .toDropoff: return "mappin.circle.fill"
-        case .atPickup:             return "shippingbox.fill"
-        case .atDropoff:            return "checkmark.circle.fill"
-        case .delivered:            return "house.fill"
+        case .arrivedAtPickup:      return "shippingbox.fill"
+        case .pickedUp:             return "arrow.right.circle.fill"
+        case .arrivedAtDropoff:     return "checkmark.seal.fill"
+        case .proofSubmitted:       return "checkmark.circle.fill"
+        case .complete:             return "house.fill"
         }
     }
 
     private var stageCtaEnabled: Bool {
         switch viewModel.presentationStage {
         case .toPickup, .toDropoff: return !viewModel.isMarkingPickup && !viewModel.isMarkingDelivered
-        case .atPickup:             return !viewModel.isMarkingPickup
-        case .atDropoff:            return !viewModel.isMarkingDelivered
-        case .delivered:            return true
+        case .arrivedAtPickup:      return !viewModel.isMarkingPickup
+        case .pickedUp:             return true
+        case .arrivedAtDropoff:     return !viewModel.isSubmittingProof
+        case .proofSubmitted:       return !viewModel.isCompletingDelivery
+        case .complete:             return true
         }
     }
 
     private var stageCtaAction: () -> Void {
         switch viewModel.presentationStage {
-        case .toPickup, .toDropoff:
-            return { viewModel.hasArrivedAtCurrentWaypoint = true }
-        case .atPickup:
-            return {
-                Task {
-                    await viewModel.markPickup()
-                    viewModel.hasArrivedAtCurrentWaypoint = false
-                }
-            }
-        case .atDropoff:
-            return {
-                Task {
-                    await viewModel.markDelivered()
-                    viewModel.hasArrivedAtCurrentWaypoint = false
-                }
-            }
-        case .delivered:
+        case .toPickup:
+            return { Task { await viewModel.arriveAtPickup() } }
+        case .toDropoff:
+            return { Task { await viewModel.arriveAtDropoff() } }
+        case .arrivedAtPickup:
+            return { Task { await viewModel.markPickedUp() } }
+        case .pickedUp:
+            return {}
+        case .arrivedAtDropoff:
+            return {}
+        case .proofSubmitted:
+            return { Task { _ = await viewModel.completeDelivery() } }
+        case .complete:
             return onBackToDashboard
+        }
+    }
+
+    private var showsDefaultRouteContent: Bool {
+        switch viewModel.presentationStage {
+        case .arrivedAtPickup, .arrivedAtDropoff, .proofSubmitted:
+            return false
+        default:
+            return true
         }
     }
 
     private var fareLabel: String {
         let cents = viewModel.booking.finalPriceCents ?? viewModel.booking.estimatedPriceCents
         return "\(viewModel.booking.currency) \(String(format: "%.2f", Double(cents) / 100))"
+    }
+
+    private func presentChat() {
+        let booking = viewModel.booking
+        let selfUserID = booking.runnerId ?? ""
+        let chatViewModel = ChatViewModel(
+            threadID: booking.id,
+            selfUserID: selfUserID,
+            remoteUserID: booking.ownerId
+        )
+        let participantName = booking.petSpec.name.isEmpty ? "Customer" : "\(booking.petSpec.name)'s owner"
+        chatPresentation = ChatPresentation(
+            id: booking.id,
+            viewModel: chatViewModel,
+            participantName: participantName
+        )
     }
 }

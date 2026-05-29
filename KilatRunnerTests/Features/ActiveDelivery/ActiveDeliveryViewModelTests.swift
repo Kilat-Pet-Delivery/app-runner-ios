@@ -32,6 +32,65 @@ final class ActiveDeliveryViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.deliveryPhase, .enroute)
     }
 
+    func test_arriveAtPickup_transitionsState_fromToPickup_toArrivedAtPickup() async {
+        let bookingRepository = ActiveDeliveryFakeBookingRepository()
+        let viewModel = ActiveDeliveryViewModel(
+            booking: Self.makeBooking(),
+            locationProvider: FakeLocationProvider(),
+            runnerRepository: FakeRunnerRepository(),
+            bookingRepository: bookingRepository,
+            webSocketClient: FakeRealtimeTrackingClient(),
+            tokenStore: FakeTokenStore()
+        )
+
+        await viewModel.arriveAtPickup()
+
+        XCTAssertEqual(viewModel.presentationStage, .arrivedAtPickup)
+        XCTAssertEqual(bookingRepository.arriveAtPickupIDs, ["10000000-0000-4000-8000-000000000001"])
+    }
+
+    func test_arriveAtPickup_rejectsFromWrongState() async {
+        let bookingRepository = ActiveDeliveryFakeBookingRepository()
+        let viewModel = ActiveDeliveryViewModel(
+            booking: Self.makeBooking(),
+            locationProvider: FakeLocationProvider(),
+            runnerRepository: FakeRunnerRepository(),
+            bookingRepository: bookingRepository,
+            webSocketClient: FakeRealtimeTrackingClient(),
+            tokenStore: FakeTokenStore()
+        )
+        viewModel.deliveryPhase = .pickedUp
+
+        await viewModel.arriveAtPickup()
+
+        XCTAssertEqual(viewModel.presentationStage, .toDropoff)
+        XCTAssertTrue(bookingRepository.arriveAtPickupIDs.isEmpty)
+    }
+
+    func test_submitProof_transitionsToProofSubmitted() async throws {
+        let bookingRepository = ActiveDeliveryFakeBookingRepository()
+        let viewModel = ActiveDeliveryViewModel(
+            booking: Self.makeBooking(),
+            locationProvider: FakeLocationProvider(),
+            runnerRepository: FakeRunnerRepository(),
+            bookingRepository: bookingRepository,
+            webSocketClient: FakeRealtimeTrackingClient(),
+            tokenStore: FakeTokenStore()
+        )
+        viewModel.deliveryPhase = .pickedUp
+        viewModel.hasArrivedAtCurrentWaypoint = true
+
+        try await viewModel.submitProofOfDelivery(.init(
+            photoStorageKey: "photo-key",
+            signatureStorageKey: "signature-key",
+            recipient: .customer,
+            notes: "Signed by owner"
+        ))
+
+        XCTAssertEqual(viewModel.presentationStage, .proofSubmitted)
+        XCTAssertEqual(bookingRepository.submittedProofs.first?.photoStorageKey, "photo-key")
+    }
+
     func test_onAppear_startsLocationUpdates() {
         let locationProvider = FakeLocationProvider()
         let viewModel = ActiveDeliveryViewModel(
@@ -347,5 +406,42 @@ private final class FakeTokenStore: TokenStore {
 
     func clear() {
         storedAccessToken = nil
+    }
+}
+
+private final class ActiveDeliveryFakeBookingRepository: BookingRepositoryProtocol {
+    private(set) var arriveAtPickupIDs: [String] = []
+    private(set) var submittedProofs: [ProofOfDeliveryRequest] = []
+
+    func listAvailable() async throws -> [Booking] { [] }
+    func get(id: String) async throws -> Booking { ActiveDeliveryFixture.makeBooking() }
+    func accept(id: String) async throws -> Booking { ActiveDeliveryFixture.makeBooking() }
+    func markPickup(id: String) async throws -> Booking { ActiveDeliveryFixture.makeBooking(status: "in_progress") }
+    func markDelivered(id: String) async throws -> Booking { ActiveDeliveryFixture.makeBooking(status: "delivered") }
+
+    func arriveAtPickup(id: String) async throws -> Booking {
+        arriveAtPickupIDs.append(id)
+        return ActiveDeliveryFixture.makeBooking(status: "in_progress")
+    }
+
+    func markPickedUp(id: String, qrCode: String?) async throws -> Booking {
+        ActiveDeliveryFixture.makeBooking(status: "in_progress")
+    }
+
+    func arriveAtDropoff(id: String) async throws -> Booking {
+        ActiveDeliveryFixture.makeBooking(status: "in_progress")
+    }
+
+    func submitProofOfDelivery(id: String, proof: ProofOfDeliveryRequest) async throws -> Booking {
+        submittedProofs.append(proof)
+        return ActiveDeliveryFixture.makeBooking(status: "delivered")
+    }
+
+    func completeDelivery(id: String) async throws -> Booking {
+        ActiveDeliveryFixture.makeBooking(status: "completed")
+    }
+
+    func rateCustomer(id: String, rating: CustomerRatingRequest) async throws -> Booking {
+        ActiveDeliveryFixture.makeBooking(status: "completed")
     }
 }
